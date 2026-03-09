@@ -1,62 +1,153 @@
 import logo from '../assets/logo.svg';
-
+import { Phone, MailPlus, MapPin, Menu, ChevronDown, Package, Box, CupSoda as Cup, Snowflake, UtensilsCrossed as Utensils, Archive } from 'lucide-react';
 const NavBar = () => {
   return (
     <header className="w-full relative">
-      <div className="bg-[#0a5d3c] text-white py-3 px-4 flex justify-center items-center gap-12 text-[14px] font-medium min-h-[48px]">
-        <div className="flex items-center gap-2 hover:text-orange-300 transition-colors cursor-pointer">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-          </svg>
-          <span>(+91) 9025044947</span>
+      <div className="bg-[#0d6e41] text-white py-4 px-4 leading-0 flex flex-col items-center gap-4 text-[13px] font-medium lg:flex-row lg:justify-center lg:gap-12 lg:h-[42px] lg:py-0">
+        <div className="flex flex-wrap text-[14px] font-semibold md:text-[16px] items-center justify-center gap-x-6 gap-y-2 lg:gap-12">
+          <div className="flex items-center gap-2 hover:text-orange-300 transition-colors cursor-pointer">
+            <Phone className='md:w-[16px] md:h-[16px] w-[14px] h-[14px]' />
+            <span>(+91) 9025093823</span>
+          </div>
+          <div className="flex items-center gap-2 hover:text-orange-300 transition-colors cursor-pointer">
+            <MailPlus className='md:w-[16px] md:h-[16px] w-[14px] h-[14px]' />
+            <span>codec@gmail.com</span>
+          </div>
         </div>
-        <div className="flex items-center gap-2 hover:text-orange-300 transition-colors cursor-pointer">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-          </svg>
-          <span>codec@gmail.com</span>
-        </div>
-        <div className="flex items-center gap-2 hover:text-orange-300 transition-colors cursor-pointer">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-          </svg>
-          <span>Chennai, Tamilnad</span>
+        <div className="flex text-[14px] font-semibold md:text-[16px] items-center gap-2 hover:text-orange-300 transition-colors cursor-pointer">
+          <MapPin className='md:w-[16px] md:h-[16px] w-[14px] h-[14px]' />
+          <span>Chennai, Tamilnadu</span>
         </div>
       </div>
-
-      {/* Main Navbar (Floating) */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-[32px] w-[95%] max-w-7xl">
-        <nav className="bg-white rounded-full shadow-[0_15px_40px_rgba(0,0,0,0.12)] h-[90px] px-10 flex items-center justify-between">
-          <div className="w-1/4">
-            <img src={logo} alt="LeafedIndia Logo" className="h-10" />
+      {/* navbar */}
+      <div className="absolute left-1/2 -translate-x-1/2 top-[80px] lg:top-[42px] w-[95%] max-w-7xl z-50">
+        {/* <div className="fixed left-1/2 -translate-x-1/2 top-[80px] lg:top-[42px] w-[95%] max-w-7xl z-50"> */}
+        <nav className="bg-white rounded-full shadow-[0_15px_40px_rgba(0,0,0,0.12)] h-[70px] md:h-[90px] px-4 md:px-10 flex items-center justify-between">
+          <div className="">
+            <img src={logo} alt="LeafedIndia Logo" className="h-15 md:h-25" />
           </div>
 
-          <div className="hidden lg:flex flex-1 justify-center items-center gap-12 font-bold text-[#333]">
+          <div style={{ fontFamily: "Montserrat" }} className="hidden lg:flex flex-1 justify-between pl-20 items-center gap-[2%] font-semibold text-[#333]">
             <a href="#" className="text-[#0a5d3c] hover:text-[#fb923c] transition-colors">Home</a>
-            <a href="#" className="hover:text-[#0a5d3c] transition-colors">About Us</a>
-            <div className="flex items-center gap-1 cursor-pointer hover:text-[#0a5d3c] transition-colors group">
-              <span>Services</span>
-              <svg className="w-4 h-4 mt-0.5 group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-              </svg>
+            <a href="#" className="text-[#0a5d3c] hover:text-[#fb923c] transition-colors">About Us</a>
+
+            <div className="group/mega flex items-center gap-1 cursor-pointer text-[#0a5d3c] hover:text-[#fb923c] transition-colors py-8">
+              <span>Products</span>
+              <ChevronDown className="w-4 h-4 mt-0.5 group-hover/mega:rotate-180 transition-transform" />
+
+              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-[850px] invisible group-hover/mega:visible opacity-0 group-hover/mega:opacity-100 transition-all duration-300 z-50">
+                <div className="bg-white rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.15)] overflow-hidden flex min-h-[380px]">
+                  <div className="flex-1 p-10 pr-6">
+                    <h2 className="text-[#86bc25] text-xl font-bold mb-8">SEE All Products</h2>
+
+                    <div className="grid grid-cols-2 gap-x-12 gap-y-8">
+                      <div className="flex items-center gap-6 group/item cursor-pointer">
+                        <div className="w-12 h-12 bg-[#fefbea] rounded-xl flex items-center justify-center group-hover/item:bg-[#86bc25] transition-colors">
+                          <Box className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
+                        </div>
+                        <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
+                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Paper Lunch Box</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-6 group/item cursor-pointer">
+                        <div className="w-12 h-12 bg-[#fefbea] rounded-xl flex items-center justify-center group-hover/item:bg-[#86bc25] transition-colors">
+                          <Snowflake className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
+                        </div>
+                        <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
+                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Paper Bowls</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-6 group/item cursor-pointer">
+                        <div className="w-12 h-12 bg-[#fefbea] rounded-xl flex items-center justify-center group-hover/item:bg-[#86bc25] transition-colors">
+                          <Cup className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
+                        </div>
+                        <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
+                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Paper Cups</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-6 group/item cursor-pointer">
+                        <div className="w-12 h-12 bg-[#fefbea] rounded-xl flex items-center justify-center group-hover/item:bg-[#86bc25] transition-colors">
+                          <Archive className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
+                        </div>
+                        <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
+                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Paper Bag</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-6 group/item cursor-pointer">
+                        <div className="w-12 h-12 bg-[#fefbea] rounded-xl flex items-center justify-center group-hover/item:bg-[#86bc25] transition-colors">
+                          <Utensils className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
+                        </div>
+                        <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
+                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Cutlery</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-6 group/item cursor-pointer">
+                        <div className="w-12 h-12 bg-[#fefbea] rounded-xl flex items-center justify-center group-hover/item:bg-[#86bc25] transition-colors">
+                          <Package className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
+                        </div>
+                        <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
+                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Other Food Packaging</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="w-[300px] p-6">
+                    <div className="bg-[#fefbea] h-full rounded-[30px] border-2 border-dashed border-[#86bc25]/30 flex flex-col items-center justify-center text-center p-8 group/placeholder">
+                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm group-hover/placeholder:scale-110 transition-transform">
+                        <Package className="w-8 h-8 text-[#86bc25]" />
+                      </div>
+                      <h3 className="text-[#0d6e41] text-lg font-bold mb-1">Coming Soon</h3>
+                      <p className="text-gray-500 text-xs">
+                        New eco-friendly solutions are on the way.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-1 cursor-pointer hover:text-[#0a5d3c] transition-colors group">
-              <span>Pages</span>
-              <svg className="w-4 h-4 mt-0.5 group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-              </svg>
+
+            <div className="flex items-center gap-1 cursor-pointer text-[#0a5d3c] hover:text-[#fb923c] transition-colors group">
+              <span>Contact</span>
             </div>
           </div>
 
           <div className="w-1/4 flex justify-end">
-            <button className="bg-[#fb923c] text-white px-10 py-4 rounded-full font-extrabold shadow-[0_10px_20px_rgba(251,146,60,0.4)] hover:shadow-none hover:bg-orange-600 transition-all transform hover:-translate-y-1 active:translate-y-0">
-              Contact Us
+            <button
+              className="hidden lg:block group text-[14px] px-14  py-3  md:text-[16px]  text-center
+                   text-white font-medium 
+                  border border-transparent
+                  hover:border-[#0d6e41]
+                  rounded-full
+                  transition-all duration-300
+                
+                 hover:bg-[#fefbea]
+                 hover:text-[#0d6e41]
+                  
+                  hover:-translate-x-[4px]
+                  hover:-translate-y-[4px]
+                  
+                  hover:shadow-[4px_4px_0px_#0d6e41]
+                  hover: cursor-pointer
+                  bg-[#0d6e41]
+                  flex items-center 
+                  "
+            >              Contact Us
+            </button>
+            <button className="lg:hidden text-[#0d6e41] p-2">
+              <Menu strokeWidth={3} className='w-8 h-8' />
             </button>
           </div>
         </nav>
       </div>
-    </header>
+    </header >
   );
 };
 
 export default NavBar;
+
