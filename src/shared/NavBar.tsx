@@ -1,6 +1,30 @@
+import { useState, useEffect } from 'react';
 import logo from '../assets/logo.svg';
+import { images } from "../pages/Gallery"
+import Stack from '../animations/Stack';
 import { Phone, MailPlus, MapPin, Menu, ChevronDown, Package, Box, CupSoda as Cup, Snowflake, UtensilsCrossed as Utensils, Archive } from 'lucide-react';
 const NavBar = () => {
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const controlNavbar = () => {
+      if (typeof window !== 'undefined') {
+        if (window.scrollY > lastScrollY && window.scrollY > 100) { // scrolling down
+          setIsVisible(false);
+        } else { // scrolling up
+          setIsVisible(true);
+        }
+        setLastScrollY(window.scrollY);
+      }
+    };
+
+    window.addEventListener('scroll', controlNavbar);
+    return () => {
+      window.removeEventListener('scroll', controlNavbar);
+    };
+  }, [lastScrollY]);
+
   return (
     <header className="w-full relative">
       <div className="bg-[#0d6e41] text-white py-4 px-4 leading-0 flex flex-col items-center gap-4 text-[13px] font-medium lg:flex-row lg:justify-center lg:gap-12 lg:h-[42px] lg:py-0">
@@ -20,8 +44,7 @@ const NavBar = () => {
         </div>
       </div>
       {/* navbar */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-[80px] lg:top-[42px] w-[95%] max-w-7xl z-50">
-        {/* <div className="fixed left-1/2 -translate-x-1/2 top-[80px] lg:top-[42px] w-[95%] max-w-7xl z-50"> */}
+      <div className={`fixed left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50 transition-all duration-300 ${isVisible ? 'top-[80px] lg:top-[42px] opacity-100' : 'top-[-100px] opacity-0 pointer-events-none'}`}>
         <nav className="bg-white rounded-full shadow-[0_15px_40px_rgba(0,0,0,0.12)] h-[70px] md:h-[90px] px-4 md:px-10 flex items-center justify-between">
           <div className="">
             <img src={logo} alt="LeafedIndia Logo" className="h-15 md:h-25" />
@@ -38,7 +61,7 @@ const NavBar = () => {
               <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-[850px] invisible group-hover/mega:visible opacity-0 group-hover/mega:opacity-100 transition-all duration-300 z-50">
                 <div className="bg-white rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.15)] overflow-hidden flex min-h-[380px]">
                   <div className="flex-1 p-10 pr-6">
-                    <h2 className="text-[#86bc25] text-xl font-bold mb-8">SEE All Products</h2>
+                    <h2 className="text-[#0d6e41] text-xl font-bold mb-8">SEE All Products</h2>
 
                     <div className="grid grid-cols-2 gap-x-12 gap-y-8">
                       <div className="flex items-center gap-6 group/item cursor-pointer">
@@ -46,7 +69,7 @@ const NavBar = () => {
                           <Box className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
                         </div>
                         <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
-                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Paper Lunch Box</span>
+                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Paper Food Box</span>
                         </div>
                       </div>
 
@@ -55,7 +78,7 @@ const NavBar = () => {
                           <Snowflake className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
                         </div>
                         <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
-                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Paper Bowls</span>
+                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Bowls</span>
                         </div>
                       </div>
 
@@ -64,7 +87,7 @@ const NavBar = () => {
                           <Cup className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
                         </div>
                         <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
-                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Paper Cups</span>
+                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Burger box</span>
                         </div>
                       </div>
 
@@ -73,7 +96,7 @@ const NavBar = () => {
                           <Archive className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
                         </div>
                         <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
-                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Paper Bag</span>
+                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Paper cups</span>
                         </div>
                       </div>
 
@@ -82,7 +105,7 @@ const NavBar = () => {
                           <Utensils className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
                         </div>
                         <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
-                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Cutlery</span>
+                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Pizza box</span>
                         </div>
                       </div>
 
@@ -97,15 +120,26 @@ const NavBar = () => {
                     </div>
                   </div>
 
-                  <div className="w-[300px] p-6">
-                    <div className="bg-[#fefbea] h-full rounded-[30px] border-2 border-dashed border-[#86bc25]/30 flex flex-col items-center justify-center text-center p-8 group/placeholder">
-                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm group-hover/placeholder:scale-110 transition-transform">
-                        <Package className="w-8 h-8 text-[#86bc25]" />
-                      </div>
-                      <h3 className="text-[#0d6e41] text-lg font-bold mb-1">Coming Soon</h3>
-                      <p className="text-gray-500 text-xs">
-                        New eco-friendly solutions are on the way.
-                      </p>
+                  <div className="w-[300px] p-6 flex justify-center items-center">
+                    <div style={{ width: 208, height: 208 }}>
+                      <Stack
+                        randomRotation={false}
+                        sensitivity={200}
+                        sendToBackOnClick={true}
+                        cards={images.map((src: any, i: number) => (
+                          <img
+                            key={i}
+                            src={src}
+                            alt={`card-${i + 1}`}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            draggable="false"
+                            className="w-full h-full object-cover pointer-events-none"
+                          />
+                        ))}
+                        autoplay={false}
+                        autoplayDelay={3000}
+                        pauseOnHover={false}
+                      />
                     </div>
                   </div>
                 </div>
@@ -145,7 +179,7 @@ const NavBar = () => {
           </div>
         </nav>
       </div>
-    </header >
+    </header>
   );
 };
 
