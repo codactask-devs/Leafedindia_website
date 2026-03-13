@@ -1142,8 +1142,8 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0, onButton
           font-black
           md:text-[4rem]
           text-[3rem]
-          left-[10%] md:left-[1.6em]
-          top-[15%] md:top-1/2
+          left-[10%] md:left-[1.4em]
+          top-[15%] lg:top-1/2
           transform
           translate-x-0 md:translate-x-[20%]
           translate-y-0 md:-translate-y-1/2
@@ -1166,8 +1166,9 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0, onButton
           text-[1.5rem]
           hidden
           md:block
-          top-1/2
-          right-[1%]
+           lg:top-1/2
+            md:bottom-[5%] lg:bottom-[22%]
+           md:right-[-5%] lg:right-[5%] font-semibold
           transition-all
           ease-[cubic-bezier(0.25,0.1,0.25,1.0)] text-[#166534]
           ${isMoving

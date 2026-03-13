@@ -51,31 +51,31 @@ const Gallery = () => {
             image: bowl,
             link: 'https://google.com/',
             title: 'Bowls',
-            description: 'Serve hearty meaals with confidence.'
+            description: 'Serve hearty meals with confidence.'
         },
         {
             image: burgerbox,
             link: 'https://google.com/',
             title: 'Burger Box',
-            description: 'This is pretty cool, right?'
+            description: 'Packagine made for the ultimate bite.'
         },
         {
             image: foodbox,
             link: 'https://google.com/',
             title: 'Food Box',
-            description: 'This is pretty cool, right?'
+            description: 'Reliable boxes for every takeaway.'
         },
         {
             image: foodtray,
             link: 'https://google.com/',
             title: 'Food Tray',
-            description: 'This is pretty cool, right?'
+            description: 'Perfect trays for quick bites.'
         },
         {
             image: noodlesbox,
             link: 'https://google.com/',
             title: 'Noodles Box',
-            description: 'This is pretty cool, right?'
+            description: 'Designed for flavors that travel.'
         }
     ];
 
@@ -89,8 +89,8 @@ const Gallery = () => {
     };
 
     return (
-        <div className="my-10 w-full mx-auto">
-
+        <div className="my-30 w-full mx-auto ">
+            <p style={{ fontFamily: "'Montserrat', sans-serif" }} className=' text-[40px] font-bold text-[#12263a] mt-10 md:mt-25 lg:mt-35 mb-4  ml-[6%]' >Gallery</p>
             {/* <div style={{ width: 208, height: 208 }}>
                 <Stack
                     randomRotation={false}
@@ -147,7 +147,7 @@ const Gallery = () => {
                     )}
                 </AnimatePresence>
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -124,7 +124,7 @@ const HomePage = () => {
                             <div className="flex flex-wrap justify-center lg:justify-start gap-8 items-center opacity-80">
                                 <div className="flex items-center gap-2 font-bold text-xl">
                                     <div className="w-1.5 h-6 bg-white/40" />
-                                    <span className="tracking-tighter uppercase">Logoipsum</span>
+                                    <span className="tracking-tighter uppercase">LOGO1</span>
                                 </div>
                                 <div className="flex items-center gap-2 font-bold text-xl">
                                     {/* <div className="grid grid-cols-2 gap-0.5">
@@ -133,13 +133,10 @@ const HomePage = () => {
                                         <div className="w-2 h-2 bg-white/40" />
                                         <div className="w-2 h-2 bg-white/40" />
                                     </div> */}
-                                    <span className="tracking-tighter uppercase">Logoipsum</span>
+                                    <span className="tracking-tighter uppercase">LOGO2</span>
                                 </div>
                                 <div className="flex items-center gap-2 font-bold text-xl">
-                                    <div className="w-5 h-5 rounded-full border-2 border-white/40 flex items-center justify-center">
-                                        <div className="w-2 h-2 bg-white/40 rounded-full" />
-                                    </div>
-                                    <span className="tracking-tighter uppercase">Logoipsum</span>
+                                    <span className="tracking-tighter uppercase">LOGO3</span>
                                 </div>
                             </div>
                         </div>

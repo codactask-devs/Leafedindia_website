@@ -10,9 +10,9 @@ const NavBar = () => {
   useEffect(() => {
     const controlNavbar = () => {
       if (typeof window !== 'undefined') {
-        if (window.scrollY > lastScrollY && window.scrollY > 100) { // scrolling down
+        if (window.scrollY > lastScrollY && window.scrollY > 100) {
           setIsVisible(false);
-        } else { // scrolling up
+        } else {
           setIsVisible(true);
         }
         setLastScrollY(window.scrollY);

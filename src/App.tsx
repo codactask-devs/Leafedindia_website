@@ -2,6 +2,8 @@ import Lenis from "lenis";
 import { useEffect } from "react";
 import HomePage from "./pages/HomePage";
 import Gallery from "./pages/Gallery";
+import Testimonials from "./shared/Testimonials";
+import Footer from "./shared/Footer";
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
     <>
       <HomePage />
       <Gallery />
+      <Testimonials />
+      <Footer />
     </>
   );
 }
