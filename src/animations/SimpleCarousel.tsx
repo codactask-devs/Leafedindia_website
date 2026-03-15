@@ -24,7 +24,26 @@ const SimpleCarousel: FC<SimpleCarouselProps> = ({ images, title, onBack }) => {
         return (currentIndex + offset + images.length) % images.length;
     };
 
-    if (!images.length) return null;
+    if (!images.length) {
+        return (
+            <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#dcfce7] overflow-hidden">
+                <div className="text-center px-6">
+                    <h2 className="text-[#064e3b] text-3xl font-black uppercase tracking-tighter mb-4">
+                        {title}
+                    </h2>
+                    <p className="text-[#064e3b] text-lg font-medium mb-8">
+                        No images found for this category.
+                    </p>
+                    <button
+                        onClick={onBack}
+                        className="px-6 py-3 rounded-full bg-[#064e3b] text-white font-semibold hover:bg-[#0b582f] transition"
+                    >
+                        Go Back
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#dcfce7] overflow-hidden">

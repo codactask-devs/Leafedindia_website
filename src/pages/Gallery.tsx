@@ -11,12 +11,12 @@ import InfiniteMenu from "../animations/InfiniteMenu";
 import SimpleCarousel from "../animations/SimpleCarousel";
 
 // Asset folder mapping
-const cupImages = Object.values(import.meta.glob('../assets/CUPS/*.svg', { eager: true, import: 'default' })) as string[];
-const bowlImages = Object.values(import.meta.glob('../assets/Main/bowl*.svg', { eager: true, import: 'default' })) as string[];
-const burgerImages = Object.values(import.meta.glob('../assets/BURGER BOX/*.svg', { eager: true, import: 'default' })) as string[];
-const foodBoxImages = Object.values(import.meta.glob('../assets/FOOD BOX/*.svg', { eager: true, import: 'default' })) as string[];
-const foodTrayImages = Object.values(import.meta.glob('../assets/FOOD TRAY/*.svg', { eager: true, import: 'default' })) as string[];
-const noodleImages = Object.values(import.meta.glob('../assets/NOODLES_BOX/*.svg', { eager: true, import: 'default' })) as string[];
+const cupImages = Object.values(import.meta.glob('../assets/CUPS/*.{svg,jpg}', { eager: true, import: 'default' })) as string[];
+const bowlImages = Object.values(import.meta.glob('../assets/Main/bowl*.{svg,jpg}', { eager: true, import: 'default' })) as string[];
+const burgerImages = Object.values(import.meta.glob('../assets/BURGER BOX/*.{svg,jpg}', { eager: true, import: 'default' })) as string[];
+const foodBoxImages = Object.values(import.meta.glob('../assets/FOOD BOX/*.{svg,jpg}', { eager: true, import: 'default' })) as string[];
+const foodTrayImages = Object.values(import.meta.glob('../assets/FOOD TRAY/*.{svg,jpg}', { eager: true, import: 'default' })) as string[];
+const noodleImages = Object.values(import.meta.glob('../assets/NOODLES_BOX/*.{svg,jpg}', { eager: true, import: 'default' })) as string[];
 
 const folderMap: Record<string, string[]> = {
     'Cups': cupImages,
