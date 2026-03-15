@@ -31,16 +31,16 @@ const NavBar = () => {
         <div className="flex flex-wrap text-[14px] font-semibold md:text-[16px] items-center justify-center gap-x-6 gap-y-2 lg:gap-12">
           <div className="flex items-center gap-2 hover:text-orange-300 transition-colors cursor-pointer">
             <Phone className='md:w-[16px] md:h-[16px] w-[14px] h-[14px]' />
-            <span>(+91) 9025093823</span>
+            <span>(+91) 9502952951</span>
           </div>
           <div className="flex items-center gap-2 hover:text-orange-300 transition-colors cursor-pointer">
             <MailPlus className='md:w-[16px] md:h-[16px] w-[14px] h-[14px]' />
-            <span>codec@gmail.com</span>
+            <span>sales@leafedindia.com</span>
           </div>
         </div>
         <div className="flex text-[14px] font-semibold md:text-[16px] items-center gap-2 hover:text-orange-300 transition-colors cursor-pointer">
           <MapPin className='md:w-[16px] md:h-[16px] w-[14px] h-[14px]' />
-          <span>Chennai, Tamilnadu</span>
+          <span>Chennai, India</span>
         </div>
       </div>
       {/* navbar */}

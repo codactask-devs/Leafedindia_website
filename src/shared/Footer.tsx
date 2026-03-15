@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import logo from '../assets/logo.svg';
-import { Facebook, Twitter, Youtube, Globe, ArrowRight } from 'lucide-react';
+import { Facebook, Twitter, Youtube, Globe } from 'lucide-react';
 
 const Footer: FC = () => {
     return (

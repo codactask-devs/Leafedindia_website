@@ -36,48 +36,48 @@ export const images = [
     foodtray,
 ];
 
+const items = [
+    {
+        image: cup,
+        link: 'https://google.com/',
+        title: 'Cups',
+        description: 'Designed for drinks, crafted for brands.'
+    },
+    {
+        image: bowl,
+        link: 'https://google.com/',
+        title: 'Bowls',
+        description: 'Serve hearty meals with confidence.'
+    },
+    {
+        image: burgerbox,
+        link: 'https://google.com/',
+        title: 'Burger Box',
+        description: 'Packagine made for the ultimate bite.'
+    },
+    {
+        image: foodbox,
+        link: 'https://google.com/',
+        title: 'Food Box',
+        description: 'Reliable boxes for every takeaway.'
+    },
+    {
+        image: foodtray,
+        link: 'https://google.com/',
+        title: 'Food Tray',
+        description: 'Perfect trays for quick bites.'
+    },
+    {
+        image: noodlesbox,
+        link: 'https://google.com/',
+        title: 'Noodles Box',
+        description: 'Designed for flavors that travel.'
+    }
+];
+
 const Gallery = () => {
     const [viewMode, setViewMode] = useState<'menu' | 'carousel'>('menu');
     const [activeCategory, setActiveCategory] = useState<{ title: string, images: string[] } | null>(null);
-
-    const items = [
-        {
-            image: cup,
-            link: 'https://google.com/',
-            title: 'Cups',
-            description: 'Designed for drinks, crafted for brands.'
-        },
-        {
-            image: bowl,
-            link: 'https://google.com/',
-            title: 'Bowls',
-            description: 'Serve hearty meals with confidence.'
-        },
-        {
-            image: burgerbox,
-            link: 'https://google.com/',
-            title: 'Burger Box',
-            description: 'Packagine made for the ultimate bite.'
-        },
-        {
-            image: foodbox,
-            link: 'https://google.com/',
-            title: 'Food Box',
-            description: 'Reliable boxes for every takeaway.'
-        },
-        {
-            image: foodtray,
-            link: 'https://google.com/',
-            title: 'Food Tray',
-            description: 'Perfect trays for quick bites.'
-        },
-        {
-            image: noodlesbox,
-            link: 'https://google.com/',
-            title: 'Noodles Box',
-            description: 'Designed for flavors that travel.'
-        }
-    ];
 
     const handleOpenCarousel = (item: any) => {
         const folderImages = folderMap[item.title] || [];
