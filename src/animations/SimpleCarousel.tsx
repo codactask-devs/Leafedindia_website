@@ -44,6 +44,7 @@ const SimpleCarousel: FC<SimpleCarouselProps> = ({ images, title, onBack }) => {
             </div>
         );
     }
+
     return (
         <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#dcfce7] overflow-hidden">
             {/* Header / Title */}
