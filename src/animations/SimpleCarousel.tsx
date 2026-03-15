@@ -29,13 +29,13 @@ const SimpleCarousel: FC<SimpleCarouselProps> = ({ images, title, onBack }) => {
     return (
         <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#dcfce7] overflow-hidden">
             {/* Header / Title */}
-            <div className="absolute top-6 left-10 z-10">
+            <div className="absolute top-6 left-10 ">
                 <h2 className="text-[#064e3b] text-4xl font-black uppercase tracking-tighter">{title}</h2>
             </div>
 
-            <button 
+            <button
                 onClick={onBack}
-                className="absolute top-6 right-6 z-20 bg-white/20 hover:bg-white/40 transition-all p-3 rounded-full text-[#064e3b] backdrop-blur-md cursor-pointer"
+                className="absolute top-6 right-6  bg-white/20 hover:bg-white/40 transition-all p-3 rounded-full text-[#064e3b] backdrop-blur-md cursor-pointer"
             >
                 <X size={28} />
             </button>
@@ -45,15 +45,15 @@ const SimpleCarousel: FC<SimpleCarouselProps> = ({ images, title, onBack }) => {
                 <div className="relative w-full h-full flex items-center justify-center gap-4">
                     {/* Left Peek */}
                     <div className="hidden md:block w-1/4 h-3/4 opacity-30 scale-90 blur-[2px] overflow-hidden rounded-2xl">
-                        <img 
-                            src={images[getIndex(-1)]} 
-                            alt="prev" 
+                        <img
+                            src={images[getIndex(-1)]}
+                            alt="prev"
                             className="w-full h-full object-contain pointer-events-none"
                         />
                     </div>
 
                     {/* Main Image */}
-                    <div className="relative w-full md:w-2/4 h-full flex items-center justify-center z-10">
+                    <div className="relative w-full md:w-2/4 h-full flex items-center justify-center ">
                         <AnimatePresence mode='wait'>
                             <motion.div
                                 key={currentIndex}
@@ -63,9 +63,9 @@ const SimpleCarousel: FC<SimpleCarouselProps> = ({ images, title, onBack }) => {
                                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                                 className="w-full h-full bg-white/40 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-white/20"
                             >
-                                <img 
-                                    src={images[currentIndex]} 
-                                    alt={`${title}-${currentIndex}`} 
+                                <img
+                                    src={images[currentIndex]}
+                                    alt={`${title}-${currentIndex}`}
                                     className="w-full h-full object-contain"
                                 />
                             </motion.div>
@@ -74,9 +74,9 @@ const SimpleCarousel: FC<SimpleCarouselProps> = ({ images, title, onBack }) => {
 
                     {/* Right Peek */}
                     <div className="hidden md:block w-1/4 h-3/4 opacity-30 scale-90 blur-[2px] overflow-hidden rounded-2xl">
-                        <img 
-                            src={images[getIndex(1)]} 
-                            alt="next" 
+                        <img
+                            src={images[getIndex(1)]}
+                            alt="next"
                             className="w-full h-full object-contain pointer-events-none"
                         />
                     </div>
@@ -85,7 +85,7 @@ const SimpleCarousel: FC<SimpleCarouselProps> = ({ images, title, onBack }) => {
 
             {/* Controls */}
             <div className="mt-8 flex items-center gap-6">
-                <button 
+                <button
                     onClick={handlePrev}
                     className="w-12 h-12 rounded-full border-2 border-[#064e3b] text-[#064e3b] flex items-center justify-center hover:bg-[#064e3b] hover:text-white transition-all cursor-pointer shadow-lg"
                 >
@@ -94,7 +94,7 @@ const SimpleCarousel: FC<SimpleCarouselProps> = ({ images, title, onBack }) => {
                 <div className="text-[#064e3b] font-black text-xl tracking-widest min-w-[60px] text-center">
                     {currentIndex + 1} / {images.length}
                 </div>
-                <button 
+                <button
                     onClick={handleNext}
                     className="w-12 h-12 rounded-full border-2 border-[#064e3b] text-[#064e3b] flex items-center justify-center hover:bg-[#064e3b] hover:text-white transition-all cursor-pointer shadow-lg"
                 >

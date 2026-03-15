@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import cup from "../assets/Main/cup5.svg";
-import bowl from "../assets/Main/bowlMain.svg";
-import burgerbox from "../assets/Main/burgerBoxMain.svg";
-import foodbox from "../assets/Main/foodBoxMain.svg";
-import foodtray from "../assets/Main/foodTrayMain.svg";
-import noodlesbox from "../assets/Main/noodlesBoxMain.svg";
+import cup from "../assets/Main/cupMain.jpg";
+import bowl from "../assets/Main/bowlMain.jpg";
+import burgerbox from "../assets/Main/burgerBoxMain.jpg";
+import foodbox from "../assets/Main/foodBoxMain.jpg";
+import foodtray from "../assets/Main/foodTrayMain.jpg";
+import noodlesbox from "../assets/Main/noodlesBoxMain.jpg";
 
 import InfiniteMenu from "../animations/InfiniteMenu";
 import SimpleCarousel from "../animations/SimpleCarousel";
@@ -36,48 +36,48 @@ export const images = [
     foodtray,
 ];
 
+const items = [
+    {
+        image: cup,
+        link: 'https://google.com/',
+        title: 'Cups',
+        description: 'Designed for drinks, crafted for brands.'
+    },
+    {
+        image: bowl,
+        link: 'https://google.com/',
+        title: 'Bowls',
+        description: 'Serve hearty meals with confidence.'
+    },
+    {
+        image: burgerbox,
+        link: 'https://google.com/',
+        title: 'Burger Box',
+        description: 'Packagine made for the ultimate bite.'
+    },
+    {
+        image: foodbox,
+        link: 'https://google.com/',
+        title: 'Food Box',
+        description: 'Reliable boxes for every takeaway.'
+    },
+    {
+        image: foodtray,
+        link: 'https://google.com/',
+        title: 'Food Tray',
+        description: 'Perfect trays for quick bites.'
+    },
+    {
+        image: noodlesbox,
+        link: 'https://google.com/',
+        title: 'Noodles Box',
+        description: 'Designed for flavors that travel.'
+    }
+];
+
 const Gallery = () => {
     const [viewMode, setViewMode] = useState<'menu' | 'carousel'>('menu');
     const [activeCategory, setActiveCategory] = useState<{ title: string, images: string[] } | null>(null);
-
-    const items = [
-        {
-            image: cup,
-            link: 'https://google.com/',
-            title: 'Cups',
-            description: 'Designed for drinks, crafted for brands.'
-        },
-        {
-            image: bowl,
-            link: 'https://google.com/',
-            title: 'Bowls',
-            description: 'Serve hearty meals with confidence.'
-        },
-        {
-            image: burgerbox,
-            link: 'https://google.com/',
-            title: 'Burger Box',
-            description: 'Packagine made for the ultimate bite.'
-        },
-        {
-            image: foodbox,
-            link: 'https://google.com/',
-            title: 'Food Box',
-            description: 'Reliable boxes for every takeaway.'
-        },
-        {
-            image: foodtray,
-            link: 'https://google.com/',
-            title: 'Food Tray',
-            description: 'Perfect trays for quick bites.'
-        },
-        {
-            image: noodlesbox,
-            link: 'https://google.com/',
-            title: 'Noodles Box',
-            description: 'Designed for flavors that travel.'
-        }
-    ];
 
     const handleOpenCarousel = (item: any) => {
         const folderImages = folderMap[item.title] || [];
