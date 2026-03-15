@@ -1,5 +1,9 @@
 import { Leaf } from 'lucide-react';
-import burgerBox from "../assets/BURGER BOX/burgerbox2.svg"
+import burgerBox from "../assets/Main/burgerBoxMain.jpg";
+import noodlesBoxMain from "../assets/Main/noodlesBoxMain.jpg";
+import foodBoxMain from "../assets/Main/foodBoxMain.jpg";
+import foodTrayMain from "../assets/Main/foodTrayMain.jpg";
+import cupMain from "../assets/Main/cupMain.jpg";
 const WhyChooseUs = () => {
   return (
     <section className="mt-10 md:mt-20 relative w-full max-w-[92%] mx-auto p-6 md:p-10 lg:p-14 py-16 md:py-24 overflow-hidden rounded-[40px] border-2 border-[#86efac]/70 bg-[#fbfdfc] shadow-sm mb-20">
@@ -67,7 +71,7 @@ const WhyChooseUs = () => {
             {/* Back */}
             <div className="absolute inset-0 backface-hidden transform-[rotateY(180deg)] border border-gray-300 rounded-[24px] overflow-hidden shadow-xl flex flex-col items-center justify-center p-1.5 bg-white">
               <img
-                src="https://images.unsplash.com/photo-1563606556157-12ac92bd031e?q=80&w=400&auto=format&fit=crop"
+                src={cupMain}
                 alt="Direct Manufacturer"
                 className="w-full h-full object-cover rounded-[20px] shadow-sm"
               />
@@ -89,7 +93,7 @@ const WhyChooseUs = () => {
             {/* Back */}
             <div className="absolute inset-0 backface-hidden transform-[rotateY(180deg)] border border-gray-300 rounded-[24px] overflow-hidden shadow-xl flex flex-col items-center justify-center p-1.5 bg-white">
               <img
-                src="https://images.unsplash.com/photo-1589330694653-efa647df8cd0?w=400&q=80"
+                src={noodlesBoxMain}
                 alt="Certificate"
                 className="w-full h-full object-cover rounded-[20px] shadow-sm"
               />
@@ -111,7 +115,7 @@ const WhyChooseUs = () => {
             {/* Back */}
             <div className="absolute inset-0 backface-hidden transform-[rotateY(180deg)] border border-gray-300 rounded-[24px] overflow-hidden shadow-xl flex flex-col items-center justify-center p-1.5 bg-white">
               <img
-                src="https://images.unsplash.com/photo-1628102491629-77858ab23b8f?q=80&w=400&auto=format&fit=crop"
+                src={foodBoxMain}
                 alt="Customizable"
                 className="w-full h-full object-cover rounded-[20px] shadow-sm"
               />
@@ -133,7 +137,7 @@ const WhyChooseUs = () => {
             {/* Back */}
             <div className="absolute inset-0 backface-hidden transform-[rotateY(180deg)] border border-gray-300 rounded-[24px] overflow-hidden shadow-xl flex flex-col items-center justify-center p-1.5 bg-white">
               <img
-                src="https://images.unsplash.com/photo-1621243804936-775306a8f2e3?q=80&w=400&auto=format&fit=crop"
+                src={foodTrayMain}
                 alt="Certificate 4"
                 className="w-full h-full object-cover rounded-[20px] shadow-sm"
               />

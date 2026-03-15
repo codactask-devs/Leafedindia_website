@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import cup from "../assets/Main/cup5.svg";
-import bowl from "../assets/Main/bowlMain.svg";
-import burgerbox from "../assets/Main/burgerBoxMain.svg";
-import foodbox from "../assets/Main/foodBoxMain.svg";
-import foodtray from "../assets/Main/foodTrayMain.svg";
-import noodlesbox from "../assets/Main/noodlesBoxMain.svg";
+import cup from "../assets/Main/cupMain.jpg";
+import bowl from "../assets/Main/bowlMain.jpg";
+import burgerbox from "../assets/Main/burgerBoxMain.jpg";
+import foodbox from "../assets/Main/foodBoxMain.jpg";
+import foodtray from "../assets/Main/foodTrayMain.jpg";
+import noodlesbox from "../assets/Main/noodlesBoxMain.jpg";
 
 import InfiniteMenu from "../animations/InfiniteMenu";
 import SimpleCarousel from "../animations/SimpleCarousel";
