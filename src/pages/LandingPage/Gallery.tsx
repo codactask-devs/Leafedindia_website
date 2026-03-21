@@ -106,86 +106,89 @@ const Gallery = () => {
 
 
             <div style={{ height: '600px', position: 'relative' }} className="w-[90%] mx-auto bg-[#dcfce7] rounded-3xl overflow-hidden shadow-2xl ">
-                <AnimatePresence mode="wait">
-                    {viewMode === 'menu' ? (
-                        <motion.div
-                            key="menu"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            className="w-full h-full relative cursor-none"
-                            onPointerDown={() => setHasInteracted(true)}
-                            onPointerMove={(e) => {
-                                const rect = e.currentTarget.getBoundingClientRect();
-                                setMousePos({
-                                    x: e.clientX - rect.left,
-                                    y: e.clientY - rect.top
-                                });
-                            }}
-                            onMouseEnter={() => setIsHovering(true)}
-                            onMouseLeave={() => setIsHovering(false)}
-                        >
-                            <AnimatePresence>
-                                {!hasInteracted && (isMobile || isHovering) && (
-                                    <motion.div
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        style={isMobile ? {
-                                            left: '50%',
-                                            top: '50%',
-                                            x: "-50%",
-                                            y: "-50%",
-                                            position: "absolute"
-                                        } : {
-                                            left: mousePos.x,
-                                            top: mousePos.y,
-                                            x: 10,
-                                            y: -11,
-                                            position: "absolute"
-                                        }}
-                                        className="z-50 pointer-events-none"
-                                    >
-                                        <div className="bg-gray-800/90 backdrop-blur-sm text-white px-4 py-2 rounded-full shadow-2xl flex items-center gap-2 border border-white/20 whitespace-nowrap">
-                                            <span className="text-[12px] md:text-[11px] font-bold tracking-tight uppercase">
-                                                {isMobile ? "Swipe to Explore" : "Swipe"}
-                                            </span>
-                                            {isMobile && (
-                                                <svg className="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                                </svg>
-                                            )}
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                            <InfiniteMenu
-                                items={items}
-                                scale={1}
-                                onButtonClick={(item) => {
-                                    setHasInteracted(true);
-                                    handleOpenCarousel(item);
-                                }}
-                            />
-                        </motion.div>
-                    ) : (
-                        <motion.div
-                            key="carousel"
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            className="w-full h-full"
-                        >
-                            {activeCategory && (
-                                <SimpleCarousel
-                                    title={activeCategory.title}
-                                    images={activeCategory.images}
-                                    onBack={() => setViewMode('menu')}
-                                />
+                <div className="w-full h-full relative">
+                    <motion.div
+                        animate={{
+                            opacity: viewMode === 'menu' ? 1 : 0,
+                        }}
+                        transition={{ duration: 0.4 }}
+                        className={`w-full h-full relative ${viewMode === 'menu' ? 'pointer-events-auto' : 'pointer-events-none'}`}
+                        onPointerDown={() => setHasInteracted(true)}
+                        onPointerMove={(e) => {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            setMousePos({
+                                x: e.clientX - rect.left,
+                                y: e.clientY - rect.top
+                            });
+                        }}
+                        onMouseEnter={() => setIsHovering(true)}
+                        onMouseLeave={() => setIsHovering(false)}
+                    >
+                        <AnimatePresence>
+                            {!hasInteracted && (isMobile || isHovering) && (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    style={isMobile ? {
+                                        left: '50%',
+                                        top: '50%',
+                                        x: "-50%",
+                                        y: "-50%",
+                                        position: "absolute"
+                                    } : {
+                                        left: mousePos.x,
+                                        top: mousePos.y,
+                                        x: 10,
+                                        y: -11,
+                                        position: "absolute"
+                                    }}
+                                    className="z-50 pointer-events-none"
+                                >
+                                    <div className="bg-gray-800/90 backdrop-blur-sm text-white px-4 py-2 rounded-full shadow-2xl flex items-center gap-2 border border-white/20 whitespace-nowrap">
+                                        <span className="text-[12px] md:text-[11px] font-bold tracking-tight uppercase">
+                                            {isMobile ? "Swipe to Explore" : "Swipe"}
+                                        </span>
+                                        {isMobile && (
+                                            <svg className="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                            </svg>
+                                        )}
+                                    </div>
+                                </motion.div>
                             )}
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                        </AnimatePresence>
+                        <InfiniteMenu
+                            items={items}
+                            scale={1}
+                            isPaused={viewMode === 'carousel'}
+                            onButtonClick={(item) => {
+                                setHasInteracted(true);
+                                handleOpenCarousel(item);
+                            }}
+                        />
+                    </motion.div>
+
+                    <AnimatePresence>
+                        {viewMode === 'carousel' && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.98 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.98 }}
+                                transition={{ duration: 0.4 }}
+                                className="absolute inset-0 z-50 bg-[#dcfce7]"
+                            >
+                                {activeCategory && (
+                                    <SimpleCarousel
+                                        title={activeCategory.title}
+                                        images={activeCategory.images}
+                                        onBack={() => setViewMode('menu')}
+                                    />
+                                )}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
             </div>
         </div >
     );
