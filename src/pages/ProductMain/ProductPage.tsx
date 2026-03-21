@@ -10,10 +10,8 @@ const ProductPage = () => {
 
             <ProductHeroModern />
 
-            {/* Product Showcase Section */}
             <ProductShowcase />
 
-            {/* Separator Section */}
             <div className="h-32 bg-linear-to-b from-[#fefbea] to-white relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(45deg, #0d6e41 1px, transparent 1px), linear-gradient(-45deg, #0d6e41 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
             </div>
