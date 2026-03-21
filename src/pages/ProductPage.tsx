@@ -1,6 +1,8 @@
 const ProductPage = () => {
     return (
-        <p>Hello</p>
+        <p>
+            hello there brother
+        </p>
     )
 }
 
