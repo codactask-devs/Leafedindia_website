@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useTransform, type PanInfo } from 'motion/react';
+import { motion, useMotionValue, useTransform, AnimatePresence, type PanInfo } from 'motion/react';
 import { useState, useEffect } from 'react';
 
 interface CardRotateProps {
@@ -57,6 +57,7 @@ interface StackProps {
     pauseOnHover?: boolean;
     mobileClickOnly?: boolean;
     mobileBreakpoint?: number;
+    showHint?: boolean;
 }
 
 export default function Stack({
@@ -69,10 +70,13 @@ export default function Stack({
     autoplayDelay = 3000,
     pauseOnHover = false,
     mobileClickOnly = false,
-    mobileBreakpoint = 768
+    mobileBreakpoint = 768,
+    showHint = true
 }: StackProps) {
     const [isMobile, setIsMobile] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const [hasInteracted, setHasInteracted] = useState(false);
 
     useEffect(() => {
         const checkMobile = () => {
@@ -143,6 +147,7 @@ export default function Stack({
     }, [cards]);
 
     const sendToBack = (id: number) => {
+        setHasInteracted(true);
         setStack(prev => {
             const newStack = [...prev];
             const index = newStack.findIndex(card => card.id === id);
@@ -169,9 +174,34 @@ export default function Stack({
             style={{
                 perspective: 600
             }}
-            onMouseEnter={() => pauseOnHover && setIsPaused(true)}
-            onMouseLeave={() => pauseOnHover && setIsPaused(false)}
+            onMouseEnter={() => {
+                pauseOnHover && setIsPaused(true);
+                setIsHovered(true);
+            }}
+            onMouseLeave={() => {
+                pauseOnHover && setIsPaused(false);
+                setIsHovered(false);
+            }}
         >
+            <AnimatePresence>
+                {showHint && !hasInteracted && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                        className="absolute -top-10 left-1/2 -translate-x-1/2 z-50 pointer-events-none whitespace-nowrap"
+                    >
+                        <div className="bg-[#0d6e41] text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1.5 animate-bounce">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                            </span>
+                            TAP OR SWIPE TO SHUFFLE
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {stack.map((card, index) => {
                 const randomRotate = randomRotation ? Math.random() * 10 - 5 : 0;
                 return (
@@ -185,9 +215,10 @@ export default function Stack({
                             className="rounded-2xl overflow-hidden w-full h-full select-none"
                             onClick={() => shouldEnableClick && sendToBack(card.id)}
                             animate={{
-                                rotateZ: (stack.length - index - 1) * 4 + randomRotate,
+                                rotateZ: (stack.length - index - 1) * (isHovered ? 8 : 4) + randomRotate,
                                 scale: 1 + index * 0.06 - stack.length * 0.06,
-                                transformOrigin: '90% 90%'
+                                x: isHovered ? (index - stack.length / 2) * 15 : 0,
+                                transformOrigin: '50% 100%'
                             }}
                             initial={false}
                             transition={{

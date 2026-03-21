@@ -1,7 +1,7 @@
-import NavBar from '../shared/NavBar';
-import HeroImage from '../assets/HeroImage.png';
-import Youtube from '../assets/youtube.svg';
-import CircularText from '../animations/CircularFont';
+import NavBar from '../../shared/NavBar';
+import HeroImage from '../../assets/HeroImage.png';
+import Youtube from '../../assets/youtube.svg';
+import CircularText from '../../animations/CircularFont';
 import { useState } from 'react';
 import { Play, Eye, Target } from 'lucide-react';
 const HomePage = () => {
@@ -49,8 +49,9 @@ const HomePage = () => {
                                     <img
                                         src={Youtube}
                                         alt="Watch Demo Preview"
-                                        // width={300}
-                                        // height={300}
+                                        width={280}
+                                        height={157}
+                                        decoding="async"
                                         className="rounded-[12px] object-cover h-auto w-[280px]"
                                     />
                                     <div className="absolute inset-0 bg-black/20 rounded-[12px] group hover:bg-black/40 transition-colors flex items-center justify-center">
@@ -90,6 +91,9 @@ const HomePage = () => {
                                 <img
                                     src={HeroImage}
                                     alt="Sustainable Packaging Mockups"
+                                    width={650}
+                                    height={450}
+                                    decoding="async"
                                     className="w-full h-auto drop-shadow-2xl"
                                 />
                             </div>

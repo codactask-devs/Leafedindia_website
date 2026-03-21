@@ -63,13 +63,19 @@ const SimpleCarousel: FC<SimpleCarouselProps> = ({ images, title, onBack }) => {
             <div className="relative w-full max-w-4xl h-[400px] flex items-center justify-center px-4">
                 <div className="relative w-full h-full flex items-center justify-center gap-4">
                     {/* Left Peek */}
-                    <div className="hidden md:block w-1/4 h-3/4 opacity-30 scale-90 blur-[2px] overflow-hidden rounded-2xl">
-                        <img
-                            src={images[getIndex(-1)]}
-                            alt="prev"
-                            className="w-full h-full object-contain pointer-events-none"
-                        />
-                    </div>
+                    {images.length > 1 && (
+                        <div className="hidden md:block w-1/4 h-3/4 opacity-30 scale-90 blur-[2px] overflow-hidden rounded-2xl">
+                            <img
+                                src={images[getIndex(-1)]}
+                                alt="prev"
+                                loading="lazy"
+                                decoding="async"
+                                width={200}
+                                height={150}
+                                className="w-full h-full object-contain pointer-events-none"
+                            />
+                        </div>
+                    )}
 
                     {/* Main Image */}
                     <div className="relative w-full md:w-2/4 h-full flex items-center justify-center ">
@@ -85,6 +91,10 @@ const SimpleCarousel: FC<SimpleCarouselProps> = ({ images, title, onBack }) => {
                                 <img
                                     src={images[currentIndex]}
                                     alt={`${title}-${currentIndex}`}
+                                    loading="lazy"
+                                    decoding="async"
+                                    width={500}
+                                    height={375}
                                     className="w-full h-full object-contain"
                                 />
                             </motion.div>
@@ -92,13 +102,19 @@ const SimpleCarousel: FC<SimpleCarouselProps> = ({ images, title, onBack }) => {
                     </div>
 
                     {/* Right Peek */}
-                    <div className="hidden md:block w-1/4 h-3/4 opacity-30 scale-90 blur-[2px] overflow-hidden rounded-2xl">
-                        <img
-                            src={images[getIndex(1)]}
-                            alt="next"
-                            className="w-full h-full object-contain pointer-events-none"
-                        />
-                    </div>
+                    {images.length > 1 && (
+                        <div className="hidden md:block w-1/4 h-3/4 opacity-30 scale-90 blur-[2px] overflow-hidden rounded-2xl">
+                            <img
+                                src={images[getIndex(1)]}
+                                alt="next"
+                                loading="lazy"
+                                decoding="async"
+                                width={200}
+                                height={150}
+                                className="w-full h-full object-contain pointer-events-none"
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
 

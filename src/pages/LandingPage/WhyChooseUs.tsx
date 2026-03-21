@@ -1,9 +1,9 @@
 import { Leaf } from 'lucide-react';
-import burgerBox from "../assets/Main/burgerBoxMain.jpg";
-import noodlesBoxMain from "../assets/Main/noodlesBoxMain.jpg";
-import foodBoxMain from "../assets/Main/foodBoxMain.jpg";
-import foodTrayMain from "../assets/Main/foodTrayMain.jpg";
-import cupMain from "../assets/Main/cupMain.jpg";
+import burgerBox from "../../assets/Main/burgerBoxMain.jpg";
+import noodlesBoxMain from "../../assets/Main/noodlesBoxMain.jpg";
+import foodBoxMain from "../../assets/Main/foodBoxMain.jpg";
+import foodTrayMain from "../../assets/Main/foodTrayMain.jpg";
+import cupMain from "../../assets/Main/cupMain.jpg";
 const WhyChooseUs = () => {
   return (
     <section className="mt-10 md:mt-20 relative w-full max-w-[92%] mx-auto p-6 md:p-10 lg:p-14 py-16 md:py-24 overflow-hidden rounded-[40px] border-2 border-[#86efac]/70 bg-[#fbfdfc] shadow-sm mb-20">
@@ -50,7 +50,15 @@ const WhyChooseUs = () => {
 
         <div className="w-full lg:w-[45%] flex justify-center  relative">
           <div className="absolute inset-0 bg-green-100 rounded-[40px] transform rotate-3 scale-105 transition-transform duration-500 hover:rotate-6"></div>
-          <img src={burgerBox} alt="Eco Packaging" className=" w-full h-auto max-w-[500px] object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500 ease-out relative rounded-2xl" />
+          <img
+            src={burgerBox}
+            alt="Eco Packaging"
+            loading="lazy"
+            decoding="async"
+            width={500}
+            height={375}
+            className="w-full h-auto max-w-[500px] object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500 ease-out relative rounded-2xl"
+          />
         </div>
       </div>
 
@@ -73,6 +81,10 @@ const WhyChooseUs = () => {
               <img
                 src={cupMain}
                 alt="Direct Manufacturer"
+                loading="lazy"
+                decoding="async"
+                width={400}
+                height={300}
                 className="w-full h-full object-cover rounded-[20px] shadow-sm"
               />
             </div>
@@ -95,6 +107,10 @@ const WhyChooseUs = () => {
               <img
                 src={noodlesBoxMain}
                 alt="Certificate"
+                loading="lazy"
+                decoding="async"
+                width={400}
+                height={300}
                 className="w-full h-full object-cover rounded-[20px] shadow-sm"
               />
             </div>
@@ -117,6 +133,10 @@ const WhyChooseUs = () => {
               <img
                 src={foodBoxMain}
                 alt="Customizable"
+                loading="lazy"
+                decoding="async"
+                width={400}
+                height={300}
                 className="w-full h-full object-cover rounded-[20px] shadow-sm"
               />
             </div>
@@ -139,6 +159,10 @@ const WhyChooseUs = () => {
               <img
                 src={foodTrayMain}
                 alt="Certificate 4"
+                loading="lazy"
+                decoding="async"
+                width={400}
+                height={300}
                 className="w-full h-full object-cover rounded-[20px] shadow-sm"
               />
             </div>

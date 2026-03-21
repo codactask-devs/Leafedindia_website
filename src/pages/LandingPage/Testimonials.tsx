@@ -98,6 +98,10 @@ const Testimonials: FC = () => {
                                             <img
                                                 src={item.avatar}
                                                 alt={item.name}
+                                                loading="lazy"
+                                                decoding="async"
+                                                width={64}
+                                                height={64}
                                                 className="w-full h-full object-cover"
                                             />
                                         </div>
