@@ -9,7 +9,7 @@ const HomePage = () => {
     return (
 
         <div className="w-full min-h-[100vh]  relative">
-
+            {/* asdfa */}
             <section className="absolute inset-0 z-0 pointer-events-none">
                 <div className=" bg-[#0d6e41] w-full" />
                 <div className="flex h-full w-full">
