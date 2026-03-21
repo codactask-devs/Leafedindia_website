@@ -633,6 +633,16 @@ type MovementChangeCallback = (isMoving: boolean) => void;
 type InitCallback = (instance: InfiniteGridMenu) => void;
 type ButtonClickCallback = (item: MenuItem) => void;
 
+interface InfiniteMenuProps {
+    items: MenuItem[];
+    onActiveItemChange?: ActiveItemCallback;
+    onMovementChange?: MovementChangeCallback;
+    onInit?: InitCallback;
+    onButtonClick?: ButtonClickCallback;
+    scale?: number;
+    isPaused?: boolean;
+}
+
 interface Camera {
     matrix: mat4;
     near: number;
@@ -651,7 +661,8 @@ interface Camera {
 class InfiniteGridMenu {
     private gl: WebGL2RenderingContext | null = null;
     private canvas: HTMLCanvasElement;
-    private items: MenuItem[];
+    public items: MenuItem[];
+    public isPaused = false;
     private onActiveItemChange: ActiveItemCallback;
     private onMovementChange: MovementChangeCallback;
     private discProgram: WebGLProgram | null = null;
@@ -757,8 +768,10 @@ class InfiniteGridMenu {
         this._deltaFrames = this._deltaTime / this.TARGET_FRAME_DURATION;
         this._frames += this._deltaFrames;
 
-        this.animate(this._deltaTime);
-        this.render();
+        if (!this.isPaused) {
+            this.animate(this._deltaTime);
+            this.render();
+        }
 
         requestAnimationFrame(t => this.run(t));
     }
@@ -1065,14 +1078,16 @@ const defaultItems: MenuItem[] = [
     }
 ];
 
-interface InfiniteMenuProps {
-    items?: MenuItem[];
-    scale?: number;
-    onButtonClick?: ButtonClickCallback;
-}
+// Redundant interface removed. Using the one defined above.
 
-const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0, onButtonClick }) => {
+const InfiniteMenu: FC<InfiniteMenuProps> = ({ 
+    items = [], 
+    scale = 1.0, 
+    onButtonClick, 
+    isPaused = false 
+}) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null) as MutableRefObject<HTMLCanvasElement | null>;
+    const menuRef = useRef<InfiniteGridMenu | null>(null);
     const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
     const [isMoving, setIsMoving] = useState<boolean>(false);
 
@@ -1095,6 +1110,8 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0, onButton
                 sk => sk.run(),
                 scale
             );
+            sketch.isPaused = isPaused;
+            menuRef.current = sketch;
         }
 
         const handleResize = () => {
@@ -1110,6 +1127,12 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0, onButton
             window.removeEventListener('resize', handleResize);
         };
     }, [items, scale]);
+
+    useEffect(() => {
+        if (menuRef.current) {
+            menuRef.current.isPaused = isPaused;
+        }
+    }, [isPaused]);
 
     const handleButtonClick = () => {
         if (!activeItem) return;
