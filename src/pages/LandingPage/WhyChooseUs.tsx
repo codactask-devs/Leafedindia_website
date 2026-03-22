@@ -8,7 +8,6 @@ const WhyChooseUs = () => {
   return (
     <section className="mt-10 md:mt-20 relative w-full max-w-[92%] mx-auto p-6 md:p-10 lg:p-14 py-16 md:py-24 overflow-hidden rounded-[40px] border-2 border-[#86efac]/70 bg-[#fbfdfc] shadow-sm mb-20">
 
-      {/* Repeating CSS Grid Background (Very Lightweight) */}
       <div
         className="absolute inset-0 z-0 opacity-40 pointer-events-none"
         style={{
@@ -51,7 +50,7 @@ const WhyChooseUs = () => {
         <div className="w-full lg:w-[45%] flex justify-center  relative">
           <div className="absolute inset-0 bg-green-100 rounded-[40px] transform rotate-3 scale-105 transition-transform duration-500 hover:rotate-6"></div>
           <img
-            src={burgerBox}
+            src={foodTrayMain}
             alt="Eco Packaging"
             loading="lazy"
             decoding="async"

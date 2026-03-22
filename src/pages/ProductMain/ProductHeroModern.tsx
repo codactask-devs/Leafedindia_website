@@ -39,7 +39,7 @@ const ProductHeroModern = () => {
                     </div>
 
                     <h1 className={`text-[54px] md:text-[78px] font-black text-[#1a2b4b] leading-[1.1] mb-2 transition-all duration-1000 delay-300 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
-                        Our Product
+                        Our Products
                     </h1>
 
                     <div className={`transition-all duration-1000 delay-450 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'} mb-6`}>
