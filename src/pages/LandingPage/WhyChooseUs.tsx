@@ -1,5 +1,4 @@
 import { Leaf } from 'lucide-react';
-import burgerBox from "../../assets/Main/burgerBoxMain.jpg";
 import noodlesBoxMain from "../../assets/Main/noodlesBoxMain.jpg";
 import foodBoxMain from "../../assets/Main/foodBoxMain.jpg";
 import foodTrayMain from "../../assets/Main/foodTrayMain.jpg";

@@ -1,10 +1,6 @@
-import React, { useState } from "react";
 import QnA from "./QnA";
-import youtubeIcon from "../assets/youtube.svg";
-import { Play } from "lucide-react";
 
 const FAQ = () => {
-    const [show, setShow] = useState(false);
     const questionsAndAnswers = [
         {
             question: "How do you calculate the shipping cost?",
