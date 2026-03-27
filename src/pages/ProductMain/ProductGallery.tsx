@@ -134,7 +134,10 @@ const ProductGallery = () => {
                                                                 key={i}
                                                                 src={src}
                                                                 alt={`shuffle-${i}`}
+                                                                width={260}
+                                                                height={260}
                                                                 loading="lazy"
+                                                                decoding="async"
                                                                 className="w-full h-full object-cover pointer-events-none rounded-2xl shadow-lg border-2 border-white/50"
                                                             />
                                                         ))}
@@ -148,7 +151,10 @@ const ProductGallery = () => {
                                             <img
                                                 src={product.image}
                                                 alt={product.title}
-                                                loading="lazy"
+                                                width={600}
+                                                height={450}
+                                                loading={index < 2 ? "eager" : "lazy"}
+                                                {...(index < 2 ? { fetchpriority: "high" } : {})}
                                                 decoding="async"
                                                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                                             />
