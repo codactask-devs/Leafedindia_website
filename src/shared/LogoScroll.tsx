@@ -36,7 +36,7 @@ const logos = [
     logo17,
 ];
 const LogoScroll = () => {
-
+    //checkss
     return (
         <section className="px-5 md:px-15 flex flex-col gap-8 items-center mb-16 mt-8 bg-white overflow-hidden">
             <p className="w-full text-center text-[15px] md:text-[16px] font-medium text-gray-500 tracking-wide uppercase">
