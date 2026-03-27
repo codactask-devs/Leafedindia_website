@@ -1,4 +1,4 @@
-import pizzaBox from '../../assets/FOOD BOX/pizzaBox.jpg';
+import pizzaBox from '../../assets/FOOD BOX/pizzaBox.webp';
 import { ArrowRight } from 'lucide-react';
 
 const BrandFreshLook = () => {
