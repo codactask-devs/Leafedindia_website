@@ -1,6 +1,6 @@
 import NavBar from '../../shared/NavBar';
-import HeroImage from '../../assets/HeroImage.png';
-import Youtube from '../../assets/youtube.svg';
+import HeroImage from '../../assets/HeroImage.webp';
+import Youtube from '../../assets/youtube.webp';
 import CircularText from '../../animations/CircularFont';
 import { useState } from 'react';
 import { Play, Eye, Target } from 'lucide-react';
@@ -8,7 +8,7 @@ const HomePage = () => {
     const [show, setShow] = useState(false);
     return (
 
-        <div className="w-full min-h-[100vh]  relative">
+        <div className="w-full min-h-screen  relative">
             {/* asdfa */}
             <section className="absolute inset-0 z-0 pointer-events-none">
                 <div className=" bg-[#0d6e41] w-full" />

@@ -1,4 +1,4 @@
-import foodBoxMain from "../../assets/FOOD BOX/foodBoxMain.jpg";
+import foodBoxMain from "../../assets/FOOD BOX/foodBoxMain.webp";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 

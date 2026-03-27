@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import burgerBox from "../../assets/Main/burgerBoxMain.jpg";
-import foodBox from "../../assets/Main/foodBoxMain.jpg";
-import cupMain from "../../assets/Main/cupMain.jpg";
-import bowlMain from "../../assets/Main/bowlMain.jpg";
-import foodTrayMain from "../../assets/Main/foodTrayMain.jpg";
-import foodBoxAlt1 from "../../assets/FOOD BOX/foodBox1.jpg";
-import foodBoxAlt2 from "../../assets/FOOD BOX/foodBox2.jpg";
+import burgerBox from "../../assets/Main/burgerBoxMain.webp";
+import foodBox from "../../assets/Main/foodBoxMain.webp";
+import cupMain from "../../assets/Main/cupMain.webp";
+import bowlMain from "../../assets/Main/bowlMain.webp";
+import foodTrayMain from "../../assets/Main/foodTrayMain.webp";
+import foodBoxAlt1 from "../../assets/FOOD BOX/foodBox1.webp";
+import foodBoxAlt2 from "../../assets/FOOD BOX/foodBox2.webp";
 import Stack from "../../animations/Stack";
 import { images } from "../LandingPage/Gallery";
 

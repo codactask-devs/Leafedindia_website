@@ -1,8 +1,8 @@
 import { Leaf } from 'lucide-react';
-import noodlesBoxMain from "../../assets/Main/noodlesBoxMain.jpg";
-import foodBoxMain from "../../assets/Main/foodBoxMain.jpg";
-import foodTrayMain from "../../assets/Main/foodTrayMain.jpg";
-import cupMain from "../../assets/Main/cupMain.jpg";
+import noodlesBoxMain from "../../assets/Main/noodlesBoxMain.webp";
+import foodBoxMain from "../../assets/Main/foodBoxMain.webp";
+import foodTrayMain from "../../assets/Main/foodTrayMain.webp";
+import cupMain from "../../assets/Main/cupMain.webp";
 const WhyChooseUs = () => {
   return (
     <section className="mt-10 md:mt-20 relative w-full max-w-[92%] mx-auto p-6 md:p-10 lg:p-14 py-16 md:py-24 overflow-hidden rounded-[40px] border-2 border-[#86efac]/70 bg-[#fbfdfc] shadow-sm mb-20">
