@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import burgerBox from "../../assets/Main/burgerBoxMain.webp";
 import foodBox from "../../assets/Main/foodBoxMain.webp";
 import cupMain from "../../assets/Main/cupMain.webp";
@@ -80,6 +81,17 @@ const products = [
 
 const ProductGallery = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const navigate = useNavigate();
+
+    const titleToId: Record<string, string> = {
+        "Burger Box": "burger-box",
+        "Paper Cups": "paper-cups",
+        "Bowl": "paper-bowls",
+        "Paper Food Box": "food-box",
+        "Paper Tray": "paper-tray",
+        "Pizza Box": "pizza-box",
+        "Hexagon Box": "hexagon-box"
+    };
 
     useEffect(() => {
         setIsVisible(true);
@@ -116,6 +128,7 @@ const ProductGallery = () => {
                         return (
                             <div
                                 key={index}
+                                onClick={() => !isStackTile && navigate(`/product/${titleToId[product.title] || product.title.toLowerCase().replace(/ /g, '-')}`)}
                                 className={`group cursor-pointer transition-all duration-1000 transform ${product.span} ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'}`}
                                 style={{ transitionDelay: `${400 + (index * 150)}ms` }}
                             >

@@ -6,6 +6,7 @@ import Testimonials from "./pages/LandingPage/Testimonials";
 import Footer from "./shared/Footer";
 import WhyChooseUs from "./pages/LandingPage/WhyChooseUs";
 import ProductPage from "./pages/ProductMain/ProductPage";
+import SingleProductPage from "./pages/SingleProductPage/SingleProductPage";
 
 const LandingPage = () => (
   <>
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/products" element={<ProductPage />} />
+        <Route path="/product/:id" element={<SingleProductPage />} />
       </Routes>
     </Router>
   );

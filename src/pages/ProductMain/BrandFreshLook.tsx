@@ -12,7 +12,7 @@ const BrandFreshLook = () => {
                         <span className="relative inline-block text-[#d92d20]">
                             Fresh Look!
                             <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M5 15C50 5 150 5 295 15" stroke="#7ab55c" strokeWidth="4" strokeLinecap="round" />
+                                <path d="M5 15C50 5 150 5 295 15" stroke="#fb923c" strokeWidth="4" strokeLinecap="round" />
                             </svg>
                         </span>
                     </h2>
@@ -21,7 +21,7 @@ const BrandFreshLook = () => {
                         Request a quote for eco-friendly food packaging that aligns with your brand and sustainability goals!
                     </p>
 
-                    <button className="hover:cursor-pointer group flex items-center gap-3 px-8 py-4 bg-white border-2 border-[#7ab55c] text-[#1a2b4b] rounded-full font-bold text-lg hover:bg-[#7ab55c] hover:text-white transition-all duration-300 shadow-lg shadow-green-100/50">
+                    <button className="hover:cursor-pointer group flex items-center gap-3 px-8 py-4 bg-white border-2 border-[#fb923c] text-[#1a2b4b] rounded-full font-bold text-lg hover:bg-[#fb923c] hover:text-white transition-all duration-300 shadow-lg shadow-orange-100/50">
                         Craft My Packaging
                         <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                     </button>
