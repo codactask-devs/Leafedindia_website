@@ -72,50 +72,50 @@ const NavBar = () => {
                     <Link to="/products" className="text-[#0d6e41] text-xl font-bold mb-8 hover:text-[#fb923c] transition-colors block">SEE All Products</Link>
 
                     <div className="grid grid-cols-2 gap-x-12 gap-y-8">
-                      <div className="flex items-center gap-6 group/item cursor-pointer">
+                      <Link to="/product/food-box" className="flex items-center gap-6 group/item cursor-pointer">
                         <div className="w-12 h-12 bg-[#fefbea] rounded-xl flex items-center justify-center group-hover/item:bg-[#86bc25] transition-colors">
                           <Box className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
                         </div>
                         <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
                           <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Paper Food Box</span>
                         </div>
-                      </div>
+                      </Link>
 
-                      <div className="flex items-center gap-6 group/item cursor-pointer">
+                      <Link to="/product/paper-bowls" className="flex items-center gap-6 group/item cursor-pointer">
                         <div className="w-12 h-12 bg-[#fefbea] rounded-xl flex items-center justify-center group-hover/item:bg-[#86bc25] transition-colors">
                           <Snowflake className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
                         </div>
                         <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
                           <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Bowls</span>
                         </div>
-                      </div>
+                      </Link>
 
-                      <div className="flex items-center gap-6 group/item cursor-pointer">
+                      <Link to="/product/burger-box" className="flex items-center gap-6 group/item cursor-pointer">
                         <div className="w-12 h-12 bg-[#fefbea] rounded-xl flex items-center justify-center group-hover/item:bg-[#86bc25] transition-colors">
                           <Cup className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
                         </div>
                         <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
                           <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Burger box</span>
                         </div>
-                      </div>
+                      </Link>
 
-                      <div className="flex items-center gap-6 group/item cursor-pointer">
+                      <Link to="/product/paper-cups" className="flex items-center gap-6 group/item cursor-pointer">
                         <div className="w-12 h-12 bg-[#fefbea] rounded-xl flex items-center justify-center group-hover/item:bg-[#86bc25] transition-colors">
                           <Archive className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
                         </div>
                         <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
                           <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Paper cups</span>
                         </div>
-                      </div>
+                      </Link>
 
-                      <div className="flex items-center gap-6 group/item cursor-pointer">
+                      <Link to="/product/pizza-box" className="flex items-center gap-6 group/item cursor-pointer">
                         <div className="w-12 h-12 bg-[#fefbea] rounded-xl flex items-center justify-center group-hover/item:bg-[#86bc25] transition-colors">
                           <Utensils className="w-6 h-6 text-[#0d6e41] group-hover/item:text-white transition-colors" />
                         </div>
                         <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
                           <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Pizza box</span>
                         </div>
-                      </div>
+                      </Link>
 
                       <div className="flex items-center gap-6 group/item cursor-pointer">
                         <div className="w-12 h-12 bg-[#fefbea] rounded-xl flex items-center justify-center group-hover/item:bg-[#86bc25] transition-colors">
