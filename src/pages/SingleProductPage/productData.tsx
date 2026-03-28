@@ -4,7 +4,6 @@ import cupMain from "../../assets/Main/cupMain.webp";
 import burgerBoxMain from "../../assets/Main/burgerBoxMain.webp";
 import foodBoxMain from "../../assets/Main/foodBoxMain.webp";
 import foodTrayMain from "../../assets/Main/foodTrayMain.webp";
-import noodlesBoxMain from "../../assets/Main/noodlesBoxMain.webp";
 import pizzaBox from "../../assets/FOOD BOX/pizzaBox.webp";
 
 // Variant Assets
