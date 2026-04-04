@@ -8,7 +8,7 @@ const HomePage = () => {
     const [show, setShow] = useState(false);
     return (
 
-        <div className="w-full min-h-screen  relative">
+        <div className="w-full min-h-screen  relative md:mb-35">
             {/* asdfa */}
             <section className="absolute inset-0 z-0 pointer-events-none">
                 <div className=" bg-[#0d6e41] w-full" />
@@ -123,27 +123,6 @@ const HomePage = () => {
                             Our mission is to empower brands with sustainable, beautiful, for the earth.
                         </p>
 
-                        <div className="flex flex-col md:flex-row items-center lg:items-center gap-6 mt-12 pt-8 border-t border-white/20">
-                            <span className="text-sm font-bold uppercase tracking-widest opacity-70">Our Partners:</span>
-                            <div className="flex flex-wrap justify-center lg:justify-start gap-8 items-center opacity-80">
-                                <div className="flex items-center gap-2 font-bold text-xl">
-                                    <div className="w-1.5 h-6 bg-white/40" />
-                                    <span className="tracking-tighter uppercase">LOGO1</span>
-                                </div>
-                                <div className="flex items-center gap-2 font-bold text-xl">
-                                    {/* <div className="grid grid-cols-2 gap-0.5">
-                                        <div className="w-2 h-2 bg-white/40" />
-                                        <div className="w-2 h-2 bg-white/40" />
-                                        <div className="w-2 h-2 bg-white/40" />
-                                        <div className="w-2 h-2 bg-white/40" />
-                                    </div> */}
-                                    <span className="tracking-tighter uppercase">LOGO2</span>
-                                </div>
-                                <div className="flex items-center gap-2 font-bold text-xl">
-                                    <span className="tracking-tighter uppercase">LOGO3</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     {/* Vision and Mission Cards */}

@@ -1,22 +1,51 @@
 import React from "react";
 import { Leaf } from "lucide-react";
 import type { Variant } from "./productData";
+import { getImagesInFolder } from "../../shared/utils/assetLoader";
 
 interface ProductVariantsSectionProps {
     catchPhrase: string;
     title: string;
     description: string;
     variants: Variant[];
+    variantFolder?: string;
+    productName: string;
 }
 
 const ProductVariantsSection: React.FC<ProductVariantsSectionProps> = ({
     catchPhrase,
     title,
     description,
-    variants
+    variants,
+    variantFolder,
+    productName
 }) => {
+    // Dynamic loading of additional variants
+    const dynamicImages = variantFolder ? getImagesInFolder(variantFolder) : [];
+    
+    // Filter out dynamic images that are already present in static variants
+    // We compare URIs or filenames to avoid duplicates
+    const existingImageUrls = new Set(variants.map(v => v.image));
+    
+    const additionalVariants: Variant[] = dynamicImages
+        .filter(imgUrl => !existingImageUrls.has(imgUrl))
+        .map((imgUrl, idx) => {
+            // Get filename without extension for name
+            const fileName = imgUrl.split('/').pop()?.split('.')[0] || `Variant ${idx + 1}`;
+            // Prettify name (e.g. burgerbox2 -> Burgerbox 2)
+            const prettyName = fileName.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()).trim();
+
+            return {
+                name: prettyName,
+                description: `A premium ${productName.toLowerCase()} variant.`,
+                image: imgUrl
+            };
+        });
+
+    const allVariants = [...variants, ...additionalVariants];
+
     return (
-        <section className="w-full py-20 px-6 lg:px-20 bg-white">
+        <section className="w-full py-20 px-6 lg:px-20 bg-transparent">
             <div className="max-w-7xl mx-auto">
                 {/* Header Section */}
                 <div className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-16">
@@ -53,7 +82,7 @@ const ProductVariantsSection: React.FC<ProductVariantsSectionProps> = ({
 
                 {/* Variants Grid */}
                 <div className="flex flex-nowrap justify-center gap-8 md:gap-6 lg:gap-8 overflow-x-auto pb-8 scrollbar-hide">
-                    {variants.map((variant, index) => (
+                    {allVariants.map((variant, index) => (
                         <div
                             key={index}
                             className="flex-1 min-w-[280px] max-w-[320px] bg-white rounded-[40px] p-4 shadow-sm hover:shadow-xl transition-all duration-500 group border border-gray-50 flex flex-col items-center text-center"

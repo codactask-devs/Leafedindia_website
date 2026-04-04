@@ -2,7 +2,6 @@ import Footer from "../../shared/Footer";
 import NavBar from "../../shared/NavBar";
 import ProductHeroModern from "./ProductHeroModern";
 import ProductGallery from "./ProductGallery";
-import LogoScroll from "../../shared/LogoScroll";
 import BrandFreshLook from "./BrandFreshLook";
 import FAQ from "../../shared/FAQ";
 
@@ -12,7 +11,6 @@ const ProductPage = () => {
             <NavBar />
 
             <ProductHeroModern />
-            <LogoScroll />
             <ProductGallery />
 
             <div className="h-32 bg-linear-to-b from-[#fefbea] to-white relative overflow-hidden">

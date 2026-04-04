@@ -7,6 +7,7 @@ import ProductVariantsSection from "./ProductVariantsSection";
 import ProductFeaturesSection from "./ProductFeaturesSection";
 import ProductSpecsSection from "./ProductSpecsSection";
 import ProductCTASection from "./ProductCTASection";
+import doodles from "../../assets/doodle/DODALS.jpg";
 
 const SingleProductPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -26,27 +27,64 @@ const SingleProductPage = () => {
                 heroImage={activeProduct.heroImage}
             />
 
-            <ProductVariantsSection
-                catchPhrase={activeProduct.variantsCatchPhrase}
-                title={activeProduct.variantsTitle}
-                description={activeProduct.variantsDescription}
-                variants={activeProduct.variants}
-            />
+            {/* Doodle Section */}
+            <div className="relative overflow-hidden">
+                <div 
+                    className="absolute inset-0 opacity-[0.04] pointer-events-none" 
+                    style={{ 
+                        backgroundImage: `url(${doodles})`, 
+                        backgroundSize: '800px',
+                        mixBlendMode: 'multiply'
+                    }} 
+                />
+                <ProductVariantsSection
+                    catchPhrase={activeProduct.variantsCatchPhrase}
+                    title={activeProduct.variantsTitle}
+                    description={activeProduct.variantsDescription}
+                    variants={activeProduct.variants}
+                    variantFolder={activeProduct.variantFolder}
+                    productName={activeProduct.productName}
+                />
+            </div>
 
-            <ProductFeaturesSection
-                productName={activeProduct.productName}
-                featuresImage={activeProduct.featuresImage}
-            />
+            {/* Grid Section */}
+            <div className="bg-grid-subtle">
+                <ProductFeaturesSection
+                    productName={activeProduct.productName}
+                    featuresImage={activeProduct.featuresImage}
+                />
+            </div>
 
             <ProductSpecsSection
                 productName={activeProduct.productName}
                 specs={activeProduct.specs}
             />
 
-            <ProductCTASection 
-                productName={activeProduct.productName}
-                ctaImage={activeProduct.ctaImage}
-            />
+            {/* Mixed Background Section */}
+            <div className="relative overflow-hidden bg-grid-subtle">
+                 <div 
+                    className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+                    style={{ 
+                        backgroundImage: `url(${doodles})`, 
+                        backgroundSize: '1000px',
+                        backgroundPosition: 'center',
+                        mixBlendMode: 'multiply'
+                    }} 
+                />
+                <ProductCTASection 
+                    productName={activeProduct.productName}
+                    ctaImage={activeProduct.ctaImage}
+                />
+            </div>
+
+            <style>{`
+                .bg-grid-subtle {
+                    background-image: 
+                        linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+                    background-size: 50px 50px;
+                }
+            `}</style>
 
             <Footer />
 

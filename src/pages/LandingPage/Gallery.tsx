@@ -8,7 +8,7 @@ import foodtray from "../../assets/Main/foodTrayMain.webp";
 import noodlesbox from "../../assets/Main/noodlesBoxMain.webp";
 
 import InfiniteMenu from "../../animations/InfiniteMenu";
-import SimpleCarousel from "../../animations/SimpleCarousel";
+import HorizontalGallery from "../../animations/HorizontalGallery";
 
 // Asset folder mapping
 //nothing
@@ -176,10 +176,10 @@ const Gallery = () => {
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.98 }}
                                 transition={{ duration: 0.4 }}
-                                className="absolute inset-0 z-50 bg-[#dcfce7]"
+                                className="absolute inset-0  bg-[#dcfce7]"
                             >
                                 {activeCategory && (
-                                    <SimpleCarousel
+                                    <HorizontalGallery
                                         title={activeCategory.title}
                                         images={activeCategory.images}
                                         onBack={() => setViewMode('menu')}

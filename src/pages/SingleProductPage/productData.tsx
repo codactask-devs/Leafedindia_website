@@ -46,6 +46,7 @@ export interface ProductData {
     featuresImage: string;
     specs: SpecificationData;
     ctaImage: string;
+    variantFolder?: string; // e.g. "BURGER BOX"
 }
 
 export const products: Record<string, ProductData> = {
@@ -97,7 +98,8 @@ export const products: Record<string, ProductData> = {
                 { volume: "1500cc / 50.72oz", dimension: "185*160*84", pieces: "300pcs" }
             ]
         },
-        ctaImage: bowlMain
+        ctaImage: bowlMain,
+        variantFolder: "FOOD BOX" // Using same folder as variants previously pointed here
     },
     "paper-cups": {
         id: "paper-cups",
@@ -137,7 +139,8 @@ export const products: Record<string, ProductData> = {
                 { volume: "16oz / 480ml", dimension: "90*60*130", pieces: "500pcs" }
             ]
         },
-        ctaImage: cupMain
+        ctaImage: cupMain,
+        variantFolder: "CUPS"
     },
     "burger-box": {
         id: "burger-box",
@@ -175,7 +178,8 @@ export const products: Record<string, ProductData> = {
                 { volume: "Extra Large", dimension: "140*140*90", pieces: "200pcs" }
             ]
         },
-        ctaImage: burgerBoxMain
+        ctaImage: burgerBoxMain,
+        variantFolder: "BURGER BOX"
     },
     "food-box": {
         id: "food-box",
@@ -213,7 +217,8 @@ export const products: Record<string, ProductData> = {
                 { volume: "1000ml", dimension: "180*140*60", pieces: "300pcs" }
             ]
         },
-        ctaImage: foodBoxMain
+        ctaImage: foodBoxMain,
+        variantFolder: "FOOD BOX"
     },
     "pizza-box": {
         id: "pizza-box",
@@ -246,7 +251,8 @@ export const products: Record<string, ProductData> = {
                 { volume: "12 inch", dimension: "300*300*45", pieces: "100pcs" }
             ]
         },
-        ctaImage: pizzaBox
+        ctaImage: pizzaBox,
+        variantFolder: "FOOD BOX" // Pizza box was in FOOD BOX folder
     },
     "paper-tray": {
         id: "paper-tray",
@@ -274,7 +280,8 @@ export const products: Record<string, ProductData> = {
                 { volume: "Large", dimension: "220*150*50", pieces: "500pcs" }
             ]
         },
-        ctaImage: foodTrayMain
+        ctaImage: foodTrayMain,
+        variantFolder: "FOOD TRAY"
     },
     "hexagon-box": {
         id: "hexagon-box",
@@ -300,7 +307,8 @@ export const products: Record<string, ProductData> = {
                 { volume: "Premium Size", dimension: "100*100*100", pieces: "200pcs" }
             ]
         },
-        ctaImage: foodBox2
+        ctaImage: foodBox2,
+        variantFolder: "FOOD BOX" // Hexagon box used images from FOOD BOX
     }
 };
 
