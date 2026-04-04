@@ -66,7 +66,7 @@ const ProductFeaturesSection: React.FC<ProductFeaturesSectionProps> = ({
     ];
 
     return (
-        <section className="w-full py-20 px-6 lg:px-20 bg-[#fdfdfb] overflow-hidden">
+        <section className="w-full py-20 px-6 lg:px-20 bg-transparent overflow-hidden">
             <div className="max-w-7xl mx-auto">
                 {/* Header Area */}
                 <div className="max-w-4xl space-y-6 mb-16">

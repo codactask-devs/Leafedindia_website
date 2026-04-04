@@ -10,7 +10,7 @@ const ProductCTASection: React.FC<ProductCTASectionProps> = ({
     ctaImage
 }) => {
     return (
-        <section className="w-full py-10s px-6 lg:px-20 bg-[#f8f9fa] overflow-hidden">
+        <section className="w-full py-10s px-6 lg:px-20 bg-transparent overflow-hidden">
             <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16">
 
                 {/* Text Content */}

@@ -7,10 +7,12 @@ import Footer from "./shared/Footer";
 import WhyChooseUs from "./pages/LandingPage/WhyChooseUs";
 import ProductPage from "./pages/ProductMain/ProductPage";
 import SingleProductPage from "./pages/SingleProductPage/SingleProductPage";
+import LogoScroll from "./shared/LogoScroll";
 
 const LandingPage = () => (
   <>
     <HomePage />
+    <LogoScroll />
     <Gallery />
     <WhyChooseUs />
     <Testimonials />

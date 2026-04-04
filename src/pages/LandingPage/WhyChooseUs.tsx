@@ -1,9 +1,44 @@
 import { Leaf } from 'lucide-react';
-import noodlesBoxMain from "../../assets/Main/noodlesBoxMain.webp";
-import foodBoxMain from "../../assets/Main/foodBoxMain.webp";
+import { useState } from 'react';
+import cert1 from "../../assets/certificates/cert1.webp";
+import cert2 from "../../assets/certificates/cert2.webp";
+import cert3 from "../../assets/certificates/cert3.webp";
+import certLogo1 from "../../assets/certificates/certLogo1.webp";
+import certLogo2 from "../../assets/certificates/certLogo2.webp";
+import certLogo3 from "../../assets/certificates/certLogo3.avif";
 import foodTrayMain from "../../assets/Main/foodTrayMain.webp";
-import cupMain from "../../assets/Main/cupMain.webp";
 const WhyChooseUs = () => {
+  const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
+
+  const toggleFlip = (index: number) => {
+    setFlippedCards(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
+  const certificateData = [
+
+    {
+      title: "FSC Certification",
+      description: "Forest Stewardship Council certification verifying sustainably sourced materials.",
+      logo: certLogo2,
+      certImg: cert2
+    },
+    {
+      title: "ISO 22000:2018",
+      description: "Food Safety Management System certification for premium packaging safety.",
+      logo: certLogo3,
+      certImg: cert3
+    },
+    {
+      title: "ISO 9001:2015",
+      description: "Quality Management System certification ensuring excellence across paper manufacturing.",
+      logo: certLogo1,
+      certImg: cert1
+    }
+  ];
+
   return (
     <section className="mt-10 md:mt-20 relative w-full max-w-[92%] mx-auto p-6 md:p-10 lg:p-14 py-16 md:py-24 overflow-hidden rounded-[40px] border-2 border-[#86efac]/70 bg-[#fbfdfc] shadow-sm mb-20">
 
@@ -60,113 +95,50 @@ const WhyChooseUs = () => {
         </div>
       </div>
 
+      {/* Certificate Heading */}
+      <h2
+        style={{ fontFamily: "'Montserrat', sans-serif" }}
+        className="text-[32px] md:text-[40px] font-black text-center lg:text-left leading-[1.1] text-[#12263a] mb-12 tracking-tight relative z-1"
+      >
+        Certificates
+      </h2>
+
       {/* Grid of Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-center relative w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center relative w-full">
+        {certificateData.map((cert, index) => (
+          <div
+            key={index}
+            className="group relative perspective-[1000px] h-[340px] w-full flex items-center justify-center cursor-pointer"
+            onClick={() => toggleFlip(index)}
+          >
+            <div
+              className={`relative w-full h-full transition-transform duration-800 transform-3d ${flippedCards[index] ? 'rotate-y-180' : 'group-hover:rotate-y-180'}`}
+              style={{ transformStyle: 'preserve-3d', transform: flippedCards[index] ? 'rotateY(180deg)' : undefined }}
+            >
+              {/* Front */}
+              <div className="absolute inset-0 backface-hidden border-2 border-gray-100 rounded-[32px] p-8 flex flex-col items-center justify-center bg-white shadow-sm transition-all duration-300 group-hover:border-[#86efac]/50">
+                <div className="w-full h-full flex items-center justify-center p-4">
+                  <img
+                    src={cert.logo}
+                    alt={cert.title}
+                    className="max-w-full max-h-full object-contain"
+                  />
+                </div>
+              </div>
 
-        {/* Card 1 */}
-        <div className="group relative perspective-[1000px] h-[260px] w-full flex items-center justify-center">
-          <div className="relative w-full h-full transition-transform duration-800 transform-3d group-hover:transform-[rotateY(180deg)]">
-            {/* Front */}
-            <div className="absolute inset-0 backface-hidden border border-gray-300 rounded-[24px] p-6 flex flex-col items-center text-center bg-white shadow-sm justify-center">
-
-              <h3 style={{ fontFamily: "'Montserrat', sans-serif" }} className="text-[#12263a] text-[17px] font-bold mb-3">Certificate 1</h3>
-              <p style={{ fontFamily: "'Montserrat', sans-serif" }} className="text-gray-500 text-[13px] leading-relaxed font-medium">
-                Our base manufacturing certification ensuring quality and safety across all production lines.
-              </p>
-            </div>
-            {/* Back */}
-            <div className="absolute inset-0 backface-hidden transform-[rotateY(180deg)] border border-gray-300 rounded-[24px] overflow-hidden shadow-xl flex flex-col items-center justify-center p-1.5 bg-white">
-              <img
-                src={cupMain}
-                alt="Direct Manufacturer"
-                loading="lazy"
-                decoding="async"
-                width={400}
-                height={300}
-                className="w-full h-full object-cover rounded-[20px] shadow-sm"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Card 2: Certificates Flip Card */}
-        <div className="group relative perspective-[1000px] h-[260px] w-full flex items-center justify-center">
-          <div className="relative w-full h-full transition-transform duration-800 transform-3d group-hover:transform-[rotateY(180deg)]">
-            {/* Front */}
-            <div className="absolute inset-0 backface-hidden border border-gray-300 rounded-[24px] p-6 flex flex-col items-center text-center bg-white shadow-sm justify-center">
-
-              <h3 style={{ fontFamily: "'Montserrat', sans-serif" }} className="text-[#12263a] text-[17px] font-bold mb-3">Certificate 2</h3>
-              <p style={{ fontFamily: "'Montserrat', sans-serif" }} className="text-gray-500 text-[13px] leading-relaxed font-medium">
-                Sustainably sourced and environmentally verified materials for eco-conscious packaging.
-              </p>
-            </div>
-            {/* Back */}
-            <div className="absolute inset-0 backface-hidden transform-[rotateY(180deg)] border border-gray-300 rounded-[24px] overflow-hidden shadow-xl flex flex-col items-center justify-center p-1.5 bg-white">
-              <img
-                src={noodlesBoxMain}
-                alt="Certificate"
-                loading="lazy"
-                decoding="async"
-                width={400}
-                height={300}
-                className="w-full h-full object-cover rounded-[20px] shadow-sm"
-              />
+              {/* Back */}
+              <div className="absolute inset-0 backface-hidden transform-[rotateY(180deg)] border-2 border-gray-100 rounded-[32px] overflow-hidden shadow-xl flex flex-col items-center justify-center p-2 bg-white transition-all duration-300">
+                <img
+                  src={cert.certImg}
+                  alt={`${cert.title} Certificate`}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-contain rounded-[24px]"
+                />
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* Card 3 */}
-        <div className="group relative perspective-[1000px] h-[260px] w-full flex items-center justify-center">
-          <div className="relative w-full h-full transition-transform duration-800 transform-3d group-hover:transform-[rotateY(180deg)]">
-            {/* Front */}
-            <div className="absolute inset-0 backface-hidden border border-gray-300 rounded-[24px] p-6 flex flex-col items-center text-center bg-white shadow-sm justify-center">
-
-              <h3 style={{ fontFamily: "'Montserrat', sans-serif" }} className="text-[#12263a] text-[17px] font-bold mb-3">Certificate 3</h3>
-              <p style={{ fontFamily: "'Montserrat', sans-serif" }} className="text-gray-500 text-[13px] leading-relaxed font-medium">
-                Quality management certification for custom-designed and tailored packaging solutions.
-              </p>
-            </div>
-            {/* Back */}
-            <div className="absolute inset-0 backface-hidden transform-[rotateY(180deg)] border border-gray-300 rounded-[24px] overflow-hidden shadow-xl flex flex-col items-center justify-center p-1.5 bg-white">
-              <img
-                src={foodBoxMain}
-                alt="Customizable"
-                loading="lazy"
-                decoding="async"
-                width={400}
-                height={300}
-                className="w-full h-full object-cover rounded-[20px] shadow-sm"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Card 4 */}
-        <div className="group relative perspective-[1000px] h-[260px] w-full flex items-center justify-center">
-          <div className="relative w-full h-full transition-transform duration-800 transform-3d group-hover:transform-[rotateY(180deg)]">
-            {/* Front */}
-            <div className="absolute inset-0 backface-hidden border border-gray-300 rounded-[24px] p-6 flex flex-col items-center text-center bg-white shadow-sm justify-center">
-
-              <h3 style={{ fontFamily: "'Montserrat', sans-serif" }} className="text-[#12263a] text-[17px] font-bold mb-3">Certificate 4</h3>
-              <p style={{ fontFamily: "'Montserrat', sans-serif" }} className="text-gray-500 text-[13px] leading-relaxed font-medium">
-                Global standards compliance trusted by industry leaders and international brands.
-              </p>
-            </div>
-            {/* Back */}
-            <div className="absolute inset-0 backface-hidden transform-[rotateY(180deg)] border border-gray-300 rounded-[24px] overflow-hidden shadow-xl flex flex-col items-center justify-center p-1.5 bg-white">
-              <img
-                src={foodTrayMain}
-                alt="Certificate 4"
-                loading="lazy"
-                decoding="async"
-                width={400}
-                height={300}
-                className="w-full h-full object-cover rounded-[20px] shadow-sm"
-              />
-            </div>
-          </div>
-        </div>
-
+        ))}
       </div>
 
     </section>
