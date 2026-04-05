@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, type FC, type MutableRefObject } from 'react';
+import { useRef, useState, useEffect, useImperativeHandle, type MutableRefObject } from 'react';
 import { mat4, quat, vec2, vec3 } from 'gl-matrix';
 
 const discVertShaderSource = `#version 300 es
@@ -500,6 +500,8 @@ class ArcballControl {
 
     private readonly EPSILON = 0.1;
     private readonly IDENTITY_QUAT = quat.create();
+    private pulseAxis = vec3.fromValues(0, 1, 0);
+    private pulseRemaining = 0;
 
     constructor(canvas: HTMLCanvasElement, updateCallback?: UpdateCallback) {
         this.canvas = canvas;
@@ -528,6 +530,14 @@ class ArcballControl {
         const timeScale = deltaTime / targetFrameDuration + 0.00001;
         let angleFactor = timeScale;
         const snapRotation = quat.create();
+
+        if (this.pulseRemaining > 0) {
+            const pulseAmount = this.pulseRemaining * 0.1;
+            const pulseQuat = quat.setAxisAngle(quat.create(), this.pulseAxis, pulseAmount);
+            quat.multiply(this.pointerRotation, this.pointerRotation, pulseQuat);
+            this.pulseRemaining *= Math.pow(0.9, timeScale);
+            if (this.pulseRemaining < 0.001) this.pulseRemaining = 0;
+        }
 
         if (this.isPointerDown) {
             const INTENSITY = 0.3 * timeScale;
@@ -618,6 +628,11 @@ class ArcballControl {
             z = rSq / Math.sqrt(xySq);
         }
         return vec3.fromValues(-x, y, z);
+    }
+
+    public pulse(axis?: vec3, intensity = 1.0): void {
+        if (axis) vec3.copy(this.pulseAxis, axis);
+        this.pulseRemaining = intensity;
     }
 }
 
@@ -774,6 +789,10 @@ class InfiniteGridMenu {
         }
 
         requestAnimationFrame(t => this.run(t));
+    }
+
+    public pulse(): void {
+        this.control.pulse(vec3.fromValues(0, 1, 0), 0.5);
     }
 
     private init(onInit?: InitCallback): void {
@@ -1078,18 +1097,33 @@ const defaultItems: MenuItem[] = [
     }
 ];
 
-// Redundant interface removed. Using the one defined above.
+export interface InfiniteMenuHandle {
+    pulse: () => void;
+}
 
-const InfiniteMenu: FC<InfiniteMenuProps> = ({ 
+const InfiniteMenu = ({ 
     items = [], 
     scale = 1.0, 
     onButtonClick, 
-    isPaused = false 
-}) => {
+    isPaused = false,
+    ref
+}: InfiniteMenuProps & { ref?: React.Ref<InfiniteMenuHandle> }) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null) as MutableRefObject<HTMLCanvasElement | null>;
     const menuRef = useRef<InfiniteGridMenu | null>(null);
     const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
     const [isMoving, setIsMoving] = useState<boolean>(false);
+
+    // Expose the pulse method to the parent component
+    if (ref) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useImperativeHandle(ref, () => ({
+            pulse: () => {
+                if (menuRef.current) {
+                    menuRef.current.pulse();
+                }
+            }
+        }), []);
+    }
 
     useEffect(() => {
         const canvas = canvasRef.current;

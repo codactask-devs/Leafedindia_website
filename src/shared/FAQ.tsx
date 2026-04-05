@@ -25,7 +25,7 @@ const FAQ = () => {
     ];
 
     return (
-        <div className="border mt-5 md:mt-10 border-gray-200 rounded-2xl mb-25 md:mb-50 px-5 md:px-15 flex gap-10 md:gap-20 bg-white flex-col md:flex-row max-w-7xl mx-auto py-10">
+        <div className="border bg-white border-gray-200 rounded-[32px] mb-20 md:mb-32 px-6 md:px-16 flex gap-10 md:gap-20  flex-col md:flex-row max-w-6xl mx-auto py-12 relative z-10">
             <section className="md:w-[45%] flex flex-col justify-between py-4">
                 <nav>
                     <p className="text-[#0d6e41] font-bold mb-4 md:mb-2 uppercase tracking-widest text-sm">/ FAQ</p>

@@ -62,7 +62,7 @@ const Testimonials: FC = () => {
 
     return (
         <section className="w-full pt-10 pb-20 overflow-hidden">
-            <div className=" mx-auto bg-[#fb923c] rounded-[40px] md:rounded-[60px] py-16 md:py-24 relative overflow-hidden">
+            <div className=" mx-auto bg-[#0d6e41] rounded-[40px] md:rounded-[60px] py-16 md:py-24 relative overflow-hidden">
 
                 {/* Heading */}
                 <div className="text-center mb-16 px-4">
@@ -80,7 +80,7 @@ const Testimonials: FC = () => {
                                 className="inline-block w-[300px] md:w-[350px] relative "
                             >
                                 <div className="bg-[#fff9e6] rounded-[32px] p-8 pb-12 pt-12 shadow-xl flex flex-col items-center text-center relative">
-                                    <div className="flex justify-center mb-4 text-[#0d6e41]">
+                                    <div className="flex justify-center mb-4 text-[#fb923c]">
                                         <Quote size={32} fill="currentColor" className="rotate-180" />
                                     </div>
                                     <p className="text-gray-600 text-sm md:text-base leading-relaxed whitespace-normal font-medium mb-6 line-clamp-3">

@@ -25,22 +25,23 @@ const WhyChooseUs = () => {
       logo: certLogo2,
       certImg: cert2
     },
+
+    {
+      title: "ISO 9001:2015",
+      description: "Quality Management System certification ensuring excellence across paper manufacturing.",
+      logo: certLogo1,
+      certImg: cert1
+    },
     {
       title: "ISO 22000:2018",
       description: "Food Safety Management System certification for premium packaging safety.",
       logo: certLogo3,
       certImg: cert3
     },
-    {
-      title: "ISO 9001:2015",
-      description: "Quality Management System certification ensuring excellence across paper manufacturing.",
-      logo: certLogo1,
-      certImg: cert1
-    }
   ];
 
   return (
-    <section className="mt-10 md:mt-20 relative w-full max-w-[92%] mx-auto p-6 md:p-10 lg:p-14 py-16 md:py-24 overflow-hidden rounded-[40px] border-2 border-[#86efac]/70 bg-[#fbfdfc] shadow-sm mb-20">
+    <section className="mt-10 bg-white md:mt-20 relative w-full max-w-[92%] mx-auto p-6 md:p-10 lg:p-14 py-16 md:py-24 overflow-hidden rounded-[40px] border-2 border-[#86efac]/70  shadow-sm mb-20">
 
       <div
         className="absolute inset-0 z-0 opacity-40 pointer-events-none"
@@ -104,19 +105,19 @@ const WhyChooseUs = () => {
       </h2>
 
       {/* Grid of Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center relative w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-8 items-center relative w-full">
         {certificateData.map((cert, index) => (
           <div
             key={index}
-            className="group relative perspective-[1000px] h-[340px] w-full flex items-center justify-center cursor-pointer"
+            className="group  relative perspective-[1000px] h-[340px] w-full flex items-center justify-center cursor-pointer"
             onClick={() => toggleFlip(index)}
           >
             <div
-              className={`relative w-full h-full transition-transform duration-800 transform-3d ${flippedCards[index] ? 'rotate-y-180' : 'group-hover:rotate-y-180'}`}
+              className={`relative  w-full h-full transition-transform duration-800 transform-3d ${flippedCards[index] ? 'rotate-y-180' : 'group-hover:rotate-y-180'}`}
               style={{ transformStyle: 'preserve-3d', transform: flippedCards[index] ? 'rotateY(180deg)' : undefined }}
             >
               {/* Front */}
-              <div className="absolute inset-0 backface-hidden border-2 border-gray-100 rounded-[32px] p-8 flex flex-col items-center justify-center bg-white shadow-sm transition-all duration-300 group-hover:border-[#86efac]/50">
+              <div className="absolute inset-0  backface-hidden border-2 border-gray-100 rounded-[32px] p-8 flex flex-col items-center justify-center bg-white shadow-2xl transition-all duration-300 group-hover:border-[#86efac]/50">
                 <div className="w-full h-full flex items-center justify-center p-4">
                   <img
                     src={cert.logo}
@@ -127,7 +128,7 @@ const WhyChooseUs = () => {
               </div>
 
               {/* Back */}
-              <div className="absolute inset-0 backface-hidden transform-[rotateY(180deg)] border-2 border-gray-100 rounded-[32px] overflow-hidden shadow-xl flex flex-col items-center justify-center p-2 bg-white transition-all duration-300">
+              <div className="absolute inset-0 backface-hidden transform-[rotateY(180deg)] border-2  border-gray-100 rounded-[32px] overflow-hidden shadow-xl flex flex-col items-center justify-center p-2 bg-white transition-all duration-300">
                 <img
                   src={cert.certImg}
                   alt={`${cert.title} Certificate`}

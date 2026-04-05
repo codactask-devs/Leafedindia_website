@@ -4,6 +4,7 @@ import ProductHeroModern from "./ProductHeroModern";
 import ProductGallery from "./ProductGallery";
 import BrandFreshLook from "./BrandFreshLook";
 import FAQ from "../../shared/FAQ";
+import RotatingQuotes from "../../shared/RotatingQuotes";
 
 const ProductPage = () => {
     return (
@@ -11,13 +12,27 @@ const ProductPage = () => {
             <NavBar />
 
             <ProductHeroModern />
-            <ProductGallery />
+            
+            <div className="relative">
+                {/* Unified Background Layer */}
+                <div className="absolute inset-0 z-0 bg-linear-to-b from-white via-[#fefbea] to-white">
+                    <div 
+                        className="absolute inset-0 opacity-[0.08]" 
+                        style={{ 
+                            backgroundImage: `linear-gradient(#0d6e41 1px, transparent 1px), linear-gradient(90deg, #0d6e41 1px, transparent 1px)`,
+                            backgroundSize: '40px 40px'
+                        }} 
+                    />
+                </div>
 
-            <div className="h-32 bg-linear-to-b from-[#fefbea] to-white relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(45deg, #0d6e41 1px, transparent 1px), linear-gradient(-45deg, #0d6e41 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+                <div className="relative z-10">
+                    <ProductGallery />
+                    <FAQ />
+                </div>
             </div>
-            <FAQ />
+
             <BrandFreshLook />
+            <RotatingQuotes />
             <Footer />
         </div>
     )
