@@ -29,7 +29,7 @@ const SingleProductPage = () => {
             />
 
             {/* Variants & Gallery Section with Unified Background */}
-            <div className="relative overflow-hidden bg-grid-premium">
+            <div className="relative bg-grid-premium overflow-clip">
                 <div 
                     className="absolute inset-0 opacity-[0.06] pointer-events-none" 
                     style={{ 

@@ -32,7 +32,7 @@ const ProductHeroModern = () => {
                     </nav>
 
                     <div className={`transition-all duration-1000 delay-150 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'} mb-8`}>
-                        <p className="text-[#1a2b4b] font-bold text-lg md:text-xl mb-3 tracking-tight">
+                        <p className="text-[#fb923c] font-bold text-lg md:text-xl mb-3 tracking-tight">
                             Eco Friendly Food Packaging Products
                         </p>
                         <div className="w-40 h-[2px] bg-[#1a2b4b]" />

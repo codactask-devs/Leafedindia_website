@@ -38,7 +38,7 @@ const RotatingQuotes: React.FC = () => {
 
                 {/* Minimal top accent */}
                 <div className="flex justify-center mb-10">
-                    <div className="w-10 h-[3px] bg-[#0d6e41] rounded-full" />
+                    <div className="w-15 h-[3px] bg-[#0d6e41] rounded-full" />
                 </div>
 
                 {/* Quote */}
@@ -51,15 +51,13 @@ const RotatingQuotes: React.FC = () => {
 
                 {/* Counter + progress */}
                 <div className="mt-12 flex flex-col items-center gap-4">
-                    <span className="text-xs text-gray-300 font-mono tracking-widest">
-                        {String(currentIndex + 1).padStart(2, "0")} / {String(quotes.length).padStart(2, "0")}
-                    </span>
+
                     <div className="flex gap-1.5">
                         {quotes.map((_, idx) => (
                             <button
                                 key={idx}
                                 onClick={() => goTo(idx)}
-                                className={`h-1 rounded-full transition-all duration-500 ${idx === currentIndex ? "bg-[#0d6e41] w-7" : "bg-gray-200 w-1.5 hover:bg-gray-300"}`}
+                                className={`h-1 rounded-full transition-all duration-500 ${idx === currentIndex ? "bg-[#0d6e41] w-7" : "bg-gray-400 w-1.5 hover:bg-gray-500"}`}
                                 aria-label={`Go to quote ${idx + 1}`}
                             />
                         ))}

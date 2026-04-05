@@ -175,7 +175,7 @@ const NavBar = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-1 cursor-pointer text-[#0a5d3c] hover:text-[#fb923c] transition-colors group">
+            <div onClick={() => document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' })} className="flex items-center gap-1 cursor-pointer text-[#0a5d3c] hover:text-[#fb923c] transition-colors group">
               <span>Contact</span>
             </div>
           </div>
