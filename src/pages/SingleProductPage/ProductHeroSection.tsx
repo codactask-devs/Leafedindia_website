@@ -18,8 +18,7 @@ const ProductHeroSection: React.FC<ProductHeroSectionProps> = ({
     title,
     description,
     heroImage,
-    ctaText = "Get Quotation",
-    secondaryCtaText = "View Catalogue"
+    ctaText = "View Sizes",
 }) => {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -57,13 +56,11 @@ const ProductHeroSection: React.FC<ProductHeroSectionProps> = ({
                     </p>
 
                     <div className="flex flex-wrap gap-4 pt-4">
-                        <button className="group flex items-center gap-3 px-8 py-4 bg-[#4a6b0c] text-white rounded-full font-bold text-lg hover:bg-[#3d5a0a] transition-all duration-300 shadow-xl shadow-green-100 hover:cursor-pointer">
+                        <button className="group flex items-center gap-3 px-8 py-4 bg-[#0d6e41] text-white rounded-full font-bold text-lg hover:bg-[#3d5a0a] transition-all duration-300 shadow-xl shadow-green-100 hover:cursor-pointer">
                             {ctaText}
                             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                         </button>
-                        <button className="px-8 py-4 bg-white border-2 border-gray-100 text-[#1a2b4b] rounded-full font-bold text-lg hover:bg-gray-50 transition-all duration-300 hover:cursor-pointer">
-                            {secondaryCtaText}
-                        </button>
+
                     </div>
                 </div>
 

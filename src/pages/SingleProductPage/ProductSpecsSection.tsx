@@ -7,38 +7,58 @@ interface ProductSpecsSectionProps {
     specs: SpecificationData;
 }
 
+const materialLibrary: Record<string, { title: string, description: string, bgColor: string, icon: React.ReactNode }> = {
+    "white-paperboard": {
+        title: "White Paperboard",
+        description: "Clean, premium look for branding.",
+        bgColor: "bg-[#f8f9fa]",
+        icon: <FileText size={24} className="text-gray-400" />
+    },
+    "kraft-paperboard": {
+        title: "Kraft Paperboard",
+        description: "Natural brown texture for eco-conscious brands.",
+        bgColor: "bg-[#eaddd1]",
+        icon: <Layers size={24} className="text-[#8b5e34]" />
+    },
+    "pe-aqueous": {
+        title: "PE/Aqueous Lining",
+        description: "Extra protection against moisture and grease.",
+        bgColor: "bg-[#f0f4f8]",
+        icon: <Droplets size={24} className="text-[#3b82f6]" />
+    },
+    "aqueous": {
+        title: "Aqueous Lining",
+        description: "Eco-friendly protection against moisture.",
+        bgColor: "bg-[#f0f4f8]",
+        icon: <Droplets size={24} className="text-[#3b82f6]" />
+    },
+    "soy-ink": {
+        title: "Soy-based or water-based inks",
+        description: "Safe, vibrant, and environmentally friendly.",
+        bgColor: "bg-[#eff6ff]",
+        icon: <PenTool size={24} className="text-[#1e40af]" />
+    }
+};
+
+const productMaterialsMap: Record<string, string[]> = {
+    "Paper Food Box": ["white-paperboard", "kraft-paperboard", "pe-aqueous"],
+    "Burger Box": ["white-paperboard", "kraft-paperboard", "pe-aqueous"],
+    "Paper Tray": ["white-paperboard", "kraft-paperboard", "pe-aqueous"],
+    "Pizza Box": ["white-paperboard", "kraft-paperboard", "pe-aqueous"],
+    "Paper Cups": ["aqueous"],
+    "Bowls": ["aqueous"],
+    "Hexagon Box": ["white-paperboard", "kraft-paperboard", "pe-aqueous", "soy-ink"],
+};
+
 const ProductSpecsSection: React.FC<ProductSpecsSectionProps> = ({
     productName,
     specs
 }) => {
     const [activeTab, setActiveTab] = useState<"materials" | "sizes">("materials");
 
-    const materials = [
-        {
-            title: "White Paperboard",
-            description: "Clean, premium look for branding.",
-            bgColor: "bg-[#f8f9fa]",
-            icon: <FileText size={24} className="text-gray-400" />
-        },
-        {
-            title: "Kraft Paperboard",
-            description: "Natural brown texture for eco-conscious brands.",
-            bgColor: "bg-[#eaddd1]",
-            icon: <Layers size={24} className="text-[#8b5e34]" />
-        },
-        {
-            title: "PLA or Aqueous Lining",
-            description: "Extra protection against moisture and grease.",
-            bgColor: "bg-[#f0f4f8]",
-            icon: <Droplets size={24} className="text-[#3b82f6]" />
-        },
-        {
-            title: "Soy-based or water-based inks",
-            description: "Extra protection against moisture and grease.",
-            bgColor: "bg-[#eff6ff]",
-            icon: <PenTool size={24} className="text-[#1e40af]" />
-        }
-    ];
+    // Fallback to default materials if product not found
+    const currentMaterialKeys = productMaterialsMap[productName] || ["white-paperboard", "kraft-paperboard", "pe-aqueous"];
+    const materials = currentMaterialKeys.map(key => materialLibrary[key]);
 
     return (
         <section className="w-full py-20 px-6 lg:px-20 bg-white">
@@ -74,24 +94,29 @@ const ProductSpecsSection: React.FC<ProductSpecsSectionProps> = ({
                 </div>
 
                 {/* Container */}
-                <div className="bg-[#f8f9fc] rounded-[40px] border border-gray-100 p-8 md:p-12 lg:p-16 min-h-[500px] shadow-sm">
+                <div className="bg-[#f8f9fc] rounded-[24px] md:rounded-[40px] border border-gray-100 p-5 md:p-12 lg:p-16 min-h-[200px] md:min-h-[500px] shadow-sm">
                     {activeTab === "materials" ? (
-                        <div className="space-y-12 animate-in fade-in duration-500">
+                        <div className="space-y-12 animate-in fade-in duration-500 max-w-5xl mx-auto">
                             <h3 className="text-3xl font-black text-[#1a2b4b] text-center tracking-tight">
                                 Materials
                             </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {materials.map((mat, idx) => (
-                                    <div key={idx} className="bg-white rounded-[32px] p-8 border border-gray-50 shadow-sm flex flex-col items-center text-center group hover:shadow-lg transition-shadow duration-500">
-                                        <div className={`w-full aspect-square rounded-[24px] ${mat.bgColor} mb-8 flex items-center justify-center transition-transform duration-500 group-hover:scale-105`}>
+                                    <div 
+                                        key={idx} 
+                                        className="bg-white rounded-[32px] p-6 border border-gray-50 shadow-sm flex flex-row items-center group hover:shadow-lg transition-all duration-500 gap-6"
+                                    >
+                                        <div className={`w-14 h-14 md:w-20 md:h-20 shrink-0 rounded-2xl md:rounded-[24px] ${mat.bgColor} flex items-center justify-center transition-transform duration-500 group-hover:scale-105`}>
                                             {mat.icon}
                                         </div>
-                                        <h4 className="text-lg font-black text-[#1a2b4b] mb-3 tracking-tight">
-                                            {mat.title}
-                                        </h4>
-                                        <p className="text-gray-500 text-sm font-medium leading-relaxed">
-                                            {mat.description}
-                                        </p>
+                                        <div className="flex flex-col text-left">
+                                            <h4 className="text-lg font-black text-[#1a2b4b] mb-1 tracking-tight">
+                                                {mat.title}
+                                            </h4>
+                                            <p className="text-gray-500 text-sm font-medium leading-relaxed">
+                                                {mat.description}
+                                            </p>
+                                        </div>
                                     </div>
                                 ))}
                             </div>

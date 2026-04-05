@@ -98,7 +98,7 @@ const ProductGallery = () => {
     }, []);
 
     return (
-        <section className="w-full py-16 px-6 lg:px-20 bg-orange-50 overflow-hidden">
+        <section className="w-full py-20 px-6 lg:px-20 bg-transparent overflow-hidden">
 
             <div className="max-w-5xl mx-auto">
                 {/* Header */}

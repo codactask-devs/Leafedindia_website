@@ -10,7 +10,7 @@ const ProductCTASection: React.FC<ProductCTASectionProps> = ({
     ctaImage
 }) => {
     return (
-        <section className="w-full py-10s px-6 lg:px-20 bg-transparent overflow-hidden">
+        <section className="w-full py-10 px-4 md:px-6 lg:px-20 bg-transparent overflow-hidden">
             <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16">
 
                 {/* Text Content */}
@@ -26,7 +26,7 @@ const ProductCTASection: React.FC<ProductCTASectionProps> = ({
                         from initial concept to your doorstep.
                     </p>
 
-                    <button className="group relative px-6 py-3 bg-white border-2 border-[#86bc25] rounded-full text-[#1a2b4b] font-black text-[10px] uppercase tracking-widest transition-all hover:bg-[#86bc25] hover:text-white hover:shadow-xl hover:shadow-green-100 flex items-center gap-3">
+                    <button className="group relative px-5 md:px-6 py-3 bg-white border-2 border-[#86bc25] rounded-full text-[#1a2b4b] font-black text-[9px] md:text-[10px] uppercase tracking-widest transition-all hover:bg-[#86bc25] hover:text-white hover:shadow-xl hover:shadow-green-100 flex items-center gap-3 whitespace-nowrap">
                         Create My {productName}
                         <span className="transform transition-transform group-hover:translate-x-1">›</span>
                     </button>
@@ -43,7 +43,7 @@ const ProductCTASection: React.FC<ProductCTASectionProps> = ({
                             zIndex: 1,
                             boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)'
                         }}
-                        className="w-[400px] h-[400px] md:w-[600px] md:h-[600px]"
+                        className="w-[280px] h-[280px] md:w-[600px] md:h-[600px]"
                     />
 
                     {/* Secondary Glow */}
@@ -56,7 +56,7 @@ const ProductCTASection: React.FC<ProductCTASectionProps> = ({
                             position: 'absolute',
                             zIndex: 0
                         }}
-                        className="w-[450px] h-[450px] md:w-[750px] md:h-[750px]"
+                        className="w-[320px] h-[320px] md:w-[750px] md:h-[750px]"
                     />
 
                     <div className="relative z-10 w-full max-w-[260px] md:max-w-[360px]">
