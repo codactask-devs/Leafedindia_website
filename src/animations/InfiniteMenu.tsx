@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useImperativeHandle, type MutableRefObject } from 'react';
 import { mat4, quat, vec2, vec3 } from 'gl-matrix';
-
+import { ArrowUpRight } from 'lucide-react';
 const discVertShaderSource = `#version 300 es
 
 uniform mat4 uWorldMatrix;
@@ -1101,10 +1101,10 @@ export interface InfiniteMenuHandle {
     pulse: () => void;
 }
 
-const InfiniteMenu = ({ 
-    items = [], 
-    scale = 1.0, 
-    onButtonClick, 
+const InfiniteMenu = ({
+    items = [],
+    scale = 1.0,
+    onButtonClick,
     isPaused = false,
     ref
 }: InfiniteMenuProps & { ref?: React.Ref<InfiniteMenuHandle> }) => {
@@ -1259,7 +1259,7 @@ const InfiniteMenu = ({
                             }
         `}
                     >
-                        <p className="select-none relative text-[#060010] top-[2px] text-[26px]">&#x2197;</p>
+                        <ArrowUpRight className="select-none relative text-[#060010] top-[2px] text-[26px]" />
                     </div>
                 </>
             )}

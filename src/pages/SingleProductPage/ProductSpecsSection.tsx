@@ -61,7 +61,7 @@ const ProductSpecsSection: React.FC<ProductSpecsSectionProps> = ({
     const materials = currentMaterialKeys.map(key => materialLibrary[key]);
 
     return (
-        <section className="w-full py-20 px-6 lg:px-20 bg-white">
+        <section id="product-specs" className="w-full py-20 px-6 lg:px-20 bg-white">
             <div className="max-w-7xl mx-auto">
                 <h2 className="text-[32px] md:text-[48px] font-black text-[#1a2b4b] text-center mb-12 tracking-tight">
                     Specifications & Materials for {productName}
@@ -72,21 +72,19 @@ const ProductSpecsSection: React.FC<ProductSpecsSectionProps> = ({
                     <div className="flex bg-white border border-gray-200 rounded-xl p-1 shadow-sm">
                         <button
                             onClick={() => setActiveTab("materials")}
-                            className={`px-8 py-3 rounded-lg text-xs font-black uppercase tracking-widest transition-all ${
-                                activeTab === "materials"
-                                    ? "bg-[#1a2b4b] text-white shadow-md"
-                                    : "text-gray-400 hover:text-gray-600"
-                            }`}
+                            className={`hover:cursor-pointer px-8 py-3 rounded-lg text-xs font-black uppercase tracking-widest transition-all ${activeTab === "materials"
+                                ? "bg-[#1a2b4b] text-white shadow-md"
+                                : "text-gray-400 hover:text-gray-600"
+                                }`}
                         >
                             MATERIALS
                         </button>
                         <button
                             onClick={() => setActiveTab("sizes")}
-                            className={`px-8 py-3 rounded-lg text-xs font-black uppercase tracking-widest transition-all ${
-                                activeTab === "sizes"
-                                    ? "bg-[#1a2b4b] text-white shadow-md"
-                                    : "text-gray-400 hover:text-gray-600"
-                            }`}
+                            className={`hover:cursor-pointer px-8 py-3 rounded-lg text-xs font-black uppercase tracking-widest transition-all ${activeTab === "sizes"
+                                ? "bg-[#1a2b4b] text-white shadow-md"
+                                : "text-gray-400 hover:text-gray-600"
+                                }`}
                         >
                             SIZES
                         </button>
@@ -100,20 +98,22 @@ const ProductSpecsSection: React.FC<ProductSpecsSectionProps> = ({
                             <h3 className="text-3xl font-black text-[#1a2b4b] text-center tracking-tight">
                                 Materials
                             </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="flex flex-col gap-6">
                                 {materials.map((mat, idx) => (
-                                    <div 
-                                        key={idx} 
-                                        className="bg-white rounded-[32px] p-6 border border-gray-50 shadow-sm flex flex-row items-center group hover:shadow-lg transition-all duration-500 gap-6"
+                                    <div
+                                        key={idx}
+                                        className="bg-white w-full md:w-[70%] max-w-2xl mx-auto rounded-[32px] md:rounded-[40px] p-8 md:p-10 border border-gray-50 shadow-sm flex flex-col md:flex-row items-center md:items-start group hover:shadow-lg transition-all duration-500 gap-6 md:gap-8"
                                     >
-                                        <div className={`w-14 h-14 md:w-20 md:h-20 shrink-0 rounded-2xl md:rounded-[24px] ${mat.bgColor} flex items-center justify-center transition-transform duration-500 group-hover:scale-105`}>
-                                            {mat.icon}
+                                        <div className={`w-20 h-20 md:w-28 md:h-28 shrink-0 rounded-2xl md:rounded-[32px] ${mat.bgColor} flex items-center justify-center transition-transform duration-500 group-hover:scale-105`}>
+                                            <div className="scale-125 md:scale-150">
+                                                {mat.icon}
+                                            </div>
                                         </div>
-                                        <div className="flex flex-col text-left">
-                                            <h4 className="text-lg font-black text-[#1a2b4b] mb-1 tracking-tight">
+                                        <div className="flex flex-col text-center md:text-left pt-2">
+                                            <h4 className="text-xl md:text-2xl font-black text-[#1a2b4b] mb-2 md:mb-3 tracking-tight">
                                                 {mat.title}
                                             </h4>
-                                            <p className="text-gray-500 text-sm font-medium leading-relaxed">
+                                            <p className="text-gray-500 text-base md:text-lg font-medium leading-relaxed">
                                                 {mat.description}
                                             </p>
                                         </div>
@@ -130,9 +130,7 @@ const ProductSpecsSection: React.FC<ProductSpecsSectionProps> = ({
                                 <p className="text-[#1a2b4b] font-bold text-lg mb-2">
                                     {specs.volumeOptions}
                                 </p>
-                                <p className="text-[#3b82f6] font-bold underline cursor-pointer">
-                                    (custom sizes possible)
-                                </p>
+
                             </div>
 
                             <div className="overflow-hidden rounded-2xl border border-gray-200 shadow-sm mt-8 bg-white">

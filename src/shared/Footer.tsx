@@ -4,7 +4,7 @@ import { Instagram, Linkedin, Facebook, Globe } from 'lucide-react';
 
 const Footer: FC = () => {
     return (
-        <footer className="w-full">
+        <footer id="footer" className="w-full">
             <div className="  mx-auto bg-[#12263a] rounded-t-[40px] md:rounded-t-[60px] p-10 md:p-20 text-white relative overflow-hidden">
 
                 <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block" />
@@ -27,14 +27,13 @@ const Footer: FC = () => {
                         </div>
                     </div>
 
-                    {/* Company Links */}
-                    <div className="flex flex-col  gap-6">
-                        <h3 className="text-xl font-bold">Company</h3>
+                    {/* Contact Info */}
+                    <div className="flex flex-col gap-6">
+                        <h3 className="text-xl font-bold">Contact</h3>
                         <ul className="flex flex-col gap-4 text-gray-400 font-medium">
-                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="#">Terms & Conditions</a></li>
-                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="#">Privacy Policy</a></li>
-                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="#">Project Protections</a></li>
-                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="#">FAQs</a></li>
+                            <li className="font-medium text-gray-400 hover:text-white transition-all">Tamil Nadu, India</li>
+                            <li className="font-medium text-gray-400 hover:text-white transition-all"><a href="tel:+919025044947">+91 9025044947</a></li>
+                            <li className="font-medium text-gray-400 hover:text-white transition-all"><a href="mailto:sales@leafedindia.com">sales@leafedindia.com</a></li>
                         </ul>
                     </div>
 
@@ -42,10 +41,9 @@ const Footer: FC = () => {
                     <div className="flex flex-col gap-6">
                         <h3 className="text-xl font-bold">About</h3>
                         <ul className="flex flex-col gap-4 text-gray-400 font-medium">
-                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="#">Blog</a></li>
-                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="#">Contact</a></li>
-                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="#">Home</a></li>
-                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="#">Services</a></li>
+                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="/">Home</a></li>
+                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="/products">Products</a></li>
+                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="/products#faq">FAQ</a></li>
                         </ul>
                     </div>
 
@@ -70,13 +68,11 @@ const Footer: FC = () => {
                                     <Globe size={22} className="transition-transform group-hover:scale-110" />
                                 </a>
                             </div>
+                            
+                            {/* Copyright */}
+                            <p className="text-gray-500 text-sm mt-4">© 2026 Codac • All Rights Reserved</p>
                         </div>
                     </div>
-                </div>
-
-                {/* Bottom Bar */}
-                <div className="mt-20 pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm gap-4">
-                    <p>© 2026 Codac • All Rights Reserved</p>
                 </div>
 
             </div>
