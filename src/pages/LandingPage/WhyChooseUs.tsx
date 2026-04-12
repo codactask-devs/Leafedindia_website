@@ -1,11 +1,11 @@
 import { Leaf } from 'lucide-react';
 import { useState } from 'react';
-import cert1 from "../../assets/certificates/cert1.webp";
-import cert2 from "../../assets/certificates/cert2.webp";
-import cert3 from "../../assets/certificates/cert3.webp";
-import certLogo1 from "../../assets/certificates/certLogo1.webp";
-import certLogo2 from "../../assets/certificates/certLogo2.webp";
-import certLogo3 from "../../assets/certificates/certLogo3.avif";
+import cert1 from "../../assets/Certificates/cert1.webp";
+import cert2 from "../../assets/Certificates/cert2.webp";
+import cert3 from "../../assets/Certificates/cert3.webp";
+import certLogo1 from "../../assets/Certificates/certLogo1.webp";
+import certLogo2 from "../../assets/Certificates/certLogo2.webp";
+import certLogo3 from "../../assets/Certificates/certLogo3.avif";
 import foodTrayMain from "../../assets/Main/foodTrayMain.webp";
 const WhyChooseUs = () => {
   const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
