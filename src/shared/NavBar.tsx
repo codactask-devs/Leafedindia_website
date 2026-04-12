@@ -181,27 +181,29 @@ const NavBar = () => {
           </div>
 
           <div className="w-1/4 flex justify-end">
-            <button
-              className="hidden lg:block group text-[14px] px-10  py-3  md:text-[16px]  text-center
-                   text-white font-medium 
-                  border border-transparent
-                  hover:border-[#0d6e41]
-                  rounded-full
-                  transition-all duration-300
-                
-                 hover:bg-[#fefbea]
-                 hover:text-[#0d6e41]
+            <Link to="/studio">
+              <button
+                className="hidden lg:block group text-[14px] px-10  py-3  md:text-[16px]  text-center
+                    text-white font-medium 
+                    border border-transparent
+                    hover:border-[#0d6e41]
+                    rounded-full
+                    transition-all duration-300
                   
-                  hover:-translate-x-[4px]
-                  hover:-translate-y-[4px]
-                  
-                  hover:shadow-[4px_4px_0px_#0d6e41]
-                  hover: cursor-pointer
-                  bg-[#0d6e41]
-                  flex items-center 
-                  "
-            >          Customize Package
-            </button>
+                  hover:bg-[#fefbea]
+                  hover:text-[#0d6e41]
+                    
+                    hover:-translate-x-[4px]
+                    hover:-translate-y-[4px]
+                    
+                    hover:shadow-[4px_4px_0px_#0d6e41]
+                    hover: cursor-pointer
+                    bg-[#0d6e41]
+                    flex items-center 
+                    "
+              >          Customize Package
+              </button>
+            </Link>
             <button className="lg:hidden text-[#0d6e41] p-2">
               <Menu strokeWidth={3} className='w-8 h-8' />
             </button>

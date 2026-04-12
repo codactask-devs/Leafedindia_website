@@ -11,6 +11,7 @@ import LogoScroll from "./shared/LogoScroll";
 import ScrollToTop from "./shared/ScrollToTop";
 import WhatsAppButton from "./shared/WhatsAppButton";
 import RotatingQuotes from "./shared/RotatingQuotes";
+import Editor from "./studio/pages/Editor";
 
 const LandingPage = () => (
   <>
@@ -41,6 +42,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/products" element={<ProductPage />} />
         <Route path="/product/:id" element={<SingleProductPage />} />
+        <Route path="/studio" element={<Editor />} />
       </Routes>
       <WhatsAppButton />
     </Router>
