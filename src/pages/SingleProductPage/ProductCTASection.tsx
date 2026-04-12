@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface ProductCTASectionProps {
     productName: string;
@@ -26,10 +27,12 @@ const ProductCTASection: React.FC<ProductCTASectionProps> = ({
                         from initial concept to your doorstep.
                     </p>
 
-                    <button className="group relative px-5 md:px-6 py-3 bg-white border-2 border-[#86bc25] rounded-full text-[#1a2b4b] font-black text-[9px] md:text-[10px] uppercase tracking-widest transition-all hover:bg-[#86bc25] hover:text-white hover:shadow-xl hover:shadow-green-100 flex items-center gap-3 whitespace-nowrap">
-                        Create My {productName}
-                        <span className="transform transition-transform group-hover:translate-x-1">›</span>
-                    </button>
+                    <Link to="/studio">
+                        <button className="group relative px-5 md:px-6 py-3 bg-white border-2 border-[#86bc25] rounded-full text-[#1a2b4b] font-black text-[9px] md:text-[10px] uppercase tracking-widest transition-all hover:bg-[#86bc25] hover:text-white hover:shadow-xl hover:shadow-green-100 flex items-center gap-3 whitespace-nowrap">
+                            Create My {productName}
+                            <span className="transform transition-transform group-hover:translate-x-1">›</span>
+                        </button>
+                    </Link>
                 </div>
 
                 {/* Image Section */}
