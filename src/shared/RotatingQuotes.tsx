@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import quoteBackground from "../assets/quote_background.png";
 
 const quotes = [
     "Packaging as Premium as Your Recipe.",
@@ -33,7 +34,12 @@ const RotatingQuotes: React.FC = () => {
     }, [goNext]);
 
     return (
-        <section className="w-full py-20 md:py-28 bg-[#f3f1ec]">
+        <section
+            className="w-full py-20 md:py-35x bg-cover bg-center bg-no-repeat"
+            style={{
+                backgroundImage: `url(${quoteBackground})`,
+            }}
+        >
             <div className="max-w-4xl mx-auto px-6 text-center">
 
                 {/* Minimal top accent */}

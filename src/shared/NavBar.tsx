@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/logo.svg';
 import { images } from "../pages/LandingPage/Gallery"
 import Stack from '../animations/Stack';
-import { Phone, MailPlus, MapPin, Menu, ChevronDown } from 'lucide-react';
+import { Menu, ChevronDown } from 'lucide-react';
 
 // NavBar Icons
 import bowlIcon from '../assets/navBar/bowl.webp';
@@ -75,7 +75,7 @@ const NavBar = () => {
             <Link to="/" onClick={() => setIsProductsOpen(false)} className="text-[#0a5d3c] hover:text-[#fb923c] transition-colors">Home</Link>
             <a href="#" className="text-[#0a5d3c] hover:text-[#fb923c] transition-colors">About Us</a>
 
-            <div 
+            <div
               className="group/mega flex items-center gap-1 cursor-pointer text-[#0a5d3c] hover:text-[#fb923c] transition-colors py-8"
               onMouseEnter={() => setIsProductsOpen(true)}
               onMouseLeave={() => setIsProductsOpen(false)}
@@ -139,7 +139,7 @@ const NavBar = () => {
                           <img src={hexagonBoxIcon} alt="Other Packaging" className="w-full h-full object-contain" />
                         </div>
                         <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
-                      <Link to="/products" onClick={() => setIsProductsOpen(false)} className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25] transition-colors">Other Food Packaging</Link>
+                          <Link to="/products" onClick={() => setIsProductsOpen(false)} className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25] transition-colors">Other Food Packaging</Link>
                         </div>
                       </div>
                     </div>
@@ -182,7 +182,7 @@ const NavBar = () => {
 
           <div className="w-1/4 flex justify-end">
             <button
-              className="hidden lg:block group text-[14px] px-14  py-3  md:text-[16px]  text-center
+              className="hidden lg:block group text-[14px] px-10  py-3  md:text-[16px]  text-center
                    text-white font-medium 
                   border border-transparent
                   hover:border-[#0d6e41]
@@ -200,7 +200,7 @@ const NavBar = () => {
                   bg-[#0d6e41]
                   flex items-center 
                   "
-            >              Craft Your
+            >          Customize Package
             </button>
             <button className="lg:hidden text-[#0d6e41] p-2">
               <Menu strokeWidth={3} className='w-8 h-8' />
