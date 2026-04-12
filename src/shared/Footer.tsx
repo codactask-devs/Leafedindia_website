@@ -5,7 +5,7 @@ import { Instagram, Linkedin, Facebook, Globe } from 'lucide-react';
 const Footer: FC = () => {
     return (
         <footer id="footer" className="w-full">
-            <div className="  mx-auto bg-[#12263a] rounded-t-[40px] md:rounded-t-[60px] p-10 md:p-20 text-white relative overflow-hidden">
+            <div className="  mx-auto bg-[#12263a]   p-10 md:p-20 text-white relative overflow-hidden">
 
                 <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block" />
 
@@ -68,7 +68,7 @@ const Footer: FC = () => {
                                     <Globe size={22} className="transition-transform group-hover:scale-110" />
                                 </a>
                             </div>
-                            
+
                             {/* Copyright */}
                             <p className="text-gray-500 text-sm mt-4">© 2026 Codac • All Rights Reserved</p>
                         </div>
