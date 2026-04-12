@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import footerLogo from '../assets/leafedIndiaFooterLogo.png';
 import { Instagram, Linkedin, Facebook, Globe } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer: FC = () => {
     return (
@@ -41,9 +42,9 @@ const Footer: FC = () => {
                     <div className="flex flex-col gap-6">
                         <h3 className="text-xl font-bold">About</h3>
                         <ul className="flex flex-col gap-4 text-gray-400 font-medium">
-                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="/">Home</a></li>
-                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="/products">Products</a></li>
-                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><a href="/products#faq">FAQ</a></li>
+                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><Link to="/">Home</Link></li>
+                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><Link to="/products">Products</Link></li>
+                            <li className='hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-white transition-all duration-200 font-medium'><Link to="/products#faq">FAQ</Link></li>
                         </ul>
                     </div>
 
