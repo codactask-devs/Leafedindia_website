@@ -6,12 +6,12 @@ import Stack from '../animations/Stack';
 import { Menu, ChevronDown } from 'lucide-react';
 
 // NavBar Icons
-import bowlIcon from '../assets/navBar/bowl.webp';
-import burgerBoxIcon from '../assets/navBar/burger-box.webp';
-import foodBoxIcon from '../assets/navBar/food-box.webp';
-import hexagonBoxIcon from '../assets/navBar/hexagon-box.webp';
-import paperCupIcon from '../assets/navBar/paper-cup.webp';
-import pizzaBoxIcon from '../assets/navBar/pizza-box.webp';
+import bowlIcon from '../assets/NavBar/bowl.webp';
+import burgerBoxIcon from '../assets/NavBar/burger-box.webp';
+import foodBoxIcon from '../assets/NavBar/food-box.webp';
+import hexagonBoxIcon from '../assets/NavBar/hexagon-box.webp';
+import paperCupIcon from '../assets/NavBar/paper-cup.webp';
+import pizzaBoxIcon from '../assets/NavBar/pizza-box.webp';
 const NavBar = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
