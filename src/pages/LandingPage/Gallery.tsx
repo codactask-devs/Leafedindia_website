@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import cup from "../../assets/Main/cupMain.webp";
 import bowl from "../../assets/Main/bowlMain.webp";
 import burgerbox from "../../assets/Main/burgerBoxMain.webp";
@@ -36,9 +37,21 @@ const categoriesConfig = [
 
 const items = categoriesConfig.flatMap(cat => {
     const selection = cat.images.length > 0 ? cat.images.slice(0, 4) : [cat.defaultImg];
+    
+    // Map category names to actual product IDs in productData.tsx
+    let productId = "";
+    const name = cat.name.toLowerCase();
+    if (name.includes('cup')) productId = 'paper-cups';
+    else if (name.includes('bowl')) productId = 'paper-bowls';
+    else if (name.includes('burger')) productId = 'burger-box';
+    else if (name.includes('food box')) productId = 'food-box';
+    else if (name.includes('tray')) productId = 'paper-tray';
+    else if (name.includes('noodles')) productId = 'hexagon-box'; // Using hexagon as proxy if noodles page missing
+    else productId = 'products'; // Fallback to all products
+
     return selection.map(img => ({
         image: img,
-        link: '#',
+        link: productId === 'products' ? '/products' : `/product/${productId}`,
         title: cat.name,
         description: cat.desc
     }));
@@ -48,6 +61,7 @@ const Gallery: React.FC = () => {
     const menuRef = useRef<InfiniteMenuHandle>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const hasPulsed = useRef(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -70,7 +84,7 @@ const Gallery: React.FC = () => {
     }, []);
 
     return (
-        <div ref={containerRef} className="my-30 w-full mx-auto bg-[#fb923c] pb-20 rounded-[40px]">
+        <div id="collections" ref={containerRef} className="my-30 w-full mx-auto bg-[#fb923c] pb-20 rounded-[40px]">
             <p style={{ fontFamily: "'Montserrat', sans-serif" }} className='pt-10 text-[35px] md:text-[65px] text-[#fefbea] leading-none text-center font-extrabold mt-10 md:mt-25 lg:mt-35 mb-6 ml-[6%]' >Our Eco Collections</p>
 
             <div style={{ height: '600px', position: 'relative' }} className="w-[90%] mx-auto bg-[#dcfce7] rounded-3xl overflow-hidden shadow-2xl ">
@@ -78,6 +92,7 @@ const Gallery: React.FC = () => {
                     ref={menuRef}
                     items={items}
                     scale={1}
+                    onButtonClick={(item) => navigate(item.link)}
                 />
             </div>
         </div>

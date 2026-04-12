@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/logo.svg';
 import { images } from "../pages/LandingPage/Gallery"
 import Stack from '../animations/Stack';
-import { Menu, ChevronDown } from 'lucide-react';
+import { Menu, ChevronDown, X } from 'lucide-react';
 
 // NavBar Icons
 import bowlIcon from '../assets/NavBar/bowl.webp';
@@ -17,6 +17,8 @@ const NavBar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const [isProductsOpen, setIsProductsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
 
   useEffect(() => {
     const controlNavbar = () => {
@@ -39,22 +41,6 @@ const NavBar = () => {
 
   return (
     <header className="w-full relative">
-      {/* <div className="bg-[#0d6e41] text-white py-4 px-4 leading-0 flex flex-col items-center gap-4 text-[13px] font-medium lg:flex-row lg:justify-center lg:gap-12 lg:h-[42px] lg:py-0">
-        <div className="flex flex-wrap text-[14px] font-semibold md:text-[16px] items-center justify-center gap-x-6 gap-y-2 lg:gap-12">
-          <div className="flex items-center gap-2 hover:text-orange-300 transition-colors cursor-pointer">
-            <Phone className='md:w-[16px] md:h-[16px] w-[14px] h-[14px]' />
-            <span>(+91) 9502952951</span>
-          </div>
-          <div className="flex items-center gap-2 hover:text-orange-300 transition-colors cursor-pointer">
-            <MailPlus className='md:w-[16px] md:h-[16px] w-[14px] h-[14px]' />
-            <span>sales@leafedindia.com</span>
-          </div>
-        </div>
-        <div className="flex text-[14px] font-semibold md:text-[16px] items-center gap-2 hover:text-orange-300 transition-colors cursor-pointer">
-          <MapPin className='md:w-[16px] md:h-[16px] w-[14px] h-[14px]' />
-          <span>Chennai, India</span>
-        </div>
-      </div> */}
       {/* navbar */}
       <div className={`fixed left-1/2 -translate-x-1/2 w-full md:w-[95%] max-w-7xl z-50 transition-all duration-300 ${isVisible ? ' opacity-100' : 'top-[-100px] opacity-0 pointer-events-none'}`}>
         <nav className="bg-white rounded-b-[40px] shadow-[0_15px_40px_rgba(0,0,0,0.12)] h-[70px] md:h-[90px] px-4 md:px-10 flex items-center justify-between">
@@ -73,7 +59,7 @@ const NavBar = () => {
 
           <div style={{ fontFamily: "Montserrat" }} className="hidden lg:flex flex-1 justify-between pl-20 items-center gap-[2%] font-semibold text-[#333]">
             <Link to="/" onClick={() => setIsProductsOpen(false)} className="text-[#0a5d3c] hover:text-[#fb923c] transition-colors">Home</Link>
-            <a href="#" className="text-[#0a5d3c] hover:text-[#fb923c] transition-colors">About Us</a>
+            <Link to="/#about" onClick={() => setIsProductsOpen(false)} className="text-[#0a5d3c] hover:text-[#fb923c] transition-colors">About Us</Link>
 
             <div
               className="group/mega flex items-center gap-1 cursor-pointer text-[#0a5d3c] hover:text-[#fb923c] transition-colors py-8"
@@ -175,9 +161,9 @@ const NavBar = () => {
               </div>
             </div>
 
-            <div onClick={() => document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' })} className="flex items-center gap-1 cursor-pointer text-[#0a5d3c] hover:text-[#fb923c] transition-colors group">
+            <Link to="/#footer" onClick={() => setIsProductsOpen(false)} className="flex items-center gap-1 cursor-pointer text-[#0a5d3c] hover:text-[#fb923c] transition-colors group">
               <span>Contact</span>
-            </div>
+            </Link>
           </div>
 
           <div className="w-1/4 flex justify-end">
@@ -204,11 +190,122 @@ const NavBar = () => {
               >          Customize Package
               </button>
             </Link>
-            <button className="lg:hidden text-[#0d6e41] p-2">
-              <Menu strokeWidth={3} className='w-8 h-8' />
+            <button
+              className="lg:hidden text-[#0d6e41] p-2 bg-white/80 rounded-xl hover:bg-gray-100 transition-colors pointer-events-auto"
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu strokeWidth={3} className='w-7 h-7' />
             </button>
           </div>
         </nav>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <div
+        className={`fixed inset-0 z-[100] lg:hidden transition-all duration-500 ${isMobileMenuOpen ? 'visible' : 'invisible'}`}
+      >
+        {/* Backdrop */}
+        <div
+          className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-500 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`}
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+
+        {/* Sidebar */}
+        <div
+          className={`absolute top-0 left-0 bottom-0 w-[300px] bg-white shadow-2xl transition-transform duration-500 ease-out flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        >
+          {/* Mobile Header */}
+          <div className="p-6 flex items-center justify-between border-b border-gray-100">
+            <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
+              <img src={logo} alt="LeafedIndia Logo" className="h-15 w-auto" />
+            </Link>
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="p-2 text-[#0a5d3c] hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Navigation Links */}
+          <div className="flex-1 overflow-y-auto py-8 px-6 space-y-6">
+            <Link
+              to="/"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-lg font-bold text-[#0d6e41] hover:text-[#fb923c] transition-colors"
+            >
+              Home
+            </Link>
+
+            <Link
+              to="/#about"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-lg font-bold text-[#0d6e41] hover:text-[#fb923c] transition-colors"
+            >
+              About Us
+            </Link>
+
+            {/* Mobile Products Accordion */}
+            <div className="space-y-4">
+              <button
+                onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
+                className="w-full flex items-center justify-between text-lg font-bold text-[#0d6e41] hover:text-[#fb923c] transition-colors"
+              >
+                <span>Products</span>
+                <ChevronDown className={`w-5 h-5 transition-transform ${isMobileProductsOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              <div className={`pl-4 space-y-4 overflow-hidden transition-all duration-300 ${isMobileProductsOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                <Link
+                  to="/products"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block text-[#0d6e41] font-semibold hover:text-[#fb923c]"
+                >
+                  See All Products
+                </Link>
+                <div className="grid gap-4">
+                  {[
+                    { to: "/product/food-box", name: "Paper Food Box", icon: foodBoxIcon },
+                    { to: "/product/paper-bowls", name: "Bowls", icon: bowlIcon },
+                    { to: "/product/burger-box", name: "Burger Box", icon: burgerBoxIcon },
+                    { to: "/product/paper-cups", name: "Paper Cups", icon: paperCupIcon },
+                    { to: "/product/pizza-box", name: "Pizza Box", icon: pizzaBoxIcon }
+                  ].map((item) => (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center gap-3 text-sm font-medium text-gray-600 hover:text-[#fb923c]"
+                    >
+                      <div className="w-8 h-8 bg-[#fefbea] rounded p-1">
+                        <img src={item.icon} alt={item.name} className="w-full h-full object-contain" />
+                      </div>
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <Link
+              to="/#footer"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-lg font-bold text-[#0d6e41] hover:text-[#fb923c] transition-colors cursor-pointer"
+            >
+              Contact
+            </Link>
+          </div>
+
+          {/* Mobile Footer Area */}
+          <div className="p-6 border-t border-gray-100">
+            <Link to="/studio" onClick={() => setIsMobileMenuOpen(false)}>
+              <button className="w-full py-4 bg-[#0d6e41] text-white font-bold rounded-2xl shadow-[0_10px_20px_rgba(13,110,65,0.2)] hover:bg-[#0a5d3c] active:scale-95 transition-all">
+                Customize Package
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>
     </header>
   );

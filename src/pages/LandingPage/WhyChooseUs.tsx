@@ -41,7 +41,7 @@ const WhyChooseUs = () => {
   ];
 
   return (
-    <section className="mt-10 bg-white md:mt-20 relative w-full max-w-[92%] mx-auto p-6 md:p-10 lg:p-14 py-16 md:py-24 overflow-hidden rounded-[40px] border-2 border-[#86efac]/70  shadow-sm mb-20">
+    <section id="about" className="mt-10 bg-white md:mt-20 relative w-full max-w-[92%] mx-auto p-6 md:p-10 lg:p-14 py-16 md:py-24 overflow-hidden rounded-[40px] border-2 border-[#86efac]/70  shadow-sm mb-20">
 
       <div
         className="absolute inset-0 z-0 opacity-40 pointer-events-none"
