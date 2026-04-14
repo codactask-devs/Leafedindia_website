@@ -213,12 +213,12 @@ const NavBar = () => {
 
         {/* Sidebar */}
         <div
-          className={`absolute top-0 right-0 bottom-0 w-full sm:w-[400px] bg-white shadow-2xl transition-transform duration-500 ease-out flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`absolute top-0 left-0 bottom-0 w-full sm:w-[400px] bg-white shadow-2xl transition-transform duration-500 ease-out flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
         >
           {/* Mobile Header */}
           <div className="p-6 flex items-center justify-between border-b-2 border-gray-100">
             <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
-              <img src={logo} alt="LeafedIndia Logo" className="h-10 w-auto" />
+              <img src={logo} alt="LeafedIndia Logo" className="h-15 w-auto" />
             </Link>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
