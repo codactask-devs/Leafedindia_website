@@ -1,6 +1,7 @@
 import { ArrowRight, Star } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import bg1 from "../../assets/bg2.png";
 
 interface ProductHeroSectionProps {
     productName: string;
@@ -27,7 +28,15 @@ const ProductHeroSection: React.FC<ProductHeroSectionProps> = ({
     }, []);
 
     return (
-        <section className="w-full pt-32 pb-16 px-6 lg:px-20 bg-[#fdfdfb] overflow-hidden">
+        <section
+            className="w-full pt-32 pb-16 px-6 lg:px-20 overflow-hidden relative"
+            style={{
+                backgroundImage: `url(${bg1})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+            }}
+        >
             <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                 {/* Left Content */}
                 <div className={`flex-1 space-y-6 transition-all duration-1000 transform ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-12 opacity-0'}`}>
@@ -56,7 +65,7 @@ const ProductHeroSection: React.FC<ProductHeroSectionProps> = ({
                     </p>
 
                     <div className="flex flex-wrap gap-4 pt-4">
-                        <button 
+                        <button
                             onClick={() => {
                                 document.getElementById('product-specs')?.scrollIntoView({ behavior: 'smooth' });
                             }}
