@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { FileText, Layers, Droplets, PenTool } from "lucide-react";
 import type { SpecificationData } from "./productData";
+import bg2 from "../../assets/bg1.png";
+import quoteBackground from "../../assets/quote_background.png";
+
 
 interface ProductSpecsSectionProps {
     productName: string;
@@ -61,8 +64,14 @@ const ProductSpecsSection: React.FC<ProductSpecsSectionProps> = ({
     const materials = currentMaterialKeys.map(key => materialLibrary[key]);
 
     return (
-        <section id="product-specs" className="w-full py-20 px-6 lg:px-20 bg-white">
-            <div className="max-w-7xl mx-auto">
+        <section
+            id="product-specs"
+            className="w-full py-20 px-6 lg:px-20 overflow-hidden relative"
+
+        >
+
+            <div className="max-w-7xl mx-auto"
+            >
                 <h2 className="text-[32px] md:text-[48px] font-black text-[#1a2b4b] text-center mb-12 tracking-tight">
                     Specifications & Materials for {productName}
                 </h2>
@@ -92,7 +101,12 @@ const ProductSpecsSection: React.FC<ProductSpecsSectionProps> = ({
                 </div>
 
                 {/* Container */}
-                <div className="bg-[#f8f9fc] rounded-[24px] md:rounded-[40px] border border-gray-100 p-5 md:p-12 lg:p-16 min-h-[200px] md:min-h-[500px] shadow-sm">
+                <div style={{
+                    backgroundImage: `url(${quoteBackground})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                }} className="bg-[#f8f9fc] rounded-[24px] md:rounded-[40px] border border-gray-100 p-5 md:p-12 lg:p-16 min-h-[200px] md:min-h-[500px] shadow-sm">
                     {activeTab === "materials" ? (
                         <div className="space-y-12 animate-in fade-in duration-500 max-w-5xl mx-auto">
                             <h3 className="text-3xl font-black text-[#1a2b4b] text-center tracking-tight">

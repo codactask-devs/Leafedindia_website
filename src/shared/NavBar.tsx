@@ -213,75 +213,70 @@ const NavBar = () => {
 
         {/* Sidebar */}
         <div
-          className={`absolute top-0 left-0 bottom-0 w-[300px] bg-white shadow-2xl transition-transform duration-500 ease-out flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+          className={`absolute top-0 right-0 bottom-0 w-full sm:w-[400px] bg-white shadow-2xl transition-transform duration-500 ease-out flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
           {/* Mobile Header */}
-          <div className="p-6 flex items-center justify-between border-b border-gray-100">
+          <div className="p-6 flex items-center justify-between border-b-2 border-gray-100">
             <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
-              <img src={logo} alt="LeafedIndia Logo" className="h-15 w-auto" />
+              <img src={logo} alt="LeafedIndia Logo" className="h-10 w-auto" />
             </Link>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 text-[#0a5d3c] hover:bg-gray-100 rounded-full transition-colors"
+              className="p-2 text-[#4b5563] hover:bg-gray-100 rounded-full transition-colors"
             >
-              <X className="w-6 h-6" />
+              <X className="w-7 h-7" />
             </button>
           </div>
 
           {/* Navigation Links */}
-          <div className="flex-1 overflow-y-auto py-8 px-6 space-y-6">
+          <div className="flex-1 overflow-y-auto w-full">
             <Link
               to="/"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="block text-lg font-bold text-[#0d6e41] hover:text-[#fb923c] transition-colors"
+              className="block w-full py-5 text-center text-lg font-medium text-[#1a2b4b] border-b border-gray-100"
             >
               Home
             </Link>
 
-            <Link
-              to="/#about"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block text-lg font-bold text-[#0d6e41] hover:text-[#fb923c] transition-colors"
-            >
-              About Us
-            </Link>
-
             {/* Mobile Products Accordion */}
-            <div className="space-y-4">
+            <div className="border-b border-gray-100">
               <button
                 onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
-                className="w-full flex items-center justify-between text-lg font-bold text-[#0d6e41] hover:text-[#fb923c] transition-colors"
+                className="w-full py-5 flex items-center justify-center gap-2 text-lg font-medium text-[#1a2b4b]"
               >
-                <span>Products</span>
-                <ChevronDown className={`w-5 h-5 transition-transform ${isMobileProductsOpen ? 'rotate-180' : ''}`} />
+                <span>Product</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${isMobileProductsOpen ? 'rotate-180' : ''}`} />
               </button>
 
-              <div className={`pl-4 space-y-4 overflow-hidden transition-all duration-300 ${isMobileProductsOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+              <div className={`overflow-hidden transition-all duration-300 bg-[#f9fafb] ${isMobileProductsOpen ? 'max-h-[1000px] opacity-100 py-8' : 'max-h-0 opacity-0 py-0'}`}>
                 <Link
                   to="/products"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block text-[#0d6e41] font-semibold hover:text-[#fb923c]"
+                  className="block text-center text-[#86bc25] font-bold text-xl mb-10"
                 >
-                  See All Products
+                  SEE All Products
                 </Link>
-                <div className="grid gap-4">
+                <div className="grid grid-cols-2 gap-y-10 gap-x-4 px-4 w-full max-w-[320px] mx-auto">
                   {[
-                    { to: "/product/food-box", name: "Paper Food Box", icon: foodBoxIcon },
-                    { to: "/product/paper-bowls", name: "Bowls", icon: bowlIcon },
-                    { to: "/product/burger-box", name: "Burger Box", icon: burgerBoxIcon },
+                    { to: "/product/food-box", name: "Paper Lunch Box", icon: foodBoxIcon },
+                    { to: "/product/paper-bowls", name: "Paper Bowls", icon: bowlIcon },
                     { to: "/product/paper-cups", name: "Paper Cups", icon: paperCupIcon },
-                    { to: "/product/pizza-box", name: "Pizza Box", icon: pizzaBoxIcon }
+                    { to: "/product/paper-bags", name: "Paper Bag", icon: burgerBoxIcon },
+                    { to: "/product/cutlery", name: "Cutlery", icon: burgerBoxIcon },
+                    { to: "/products", name: "Other Food Packaging", icon: hexagonBoxIcon }
                   ].map((item) => (
                     <Link
-                      key={item.to}
+                      key={item.name}
                       to={item.to}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center gap-3 text-sm font-medium text-gray-600 hover:text-[#fb923c]"
+                      className="flex flex-col items-center gap-3 group"
                     >
-                      <div className="w-8 h-8 bg-[#fefbea] rounded p-1">
-                        <img src={item.icon} alt={item.name} className="w-full h-full object-contain" />
+                      <div className="h-16 flex items-center justify-center">
+                        <img src={item.icon} alt={item.name} className="w-16 h-16 object-contain mix-blend-multiply" />
                       </div>
-                      {item.name}
+                      <span className="text-sm font-semibold text-[#1a2b4b] border-b border-transparent group-hover:border-[#fb923c] pb-1 px-1 text-center transition-colors">
+                        {item.name}
+                      </span>
                     </Link>
                   ))}
                 </div>
@@ -289,23 +284,33 @@ const NavBar = () => {
             </div>
 
             <Link
+              to="/#about"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block w-full py-5 text-center text-lg font-medium text-[#1a2b4b] border-b border-gray-100"
+            >
+              About Us
+            </Link>
+
+            <Link
+              to="/#blog"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block w-full py-5 text-center text-lg font-medium text-[#1a2b4b] border-b border-gray-100"
+            >
+              Blog
+            </Link>
+
+            <Link
               to="/#footer"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="block text-lg font-bold text-[#0d6e41] hover:text-[#fb923c] transition-colors cursor-pointer"
+              className="block w-full py-5 text-center text-lg font-medium text-[#1a2b4b] border-b border-gray-100"
             >
               Contact
             </Link>
-          </div>
 
-          {/* Mobile Footer Area */}
-          <div className="p-6 border-t border-gray-100">
-            <Link to="/studio" onClick={() => setIsMobileMenuOpen(false)}>
-              <button className="w-full py-4 bg-[#0d6e41] text-white font-bold rounded-2xl shadow-[0_10px_20px_rgba(13,110,65,0.2)] hover:bg-[#0a5d3c] active:scale-95 transition-all">
-                Customize Package
-              </button>
-            </Link>
+
           </div>
         </div>
+
       </div>
     </header>
   );
