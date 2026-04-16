@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.svg';
-import { images } from "../pages/LandingPage/Gallery"
+import { stackImages } from '../assets/Assets';
 import Stack from '../animations/Stack';
 import { Menu, ChevronDown, X } from 'lucide-react';
 
 // NavBar Icons
-import bowlIcon from '../assets/NavBar/bowl.webp';
-import burgerBoxIcon from '../assets/NavBar/burger-box.webp';
-import foodBoxIcon from '../assets/NavBar/food-box.webp';
-import hexagonBoxIcon from '../assets/NavBar/hexagon-box.webp';
-import paperCupIcon from '../assets/NavBar/paper-cup.webp';
-import pizzaBoxIcon from '../assets/NavBar/pizza-box.webp';
+import bowlIcon from '../assets/NavBarIcons/bowl.webp';
+import burgerBoxIcon from '../assets/NavBarIcons/burger-box.webp';
+import foodBoxIcon from '../assets/NavBarIcons/food-box.webp';
+import hexagonBoxIcon from '../assets/NavBarIcons/hexagon-box.webp';
+import paperCupIcon from '../assets/NavBarIcons/paper-cup.webp';
+import pizzaBoxIcon from '../assets/NavBarIcons/pizza-box.webp';
 const NavBar = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -84,7 +84,7 @@ const NavBar = () => {
                         </div>
                       </Link>
 
-                      <Link to="/product/paper-bowls" onClick={() => setIsProductsOpen(false)} className="flex items-center gap-6 group/item cursor-pointer">
+                      <Link to="/product/bowls" onClick={() => setIsProductsOpen(false)} className="flex items-center gap-6 group/item cursor-pointer">
                         <div className="w-14 h-14 bg-[#fefbea] rounded-xl flex items-center justify-center overflow-hidden group-hover/item:bg-[#86bc25] transition-colors p-0.5">
                           <img src={bowlIcon} alt="Bowl" className="w-full h-full object-contain" />
                         </div>
@@ -102,7 +102,7 @@ const NavBar = () => {
                         </div>
                       </Link>
 
-                      <Link to="/product/paper-cups" onClick={() => setIsProductsOpen(false)} className="flex items-center gap-6 group/item cursor-pointer">
+                      <Link to="/product/cups" onClick={() => setIsProductsOpen(false)} className="flex items-center gap-6 group/item cursor-pointer">
                         <div className="w-14 h-14 bg-[#fefbea] rounded-xl flex items-center justify-center overflow-hidden group-hover/item:bg-[#86bc25] transition-colors p-0.5">
                           <img src={paperCupIcon} alt="Paper Cup" className="w-full h-full object-contain" />
                         </div>
@@ -111,12 +111,12 @@ const NavBar = () => {
                         </div>
                       </Link>
 
-                      <Link to="/product/pizza-box" onClick={() => setIsProductsOpen(false)} className="flex items-center gap-6 group/item cursor-pointer">
+                      <Link to="/product/noodle-box" onClick={() => setIsProductsOpen(false)} className="flex items-center gap-6 group/item cursor-pointer">
                         <div className="w-14 h-14 bg-[#fefbea] rounded-xl flex items-center justify-center overflow-hidden group-hover/item:bg-[#86bc25] transition-colors p-0.5">
-                          <img src={pizzaBoxIcon} alt="Pizza Box" className="w-full h-full object-contain" />
+                          <img src={pizzaBoxIcon} alt="Noodle Box" className="w-full h-full object-contain" />
                         </div>
                         <div className="border-b border-gray-100 flex-1 pb-3 group-hover/item:border-[#86bc25] transition-colors">
-                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Pizza box</span>
+                          <span className="text-[#0d6e41] text-md font-bold group-hover/item:text-[#86bc25]">Noodle box</span>
                         </div>
                       </Link>
 
@@ -137,7 +137,7 @@ const NavBar = () => {
                         randomRotation={false}
                         sensitivity={200}
                         sendToBackOnClick={true}
-                        cards={images.map((src: any, i: number) => (
+                        cards={stackImages.map((src: any, i: number) => (
                           <img
                             key={i}
                             src={src}
@@ -258,12 +258,12 @@ const NavBar = () => {
                 </Link>
                 <div className="grid grid-cols-2 gap-y-10 gap-x-4 px-4 w-full max-w-[320px] mx-auto">
                   {[
-                    { to: "/product/food-box", name: "Paper Lunch Box", icon: foodBoxIcon },
-                    { to: "/product/paper-bowls", name: "Paper Bowls", icon: bowlIcon },
-                    { to: "/product/paper-cups", name: "Paper Cups", icon: paperCupIcon },
-                    { to: "/product/paper-bags", name: "Paper Bag", icon: burgerBoxIcon },
-                    { to: "/product/cutlery", name: "Cutlery", icon: burgerBoxIcon },
-                    { to: "/products", name: "Other Food Packaging", icon: hexagonBoxIcon }
+                    { to: "/product/food-box", name: "Paper Food Box", icon: foodBoxIcon },
+                    { to: "/product/bowls", name: "Paper Bowls", icon: bowlIcon },
+                    { to: "/product/cups", name: "Paper Cups", icon: paperCupIcon },
+                    { to: "/product/burger-box", name: "Burger Box", icon: burgerBoxIcon },
+                    { to: "/product/noodle-box", name: "Noodle Box", icon: pizzaBoxIcon },
+                    { to: "/product/food-tray", name: "Other Food Packaging", icon: hexagonBoxIcon }
                   ].map((item) => (
                     <Link
                       key={item.name}

@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { allGalleryImages } from "../../assets/Assets";
 import NavBar from "../../shared/NavBar";
 import ProductHeroSection from "./ProductHeroSection";
 import { products } from "./productData";
@@ -14,7 +15,7 @@ const SingleProductPage = () => {
     const { id } = useParams<{ id: string }>();
 
     // Fallback logic
-    const activeProduct = (id && products[id as keyof typeof products]) || products["paper-bowls"];
+    const activeProduct = (id && products[id as keyof typeof products]) || products["bowls"];
 
     return (
         <div className="w-full min-h-screen bg-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
@@ -36,7 +37,7 @@ const SingleProductPage = () => {
                     title={activeProduct.variantsTitle}
                     description={activeProduct.variantsDescription}
                     variants={activeProduct.variants}
-                    variantFolder={activeProduct.variantFolder}
+                    galleryImages={allGalleryImages}
                 />
             </div>
 

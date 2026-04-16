@@ -1,21 +1,14 @@
 import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import burgerBox from "../../assets/Main/burgerBoxMain.webp";
-import foodBox from "../../assets/Main/foodBoxMain.webp";
-import cupMain from "../../assets/Main/cupMain.webp";
-import bowlMain from "../../assets/Main/bowlMain.webp";
-import foodTrayMain from "../../assets/Main/foodTrayMain.webp";
-import foodBoxAlt1 from "../../assets/FOOD BOX/foodBox1.webp";
-import foodBoxAlt2 from "../../assets/FOOD BOX/foodBox2.webp";
 import Stack from "../../animations/Stack";
-import { images } from "../LandingPage/Gallery";
+import { stackImages, productAssets } from "../../assets/Assets";
 
 const products = [
     {
         title: "Burger Box",
         description: "Perfectly sized, breathable paper boxes for fresh burgers.",
-        image: burgerBox,
+        image: productAssets["BurgerBox"]?.main || "",
         bg: "bg-[#fdf8f3]",
         category: "Fast Food",
         span: "md:col-span-1"
@@ -23,7 +16,7 @@ const products = [
     {
         title: "Paper Cups",
         description: "Versatile, leak-proof cups for hot and cold beverages.",
-        image: cupMain,
+        image: productAssets["Cups"]?.main || "",
         bg: "bg-[#f3f9f6]",
         category: "Beverage",
         span: "md:col-span-1 md:row-span-2",
@@ -32,7 +25,7 @@ const products = [
     {
         title: "Bowl",
         description: "Sturdy and stylish bowls for salads, soups, and more.",
-        image: bowlMain,
+        image: productAssets["Bowls"]?.main || "",
         bg: "bg-[#fef7f4]",
         category: "Catering",
         span: "md:col-span-1"
@@ -40,7 +33,7 @@ const products = [
     {
         title: "Paper Food Box",
         description: "The ultimate sustainable solution for full meals and takeaway.",
-        image: foodBox,
+        image: productAssets["FoodBox"]?.main || "",
         bg: "bg-[#f8fafc]",
         category: "Takeaway",
         span: "md:col-span-2"
@@ -48,23 +41,23 @@ const products = [
     {
         title: "Paper Tray",
         description: "Open-top trays for easy serving and eco-friendly dining.",
-        image: foodTrayMain,
+        image: productAssets["FoodTray"]?.main || "",
         bg: "bg-[#fdf2f8]",
         category: "Serving",
         span: "md:col-span-1"
     },
     {
-        title: "Pizza Box",
-        description: "Insulated, robust paper boxes to keep pizzas hot and crisp.",
-        image: foodBoxAlt1, // Placeholder
+        title: "Noodle Box",
+        description: "Insulated, robust paper boxes to keep noodles hot and crisp.",
+        image: productAssets["NoodleBox"]?.main || "",
         bg: "bg-[#fffbeb]",
-        category: "Pizza",
+        category: "Noodle",
         span: "md:col-span-1"
     },
     {
         title: "Hexagon Box",
         description: "Unique geometric packaging for premium gifting and food.",
-        image: foodBoxAlt2,
+        image: productAssets["HexagonBox"]?.main || "",
         bg: "bg-[#f0fdf4]",
         category: "Specialty",
         span: "md:col-span-1"
@@ -85,11 +78,11 @@ const ProductGallery = () => {
 
     const titleToId: Record<string, string> = {
         "Burger Box": "burger-box",
-        "Paper Cups": "paper-cups",
-        "Bowl": "paper-bowls",
+        "Paper Cups": "cups",
+        "Bowl": "bowls",
         "Paper Food Box": "food-box",
-        "Paper Tray": "paper-tray",
-        "Pizza Box": "pizza-box",
+        "Paper Tray": "food-tray",
+        "Noodle Box": "noodle-box",
         "Hexagon Box": "hexagon-box"
     };
 
@@ -142,7 +135,7 @@ const ProductGallery = () => {
                                                         randomRotation={true}
                                                         sensitivity={180}
                                                         sendToBackOnClick={true}
-                                                        cards={images.map((src, i) => (
+                                                        cards={stackImages.map((src, i) => (
                                                             <img
                                                                 key={i}
                                                                 src={src}

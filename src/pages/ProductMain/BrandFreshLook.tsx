@@ -1,4 +1,4 @@
-import pizzaBox from '../../assets/FOOD BOX/pizzaBox.webp';
+import { productAssets } from "../../assets/Assets";
 import { ArrowRight } from 'lucide-react';
 
 const BrandFreshLook = () => {
@@ -31,7 +31,7 @@ const BrandFreshLook = () => {
                 <div className="flex-1 relative">
                     <div className="relative z-10 rounded-[40px] overflow-hidden shadow-2xl transform md:rotate-2 hover:rotate-0 transition-transform duration-700">
                         <img
-                            src={pizzaBox}
+                            src={productAssets["NoodleBox"]?.main || ""}
                             alt="Brand Mockup Packaging"
                             className="w-full h-auto object-cover"
                         />

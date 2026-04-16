@@ -6,7 +6,7 @@ import cert3 from "../../assets/Certificates/cert3.webp";
 import certLogo1 from "../../assets/Certificates/certLogo1.webp";
 import certLogo2 from "../../assets/Certificates/certLogo2.webp";
 import certLogo3 from "../../assets/Certificates/certLogo3.avif";
-import foodTrayMain from "../../assets/Main/foodTrayMain.webp";
+import { productAssets } from "../../assets/Assets";
 const WhyChooseUs = () => {
   const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
 
@@ -85,7 +85,7 @@ const WhyChooseUs = () => {
         <div className="w-full lg:w-[45%] flex justify-center  relative">
           <div className="absolute inset-0 bg-green-100 rounded-[40px] transform rotate-3 scale-105 transition-transform duration-500 hover:rotate-6"></div>
           <img
-            src={foodTrayMain}
+            src={productAssets["FoodTray"]?.main || ""}
             alt="Eco Packaging"
             loading="lazy"
             decoding="async"

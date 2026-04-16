@@ -8,12 +8,12 @@ const Footer: FC = () => {
         <footer id="footer" className="w-full">
             <div className="  mx-auto bg-[#12263a]   p-10 md:p-20 text-white relative overflow-hidden">
 
-                <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block" />
+                <div className="absolute top-60 left-0 w-[800px] h-[500px] bg-white/3 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block" />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 relative z-10">
 
                     {/* Brand Section */}
-                    <div className="flex flex-col gap-8 col-span-1 lg:col-span-1">
+                    <div className="flex flex-col gap-8 col-span-1   lg:col-span-1">
                         <div className="">
                             <img src={footerLogo} alt="LeafedIndia Logo" className="h-[90px] md:h-[130px] object-contain" />
                         </div>
@@ -29,7 +29,7 @@ const Footer: FC = () => {
                     </div>
 
                     {/* Contact Info */}
-                    <div className="flex flex-col gap-6">
+                    <div className="flex flex-col ml-5 gap-6">
                         <h3 className="text-xl font-bold">Contact</h3>
                         <ul className="flex flex-col gap-4 text-gray-400 font-medium">
                             <li className="font-medium text-gray-400 hover:text-white transition-all">Tamil Nadu, India</li>

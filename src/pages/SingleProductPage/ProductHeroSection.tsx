@@ -84,6 +84,8 @@ const ProductHeroSection: React.FC<ProductHeroSectionProps> = ({
                         <img
                             src={heroImage}
                             alt="Product Hero"
+                            loading="eager"
+                            fetchPriority="high"
                             className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
                         />
                         {/* Floating Trusted Card */}

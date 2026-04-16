@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { Leaf } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Variant } from "./productData";
-import { getImagesInFolder } from "../../shared/utils/assetLoader";
+// Removed getImagesInFolder as assets are now automated in productAssets
 
 interface ProductVariantsSectionProps {
     catchPhrase: string;
     title: string;
     description: string;
     variants: Variant[];
-    variantFolder?: string;
+    galleryImages?: string[];
 }
 
 const ProductVariantsSection: React.FC<ProductVariantsSectionProps> = ({
@@ -17,7 +17,7 @@ const ProductVariantsSection: React.FC<ProductVariantsSectionProps> = ({
     title,
     description,
     variants,
-    variantFolder,
+    galleryImages = [],
 }) => {
     const [activeVariantIndex, setActiveVariantIndex] = useState(0);
     const [selectedGalleryImage, setSelectedGalleryImage] = useState<string | null>(null);
@@ -58,12 +58,9 @@ const ProductVariantsSection: React.FC<ProductVariantsSectionProps> = ({
         return () => observer.disconnect();
     }, [variants]);
 
-    // Dynamic loading of additional gallery images
-    const dynamicImages = variantFolder ? getImagesInFolder(variantFolder) : [];
-    
-    // Filter out dynamic images that are already present in static variants
+    // Filter out gallery images that are already present in static variants
     const existingImageUrls = new Set(variants.map(v => v.image));
-    const galleryItems = dynamicImages.filter(imgUrl => !existingImageUrls.has(imgUrl));
+    const galleryItems = galleryImages.filter(imgUrl => !existingImageUrls.has(imgUrl));
 
     return (
         <section className="w-full py-24 px-6 lg:px-20 bg-transparent">

@@ -1,38 +1,31 @@
 import React, { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import cup from "../../assets/Main/cupMain.webp";
-import bowl from "../../assets/Main/bowlMain.webp";
-import burgerbox from "../../assets/Main/burgerBoxMain.webp";
-import foodbox from "../../assets/Main/foodBoxMain.webp";
-import foodtray from "../../assets/Main/foodTrayMain.webp";
-import noodlesbox from "../../assets/Main/noodlesBoxMain.webp";
-
+import { productAssets } from "../../assets/Assets";
 import InfiniteMenu, { type InfiniteMenuHandle } from "../../animations/InfiniteMenu";
 
-// Asset folder mapping
-const cupImages = Object.values(import.meta.glob('../../assets/CUPS/*.{svg,webp}', { eager: true, import: 'default' })) as string[];
-const bowlImages = Object.values(import.meta.glob('../../assets/Main/bowl*.{svg,webp}', { eager: true, import: 'default' })) as string[];
-const burgerImages = Object.values(import.meta.glob('../../assets/BURGER BOX/*.{svg,webp}', { eager: true, import: 'default' })) as string[];
-const foodBoxImages = Object.values(import.meta.glob('../../assets/FOOD BOX/*.{svg,webp}', { eager: true, import: 'default' })) as string[];
-const foodTrayImages = Object.values(import.meta.glob('../../assets/FOOD TRAY/*.{svg,webp}', { eager: true, import: 'default' })) as string[];
-const noodleImages = Object.values(import.meta.glob('../../assets/NOODLES_BOX/*.{svg,webp}', { eager: true, import: 'default' })) as string[];
+const cupImages = productAssets["Cups"]?.variants || [];
+const bowlImages = productAssets["Bowls"]?.variants || [];
+const burgerImages = productAssets["BurgerBox"]?.variants || [];
+const foodBoxImages = productAssets["FoodBox"]?.variants || [];
+const foodTrayImages = productAssets["FoodTray"]?.variants || [];
+const noodleImages = productAssets["NoodleBox"]?.variants || [];
 
 export const images = [
-    cup,
-    bowl,
-    burgerbox,
-    foodbox,
-    foodtray,
-    noodlesbox
+    productAssets["Cups"]?.main || "",
+    productAssets["Bowls"]?.main || "",
+    productAssets["BurgerBox"]?.main || "",
+    productAssets["FoodBox"]?.main || "",
+    productAssets["FoodTray"]?.main || "",
+    productAssets["NoodleBox"]?.main || ""
 ];
 
 const categoriesConfig = [
-    { name: 'Cups', images: cupImages, defaultImg: cup, desc: 'Designed for drinks, crafted for brands.' },
-    { name: 'Bowls', images: bowlImages, defaultImg: bowl, desc: 'Serve hearty meals with confidence.' },
-    { name: 'Burger Box', images: burgerImages, defaultImg: burgerbox, desc: 'Packaging made for the ultimate bite.' },
-    { name: 'Food Box', images: foodBoxImages, defaultImg: foodbox, desc: 'Reliable boxes for every takeaway.' },
-    { name: 'Food Tray', images: foodTrayImages, defaultImg: foodtray, desc: 'Perfect trays for quick bites.' },
-    { name: 'Noodles Box', images: noodleImages, defaultImg: noodlesbox, desc: 'Designed for flavors that travel.' },
+    { name: 'Cups', images: cupImages, defaultImg: productAssets["Cups"]?.main || "", desc: 'Designed for drinks, crafted for brands.' },
+    { name: 'Bowls', images: bowlImages, defaultImg: productAssets["Bowls"]?.main || "", desc: 'Serve hearty meals with confidence.' },
+    { name: 'Burger Box', images: burgerImages, defaultImg: productAssets["BurgerBox"]?.main || "", desc: 'Packaging made for the ultimate bite.' },
+    { name: 'Food Box', images: foodBoxImages, defaultImg: productAssets["FoodBox"]?.main || "", desc: 'Reliable boxes for every takeaway.' },
+    { name: 'Food Tray', images: foodTrayImages, defaultImg: productAssets["FoodTray"]?.main || "", desc: 'Perfect trays for quick bites.' },
+    { name: 'Noodles Box', images: noodleImages, defaultImg: productAssets["NoodleBox"]?.main || "", desc: 'Designed for flavors that travel.' },
 ];
 
 const items = categoriesConfig.flatMap(cat => {
@@ -41,12 +34,12 @@ const items = categoriesConfig.flatMap(cat => {
     // Map category names to actual product IDs in productData.tsx
     let productId = "";
     const name = cat.name.toLowerCase();
-    if (name.includes('cup')) productId = 'paper-cups';
-    else if (name.includes('bowl')) productId = 'paper-bowls';
+    if (name.includes('cup')) productId = 'cups';
+    else if (name.includes('bowl')) productId = 'bowls';
     else if (name.includes('burger')) productId = 'burger-box';
     else if (name.includes('food box')) productId = 'food-box';
-    else if (name.includes('tray')) productId = 'paper-tray';
-    else if (name.includes('noodles')) productId = 'hexagon-box'; // Using hexagon as proxy if noodles page missing
+    else if (name.includes('tray')) productId = 'food-tray';
+    else if (name.includes('noodles')) productId = 'noodle-box';
     else productId = 'products'; // Fallback to all products
 
     return selection.map(img => ({
