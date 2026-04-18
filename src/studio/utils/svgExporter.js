@@ -5,8 +5,9 @@
  * for full vector editing — no rasterization involved.
  */
 
-const DESIGN_WIDTH  = 800;
-const DESIGN_HEIGHT = 600;
+// Use A4 Landscape dimensions in points (72 DPI)
+const DESIGN_WIDTH  = 841.89; 
+const DESIGN_HEIGHT = 595.28;
 
 // Escape XML special characters inside text nodes
 function escapeXml(str) {
@@ -71,6 +72,7 @@ export async function exportStageAsSVG(objects) {
   const svgPaths = objects.filter(o => o.type === 'svg-path');
   const images   = objects.filter(o => o.type === 'image');
   const texts    = objects.filter(o => o.type === 'text');
+  const shapes   = objects.filter(o => o.type === 'shape');
 
   // Pre-fetch all images to base64 so the SVG is self-contained
   const imageDataMap = {};
@@ -92,6 +94,16 @@ export async function exportStageAsSVG(objects) {
   svg += `  viewBox="0 0 ${W} ${H}"\n`;
   svg += `  version="1.1">\n`;
 
+  // ── Clipping Definition ────────────────────────────────────────────────
+  svg += `  <defs>\n`;
+  svg += `    <clipPath id="templateClip">\n`;
+  for (const obj of svgPaths) {
+    const t = buildTransform(obj);
+    svg += `      <path d="${obj.data}" ${t}/>\n`;
+  }
+  svg += `    </clipPath>\n`;
+  svg += `  </defs>\n`;
+
   // ── White background ────────────────────────────────────────────────────
   svg += `  <rect width="${W}" height="${H}" fill="white"/>\n`;
 
@@ -107,31 +119,45 @@ export async function exportStageAsSVG(objects) {
     svg += `  </g>\n`;
   }
 
-  // ── Layer 2: Clipped Images ─────────────────────────────────────────────
+  // ── BEGIN CLIPPED CONTENT ──────────────────────────────────────────────
+  svg += `  <g id="design-content" clip-path="url(#templateClip)">\n`;
+
+  // ── Layer 2: User Shapes ────────────────────────────────────────────────
+  if (shapes.length > 0) {
+    svg += `    <!-- User Shapes -->\n`;
+    svg += `    <g id="user-shapes">\n`;
+    for (const obj of shapes) {
+      const t    = buildTransform(obj);
+      const fill = obj.fill || '#4F46E5';
+      svg += `      <path d="${obj.data}" fill="${fill}" stroke="none" ${t}/>\n`;
+    }
+    svg += `    </g>\n`;
+  }
+
+  // ── Layer 3: Clipped Images ─────────────────────────────────────────────
   if (images.length > 0) {
-    svg += `  <!-- User Images -->\n`;
-    svg += `  <g id="images">\n`;
+    svg += `    <!-- User Images -->\n`;
+    svg += `    <g id="user-images">\n`;
     for (const obj of images) {
       const t    = buildTransform(obj);
       const href = imageDataMap[obj.id] || obj.src || '';
-      const w    = (obj.width  || 250) * (obj.scaleX || 1);
-      const h    = (obj.height || 250) * (obj.scaleY || 1);
-
-      // Use direct x/y without the scale baked into position (scale is in transform)
-      svg += `    <image xlink:href="${href}"\n`;
-      svg += `      x="${obj.x || 0}" y="${obj.y || 0}"\n`;
-      svg += `      width="${obj.width || 250}" height="${obj.height || 250}"\n`;
-      svg += `      preserveAspectRatio="xMidYMid meet"\n`;
-      if (t) svg += `      ${t}\n`;
-      svg += `    />\n`;
+      
+      // IMPORTANT: Use x="0" y="0" because the transform translate(x,y) already positions it.
+      // This fixes the "double translation" bug.
+      svg += `      <image xlink:href="${href}"\n`;
+      svg += `        x="0" y="0"\n`;
+      svg += `        width="${obj.width || 250}" height="${obj.height || 250}"\n`;
+      svg += `        preserveAspectRatio="xMidYMid meet"\n`;
+      if (t) svg += `        ${t}\n`;
+      svg += `      />\n`;
     }
-    svg += `  </g>\n`;
+    svg += `    </g>\n`;
   }
 
-  // ── Layer 3: Text Elements ──────────────────────────────────────────────
+  // ── Layer 4: Text Elements ──────────────────────────────────────────────
   if (texts.length > 0) {
-    svg += `  <!-- Text Elements -->\n`;
-    svg += `  <g id="texts">\n`;
+    svg += `    <!-- Text Elements -->\n`;
+    svg += `    <g id="user-texts">\n`;
     for (const obj of texts) {
       const fontSize   = obj.fontSize   || 24;
       const fontFamily = (obj.fontFamily || 'sans-serif').replace(/'/g, '');
@@ -150,31 +176,23 @@ export async function exportStageAsSVG(objects) {
 
       // Handle multiline text
       const lines = (obj.text || '').split('\n');
-      if (lines.length === 1) {
-        svg += `    <text\n`;
-        svg += `      x="0" y="${fontSize}"\n`;
-        svg += `      font-size="${fontSize}"\n`;
-        svg += `      font-family="${escapeXml(fontFamily)}"\n`;
-        svg += `      font-weight="${fontWeight}"\n`;
-        svg += `      fill="${fill}"\n`;
-        svg += `      transform="${transformStr}">${escapeXml(obj.text || '')}</text>\n`;
-      } else {
-        svg += `    <text\n`;
-        svg += `      font-size="${fontSize}"\n`;
-        svg += `      font-family="${escapeXml(fontFamily)}"\n`;
-        svg += `      font-weight="${fontWeight}"\n`;
-        svg += `      fill="${fill}"\n`;
-        svg += `      transform="${transformStr}">\n`;
-        lines.forEach((line, i) => {
-          svg += `      <tspan x="0" dy="${i === 0 ? fontSize : fontSize * 1.2}">${escapeXml(line)}</tspan>\n`;
-        });
-        svg += `    </text>\n`;
-      }
+      svg += `      <text\n`;
+      svg += `        font-size="${fontSize}"\n`;
+      svg += `        font-family="${escapeXml(fontFamily)}"\n`;
+      svg += `        font-weight="${fontWeight}"\n`;
+      svg += `        fill="${fill}"\n`;
+      svg += `        transform="${transformStr}">\n`;
+      lines.forEach((line, i) => {
+        svg += `        <tspan x="0" dy="${i === 0 ? fontSize : fontSize * 1.2}">${escapeXml(line)}</tspan>\n`;
+      });
+      svg += `      </text>\n`;
     }
-    svg += `  </g>\n`;
+    svg += `    </g>\n`;
   }
 
-  // ── Layer 4: SVG Path Outlines/Strokes on top (keeps borders crisp) ─────
+  svg += `  </g><!-- End Clipped Content -->\n`;
+
+  // ── Layer 5: SVG Path Outlines/Strokes on top (keeps borders crisp) ─────
   if (svgPaths.length > 0) {
     svg += `  <!-- Template Outlines (strokes on top) -->\n`;
     svg += `  <g id="foreground-outlines">\n`;
@@ -191,3 +209,4 @@ export async function exportStageAsSVG(objects) {
 
   return new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
 }
+

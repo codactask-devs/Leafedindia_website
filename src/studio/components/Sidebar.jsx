@@ -16,6 +16,7 @@ import TextSection from "./TextSection";
 import { ChevronRight } from "lucide-react";
 import ColorPickerGrid from "./ColorPickerGrid";
 import "./Sidebar.css";
+import ShapesSection from "./ShapesSection";
 
 const Sidebar = () => {
   const {
@@ -66,7 +67,7 @@ const Sidebar = () => {
           </button>
           <h2 className="sidebar-title-inline">
             Edit{" "}
-            {selectedObject.type === "svg-path" ? "Shape" : selectedObject.type}
+            {selectedObject.type === "svg-path" ? "Template" : (selectedObject.type === "shape" ? "Shape" : selectedObject.type)}
           </h2>
 
           <div className="header-actions-right">
@@ -118,13 +119,32 @@ const Sidebar = () => {
             </div>
           )}
 
-          {/* Shape Properties */}
+          {/* Template Properties */}
           {selectedObject.type === "svg-path" && (
+            <div className="sidebar-tool-section premium-editor-box">
+              <h3 className="section-label-premium">Template Details</h3>
+
+              <div className="sidebar-property-column">
+                <label className="sidebar-label-sm">Fill Color</label>
+                <br />
+                <div style={{ marginTop: "12px" }}>
+                  <ColorPickerGrid
+                    color={selectedObject.fill || "#FEFEFE"}
+                    onChange={(c) => updateObject(selectedId, { fill: c })}
+                    onChangeComplete={() => saveHistory()}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Shape Properties */}
+          {selectedObject.type === "shape" && (
             <div className="sidebar-tool-section premium-editor-box">
               <h3 className="section-label-premium">Shape Details</h3>
 
               <div className="sidebar-property-column">
-                <label className="sidebar-label-sm">Fill Color</label>
+                <label className="sidebar-label-sm">Color</label>
                 <br />
                 <div style={{ marginTop: "12px" }}>
                   <ColorPickerGrid
@@ -134,48 +154,6 @@ const Sidebar = () => {
                   />
                 </div>
               </div>
-
-              {/* <div className="sidebar-property-column">
-                <label className="sidebar-label-sm">Stroke Color</label>
-                <div className="sidebar-color-row-premium">
-                  <div className="sidebar-color-picker-wrapper-lux">
-                    <input
-                      type="color"
-                      value={selectedObject.stroke || "#000000"}
-                      onChange={(e) => updateObject(selectedId, { stroke: e.target.value })}
-                    />
-                  </div>
-                  <input
-                    type="text"
-                    className="sidebar-text-input-premium"
-                    value={selectedObject.stroke || "#000000"}
-                    onChange={(e) => updateObject(selectedId, { stroke: e.target.value })}
-                    maxLength={7}
-                  />
-                </div>
-              </div> */}
-
-              {/* <div className="sidebar-property-column">
-                <label className="sidebar-label-sm">Stroke Width (px)</label>
-                <div className="sidebar-input-row">
-                  <input
-                    type="range"
-                    min="0"
-                    max="20"
-                    step="0.5"
-                    value={selectedObject.strokeWidth || 1}
-                    onChange={(e) => updateObject(selectedId, { strokeWidth: parseFloat(e.target.value) })}
-                    className="sidebar-range-premium"
-                  />
-                  <input
-                    type="number"
-                    className="sidebar-number-input"
-                    value={selectedObject.strokeWidth || 1}
-                    onChange={(e) => updateObject(selectedId, { strokeWidth: parseFloat(e.target.value) || 0 })}
-                    step="0.5"
-                  />
-                </div>
-              </div> */}
             </div>
           )}
 
@@ -296,6 +274,8 @@ const Sidebar = () => {
     switch (activeTab) {
       case "templates":
         return <TemplatesSection />;
+      case "shapes":
+        return <ShapesSection />;
       case "images":
         return <ImagesSection />;
       case "clipart":

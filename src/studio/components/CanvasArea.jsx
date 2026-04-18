@@ -151,8 +151,8 @@ const CanvasArea = ({ stageRef }) => {
   const transformerRef = useRef(null);
   const containerRef = useRef(null);
 
-  const DESIGN_WIDTH = 800;
-  const DESIGN_HEIGHT = 600;
+  const DESIGN_WIDTH = 841.89;
+  const DESIGN_HEIGHT = 595.28;
 
   const [scale, setScale] = useState(1);
   const [stageDimensions, setStageDimensions] = useState({
@@ -375,14 +375,14 @@ const CanvasArea = ({ stageRef }) => {
                   ))}
               </Group>
 
-              {/* 2. Clipped Content - Images and Text that should only appear inside the box */}
+              {/* 2. Clipped Content - Images, Text, and Shapes that should only appear inside the box */}
               <Group
                 name="clipped-content"
                 globalCompositeOperation="source-atop"
                 listening={true}
               >
                 {objects
-                  .filter((obj) => obj.type === "image" || obj.type === "text")
+                  .filter((obj) => obj.type === "image" || obj.type === "text" || obj.type === "shape")
                   .map((obj) => {
                     const commonProps = {
                       id: obj.id,
@@ -458,6 +458,17 @@ const CanvasArea = ({ stageRef }) => {
                           fontStyle={obj.fontWeight || "400"}
                           onDblClick={(e) => handleTextDblClick(e, obj)}
                           onDblTap={(e) => handleTextDblClick(e, obj)}
+                        />
+                      );
+                    }
+
+                    if (obj.type === "shape") {
+                      return (
+                        <Path
+                          key={obj.id}
+                          {...commonProps}
+                          data={obj.data}
+                          fill={obj.fill || "#4F46E5"}
                         />
                       );
                     }

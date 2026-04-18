@@ -4,7 +4,8 @@ import {
   Type, 
   Image as ImageIcon, 
   Smile,
-  Sparkles
+  Sparkles,
+  Square
 } from "lucide-react";
 import useStore from "../store/useStore";
 import "./LeftSidebar.css";
@@ -14,6 +15,7 @@ const LeftSidebar = () => {
 
   const menuItems = [
     { id: "templates", icon: LayoutGrid, label: "Templates", dataTour: "tab-templates" },
+    { id: "shapes", icon: Square, label: "Shapes", dataTour: "tab-shapes" },
     { id: "images", icon: ImageIcon, label: "Images", dataTour: "tab-images" },
     { id: "text", icon: Type, label: "Text", dataTour: "tab-text" },
   ];
