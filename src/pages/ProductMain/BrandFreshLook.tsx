@@ -36,6 +36,7 @@ const BrandFreshLook = () => {
                             alt="Brand Mockup Packaging"
                             className="w-full h-auto object-cover"
                         />
+
                     </div>
                     {/* Decorative Background Elements */}
                     <div className="absolute -top-10 -right-10 w-40 h-40 bg-orange-100 rounded-full blur-3xl opacity-50 z-0" />
