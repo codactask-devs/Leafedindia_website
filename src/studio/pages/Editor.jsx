@@ -1,5 +1,7 @@
 import React, { useRef, useState, useCallback, useEffect } from "react";
 import jsPDF from "jspdf";
+import { svg2pdf } from "svg2pdf.js";
+import { exportStageAsSVG } from "../utils/svgExporter";
 import LeftSidebar from "../components/LeftSidebar";
 import Sidebar from "../components/Sidebar";
 import CanvasArea from "../components/CanvasArea";
@@ -333,39 +335,54 @@ function EditorInner() {
     e.preventDefault();
   };
 
-  const getCanvasBlob = async () => {
-    if (!stageRef.current) return null;
 
-    // Deselect if there's an active selection to avoid highlights in PDF
+  /**
+   * Export as a true vector PDF using svg2pdf.js on top of jsPDF.
+   * The SVG paths from the box template + user content are embedded as
+   * real vector objects — not a rasterised image — so CorelDraw (and
+   * Illustrator / Inkscape) can open the PDF and edit every element.
+   */
+  const getCanvasBlob = async () => {
+    // Deselect so handles don't appear in export
     const currentId = selectedId;
     if (currentId) {
       selectObject(null);
-      // Wait for React to re-render without selection
-      await new Promise((resolve) => setTimeout(resolve, 50));
+      await new Promise((resolve) => setTimeout(resolve, 60));
     }
 
-    // Use JPEG with 0.8 quality and 1.5 pixelRatio to significantly reduce size from 7.7MB to ~1MB
-    const dataUrl = stageRef.current.toDataURL({
-      mimeType: "image/jpeg",
-      quality: 0.8,
-      pixelRatio: 1.5,
-    });
+    try {
+      // 1. Build the vector SVG from the canvas objects
+      const svgBlob = await exportStageAsSVG(objects);
+      const svgText = await svgBlob.text();
 
-    const pdf = new jsPDF("l", "pt", "a4");
-    const imgProps = pdf.getImageProperties(dataUrl);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      // 2. Parse the SVG string into a DOM element that jsPDF can read
+      const parser = new DOMParser();
+      const svgDoc = parser.parseFromString(svgText, "image/svg+xml");
+      const svgElement = svgDoc.documentElement;
 
-    // Add image as JPEG with high compression
-    pdf.addImage(dataUrl, "JPEG", 0, 0, pdfWidth, pdfHeight, undefined, "FAST");
-    const blob = pdf.output("blob");
+      // 3. Create an A4-landscape PDF and embed the SVG as vector content
+      const pdf = new jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
+      const pdfW = pdf.internal.pageSize.getWidth();
+      const pdfH = pdf.internal.pageSize.getHeight();
 
-    // Restore selection
-    if (currentId) {
-      selectObject(currentId);
+      await svg2pdf(svgElement, pdf, {
+        x: 0,
+        y: 0,
+        width: pdfW,
+        height: pdfH
+      });
+
+      const blob = pdf.output("blob");
+
+      // Restore selection
+      if (currentId) selectObject(currentId);
+
+      return blob;
+    } catch (err) {
+      console.error("PDF generation error:", err);
+      if (currentId) selectObject(currentId);
+      throw err;
     }
-
-    return blob;
   };
 
   const initiateSave = () => {
