@@ -9,6 +9,8 @@ import certLogo3 from "../../assets/Certificates/certLogo3.avif";
 import cert4 from "../../assets/Certificates/cert4.jpg";
 import certLogo4 from "../../assets/Certificates/certLogo4.jpg";
 import { productAssets } from "../../assets/Assets";
+import whyChooseUsImg from "../../assets/Why Choose Us.webp";
+
 const WhyChooseUs = () => {
   const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
 
@@ -79,21 +81,17 @@ const WhyChooseUs = () => {
             style={{ fontFamily: "'Montserrat', sans-serif" }}
             className="text-gray-600 font-medium text-[16px] md:text-[18px] mb-6 leading-relaxed text-center lg:text-left"
           >
-            LeafedIndia is a leader in the production of environmentally-friendly, compostable paper cups. We are committed to reducing waste and promoting sustainable practices by providing customers with high-quality, eco-friendly products that are designed to minimize their impact on the environment.
+            At LeafedIndia, we lead the way in crafting eco-friendly, compostable paper products that put the planet first. 
+            Our commitment is simple: reduce waste, champion sustainability and deliver high-quality products designed to minimize environmental impact while meeting modern brand needs.
           </p>
           <div className="md:w-[80%] lg:w-80 h-1 bg-linear-to-r from-[#0d6e41] to-transparent rounded-full mx-auto lg:mx-0 mt-8 mb-6"></div>
-          <p
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
-            className="text-gray-500 font-medium text-[15px] leading-relaxed text-center lg:text-left"
-          >
-            Our mission is to create a better future for our planet by producing innovative, sustainable solutions that reduce waste and protect the environment.
-          </p>
+          
         </div>
 
         <div className="w-full lg:w-[45%] flex justify-center  relative">
           <div className="absolute inset-0 bg-green-100 rounded-[40px] transform rotate-3 scale-105 transition-transform duration-500 hover:rotate-6"></div>
           <img
-            src={productAssets["FoodTray"]?.main || ""}
+            src={whyChooseUsImg || ""}
             alt="Eco Packaging"
             loading="lazy"
             decoding="async"

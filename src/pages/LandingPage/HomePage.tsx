@@ -113,14 +113,14 @@ const HomePage = () => {
                             style={{ fontFamily: "'Montserrat', sans-serif" }}
                             className="text-[32px] md:text-[45px] font-black mb-6 leading-[1.1]"
                         >
-                            Excellence In Printing And Packaging
+                            Excellence in Sustainable Packaging
                         </h2>
                         <p
                             style={{ fontFamily: "'Montserrat', sans-serif" }}
                             className="text-gray-100 text-[14px] md:text-[16px] mb-10 max-w-xl opacity-90 font-medium"
                         >
-                            Leading the global transition towards circular packaging ecosystems.
-                            Our mission is to empower brands with sustainable, beautiful, for the earth.
+                            Innovating eco-friendly solutions that redefine how brands connect with the earth. 
+                            Crafted to balance durability with design, we create packaging that is beautiful, responsible, and future-focused.
                         </p>
 
                     </div>
@@ -142,7 +142,7 @@ const HomePage = () => {
                                 style={{ fontFamily: "'Montserrat', sans-serif" }}
                                 className="text-gray-400 text-[14px] leading-relaxed font-medium"
                             >
-                                Leading the global transition towards circular packaging ecosystems.
+                                Leading the global transition towards packaging that protects the planet and elevates brands.
                             </p>
                         </div>
 
@@ -161,7 +161,7 @@ const HomePage = () => {
                                 style={{ fontFamily: "'Montserrat', sans-serif" }}
                                 className="text-white/90 text-[14px] leading-relaxed font-medium"
                             >
-                                Empowering brands with customizable, eco-friendly packaging that doesn't compromise on beauty.
+                                Delivering customizable, eco-conscious solutions where sustainability and style unite seamlessly.
                             </p>
                         </div>
                     </div>
