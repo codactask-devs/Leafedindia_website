@@ -23,6 +23,13 @@ const TOUR_STEPS = [
     body: "Start your project by choosing a pre-made template. Simply click or drag any design onto the canvas to set a professional base for your box design.",
   },
   {
+    selector: '[data-tour="tab-shapes"]',
+    tab: "shapes",
+    icon: "📐",
+    title: "Shape Elements",
+    body: "Add geometric shapes to your design. Use squares, circles, and stars to create background patterns or callout boxes for your brand.",
+  },
+  {
     selector: '[data-tour="tab-images"]',
     tab: "images",
     icon: "📸",
@@ -88,12 +95,19 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
       className="tour-popover-inner"
       role="dialog"
       aria-labelledby="tour-title"
-      style={{ minWidth: "340px", zIndex: 1000001, padding: "24px" }}
+      style={{
+        minWidth: "340px",
+        zIndex: 1000001,
+        padding: "32px",
+        background: "#ffffff",
+        borderRadius: "24px",
+        fontFamily: "'Mazzard', sans-serif"
+      }}
     >
       {/* progress dots */}
       <div
         className="tour-dots"
-        style={{ marginBottom: "20px", display: "flex", gap: "8px" }}
+        style={{ marginBottom: "24px", display: "flex", gap: "8px", justifyContent: "center" }}
       >
         {TOUR_STEPS.map((_, i) => (
           <span
@@ -105,9 +119,10 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
               width: i === currentStep ? "24px" : "8px",
               height: "8px",
               borderRadius: "4px",
-              background: i === currentStep ? "#0d6e41" : "#e5e7eb",
+              background: i === currentStep ? "#7c3aed" : "#e4e4ee",
               cursor: "pointer",
-              transition: "all 0.3s ease",
+              transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+              boxShadow: i === currentStep ? "0 0 10px rgba(124, 58, 237, 0.3)" : "none",
             }}
           />
         ))}
@@ -117,7 +132,11 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
       <div
         className="tour-step-icon"
         aria-hidden="true"
-        style={{ fontSize: "48px", marginBottom: "15px" }}
+        style={{
+          fontSize: "52px",
+          marginBottom: "16px",
+          animation: "icon-bounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)"
+        }}
       >
         {step.icon}
       </div>
@@ -125,10 +144,11 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
         className="tour-step-title"
         id="tour-title"
         style={{
-          fontSize: "24px",
+          fontSize: "26px",
           fontWeight: "800",
-          color: "#0d6e41",
-          marginBottom: "10px",
+          color: "#1e1a3a",
+          marginBottom: "12px",
+          lineHeight: "1.2"
         }}
       >
         {step.title}
@@ -137,9 +157,9 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
         className="tour-step-body"
         style={{
           fontSize: "15px",
-          color: "#374151",
-          lineHeight: "1.6",
-          marginBottom: "20px",
+          color: "#6b6b80",
+          lineHeight: "1.7",
+          marginBottom: "24px",
         }}
       >
         {step.body}
@@ -149,11 +169,11 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
       <div
         className="tour-step-counter"
         style={{
-          color: "#9ca3af",
+          color: "#9898b0",
           fontSize: "12px",
           fontWeight: "bold",
           textTransform: "uppercase",
-          letterSpacing: "1px",
+          letterSpacing: "1.5px",
         }}
       >
         Step {currentStep + 1} / {total}
@@ -163,7 +183,7 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
       <div
         className="tour-nav"
         style={{
-          marginTop: "25px",
+          marginTop: "30px",
           display: "flex",
           gap: "12px",
           width: "100%",
@@ -175,35 +195,55 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
           onClick={skip}
           style={{
             flex: 1,
-            padding: "12px",
-            background: "#f3f4f6",
-            color: "#4b5563",
-            border: "none",
-            borderRadius: "12px",
+            padding: "14px",
+            background: "#f1f1f7",
+            color: "#6b6b80",
+            border: "1px solid #e4e4ee",
+            borderRadius: "14px",
             cursor: "pointer",
             fontSize: "14px",
             fontWeight: "600",
+            transition: "all 0.2s ease"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "#e4e4ee";
+            e.currentTarget.style.color = "#1e1a3a";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "#f1f1f7";
+            e.currentTarget.style.color = "#6b6b80";
           }}
         >
-          Skip All
+          Skip
         </button>
         <button
           className="tour-btn-next"
           onClick={goNext}
           style={{
             flex: 2,
-            padding: "12px",
-            background: "linear-gradient(135deg, #fb923c, #f97316)",
+            padding: "14px",
+            background: "#7c3aed",
             color: "#fff",
             border: "none",
-            borderRadius: "12px",
+            borderRadius: "14px",
             cursor: "pointer",
             fontWeight: "700",
             fontSize: "14px",
-            boxShadow: "0 8px 20px rgba(249, 115, 22, 0.3)",
+            boxShadow: "0 8px 16px rgba(124, 58, 237, 0.25)",
+            transition: "all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "#6d28d9";
+            e.currentTarget.style.transform = "translateY(-2px)";
+            e.currentTarget.style.boxShadow = "0 10px 20px rgba(124, 58, 237, 0.35)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "#7c3aed";
+            e.currentTarget.style.transform = "translateY(0)";
+            e.currentTarget.style.boxShadow = "0 8px 16px rgba(124, 58, 237, 0.25)";
           }}
         >
-          {isLast ? "Start Designing ✨" : "Continue →"}
+          {isLast ? "Begin Designing ✨" : "Next Step →"}
         </button>
       </div>
     </div>
