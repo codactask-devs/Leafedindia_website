@@ -39,6 +39,18 @@ const NavBar = () => {
     };
   }, [lastScrollY]);
 
+  // Body scroll lock for mobile menu
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <header className="w-full relative">
       {/* navbar */}
@@ -216,7 +228,7 @@ const NavBar = () => {
           className={`absolute top-0 left-0 bottom-0 w-full sm:w-[400px] bg-white shadow-2xl transition-transform duration-500 ease-out flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
         >
           {/* Mobile Header */}
-          <div className="p-6 flex items-center justify-between border-b-2 border-gray-100">
+          <div className="p-6 flex items-center justify-between border-b-2 border-gray-100 bg-white sticky top-0 z-10">
             <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
               <img src={logo} alt="LeafedIndia Logo" className="h-15 w-auto" />
             </Link>

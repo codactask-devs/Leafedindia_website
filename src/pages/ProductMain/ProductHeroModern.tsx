@@ -17,6 +17,8 @@ const ProductHeroModern = () => {
                     alt="Sustainable Packaging"
                     width={1920}
                     height={1080}
+                    loading="eager"
+                    fetchPriority="high"
                     decoding="async"
                     className="w-full h-full object-cover"
                 />
@@ -60,18 +62,6 @@ const ProductHeroModern = () => {
                 <div className="w-1 h-12 bg-linear-to-b from-[#1a2b4b] to-transparent rounded-full animate-scroll-hint" />
                 <span className="text-[10px] font-bold text-[#1a2b4b] uppercase tracking-widest">Scroll</span>
             </div>
-
-            <style>{`
-                @keyframes scroll-hint {
-                    0% { transform: scaleY(0); transform-origin: top; }
-                    50% { transform: scaleY(1); transform-origin: top; }
-                    51% { transform: scaleY(1); transform-origin: bottom; }
-                    100% { transform: scaleY(0); transform-origin: bottom; }
-                }
-                .animate-scroll-hint {
-                    animation: scroll-hint 2.5s infinite ease-in-out;
-                }
-            `}</style>
         </section>
     );
 }

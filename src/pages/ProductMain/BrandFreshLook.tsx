@@ -1,5 +1,6 @@
 import { productAssets } from "../../assets/Assets";
 import { ArrowRight } from 'lucide-react';
+import pizzaBox from "../../assets/Products/FoodBox/pizzaBox.webp";
 
 const BrandFreshLook = () => {
     return (
@@ -31,7 +32,7 @@ const BrandFreshLook = () => {
                 <div className="flex-1 relative">
                     <div className="relative z-10 rounded-[40px] overflow-hidden shadow-2xl transform md:rotate-2 hover:rotate-0 transition-transform duration-700">
                         <img
-                            src={productAssets["NoodleBox"]?.main || ""}
+                            src={pizzaBox}
                             alt="Brand Mockup Packaging"
                             className="w-full h-auto object-cover"
                         />

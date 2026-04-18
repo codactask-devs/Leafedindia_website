@@ -32,12 +32,15 @@ export interface ProductData {
     specs: SpecificationData;
     ctaImage: string;
     galleryImages?: string[];
+    category: string;
+    galleryBg: string; // Tailwind bg class
+    gridSpan?: string; // Tailwind span class
 }
 
 export const products: Record<string, ProductData> = {
     "bowls": {
         id: "bowls",
-        productName: "Bowls",
+        productName: "Bowl",
         catchPhrase: "Premium Sustainability",
         title: <>Serve <span className="text-[#fb923c]">Style</span> & <br />Sustainability</>,
         description: "Foodabox offers a versatile range of premium paper bowls designed for modern food brands who prioritize functionality without compromising on design.",
@@ -67,7 +70,9 @@ export const products: Record<string, ProductData> = {
             ]
         },
         ctaImage: productAssets["Bowls"]?.cta || productAssets["Bowls"]?.main || "",
-        galleryImages: productAssets["Bowls"]?.gallery || []
+        galleryImages: productAssets["Bowls"]?.gallery || [],
+        category: "Catering",
+        galleryBg: "bg-[#fef7f4]"
     },
     "cups": {
         id: "cups",
@@ -96,7 +101,10 @@ export const products: Record<string, ProductData> = {
             ]
         },
         ctaImage: productAssets["Cups"]?.cta || productAssets["Cups"]?.main || "",
-        galleryImages: productAssets["Cups"]?.gallery || []
+        galleryImages: productAssets["Cups"]?.gallery || [],
+        category: "Beverage",
+        galleryBg: "bg-[#f3f9f6]",
+        gridSpan: "md:col-span-1 md:row-span-2"
     },
     "burger-box": {
         id: "burger-box",
@@ -123,7 +131,9 @@ export const products: Record<string, ProductData> = {
             ]
         },
         ctaImage: productAssets["BurgerBox"]?.cta || productAssets["BurgerBox"]?.main || "",
-        galleryImages: productAssets["BurgerBox"]?.gallery || []
+        galleryImages: productAssets["BurgerBox"]?.gallery || [],
+        category: "Fast Food",
+        galleryBg: "bg-[#fdf8f3]"
     },
     "food-box": {
         id: "food-box",
@@ -150,7 +160,10 @@ export const products: Record<string, ProductData> = {
             ]
         },
         ctaImage: productAssets["FoodBox"]?.cta || productAssets["FoodBox"]?.main || "",
-        galleryImages: productAssets["FoodBox"]?.gallery || []
+        galleryImages: productAssets["FoodBox"]?.gallery || [],
+        category: "Takeaway",
+        galleryBg: "bg-[#f8fafc]",
+        gridSpan: "md:col-span-2"
     },
     "noodle-box": {
         id: "noodle-box",
@@ -177,7 +190,9 @@ export const products: Record<string, ProductData> = {
             ]
         },
         ctaImage: productAssets["NoodleBox"]?.cta || productAssets["NoodleBox"]?.main || "",
-        galleryImages: productAssets["NoodleBox"]?.gallery || []
+        galleryImages: productAssets["NoodleBox"]?.gallery || [],
+        category: "Noodle",
+        galleryBg: "bg-[#fffbeb]"
     },
     "food-tray": {
         id: "food-tray",
@@ -204,7 +219,9 @@ export const products: Record<string, ProductData> = {
             ]
         },
         ctaImage: productAssets["FoodTray"]?.cta || productAssets["FoodTray"]?.main || "",
-        galleryImages: productAssets["FoodTray"]?.gallery || []
+        galleryImages: productAssets["FoodTray"]?.gallery || [],
+        category: "Serving",
+        galleryBg: "bg-[#fdf2f8]"
     },
     "hexagon-box": {
         id: "hexagon-box",
@@ -229,7 +246,9 @@ export const products: Record<string, ProductData> = {
             ]
         },
         ctaImage: productAssets["HexagonBox"]?.cta || productAssets["HexagonBox"]?.main || "",
-        galleryImages: productAssets["HexagonBox"]?.gallery || []
+        galleryImages: productAssets["HexagonBox"]?.gallery || [],
+        category: "Specialty",
+        galleryBg: "bg-[#f0fdf4]"
     }
 };
 

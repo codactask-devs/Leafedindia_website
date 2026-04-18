@@ -1,6 +1,11 @@
-
 export const stackImages = Object.values(
     import.meta.glob('./NavBarImages/*.{svg,webp,png,jpg,jpeg}', { eager: true, import: 'default' })
+) as string[];
+
+export const galleryAssets = import.meta.glob('./Gallery/*.{svg,webp,png,jpg,jpeg}', { eager: true, import: 'default' });
+
+export const awardImages = Object.values(
+    import.meta.glob('./Awards/*.{svg,webp,png,jpg,jpeg}', { eager: true, import: 'default' })
 ) as string[];
 
 const allProductAssets = import.meta.glob('./Products/**/*.{svg,webp,png,jpg,jpeg}', { eager: true, import: 'default' });
@@ -15,9 +20,7 @@ interface ProductImages {
 
 export const productAssets: Record<string, ProductImages> = {};
 
-// Process the glob results
 Object.entries(allProductAssets).forEach(([path, imported]) => {
-    // Expected path format: ./Products/FolderName/[SubFolder/]FileName.ext
     const parts = path.split('/');
     if (parts.length < 4) return;
 
@@ -40,7 +43,6 @@ Object.entries(allProductAssets).forEach(([path, imported]) => {
     } else if (subFolder === 'gallery') {
         productAssets[folderName].gallery.push(assetUrl);
     } else {
-        // Top level images in the product folder
         if (fileName === 'main') {
             productAssets[folderName].main = assetUrl;
         } else if (fileName === 'whychoose') {
@@ -48,11 +50,7 @@ Object.entries(allProductAssets).forEach(([path, imported]) => {
         } else if (fileName === 'cta') {
             productAssets[folderName].cta = assetUrl;
         } else {
-            // If they don't match standard names, add to variants or gallery as fallback?
-            // For now, let's just add them to variants if they aren't one of the big 3.
             productAssets[folderName].variants.push(assetUrl);
         }
     }
 });
-
-export const allGalleryImages = Object.values(productAssets).flatMap(p => p.gallery);

@@ -6,6 +6,8 @@ import cert3 from "../../assets/Certificates/cert3.webp";
 import certLogo1 from "../../assets/Certificates/certLogo1.webp";
 import certLogo2 from "../../assets/Certificates/certLogo2.webp";
 import certLogo3 from "../../assets/Certificates/certLogo3.avif";
+import cert4 from "../../assets/Certificates/cert4.jpg";
+import certLogo4 from "../../assets/Certificates/certLogo4.jpg";
 import { productAssets } from "../../assets/Assets";
 const WhyChooseUs = () => {
   const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
@@ -37,6 +39,12 @@ const WhyChooseUs = () => {
       description: "Food Safety Management System certification for premium packaging safety.",
       logo: certLogo3,
       certImg: cert3
+    },
+    {
+      title: "BRCGS Certified",
+      description: "Global Standard for Food Safety ensuring hygiene and quality standards.",
+      logo: certLogo4,
+      certImg: cert4
     },
   ];
 
@@ -105,7 +113,7 @@ const WhyChooseUs = () => {
       </h2>
 
       {/* Grid of Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-8 items-center relative w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-8 items-center relative w-full">
         {certificateData.map((cert, index) => (
           <div
             key={index}

@@ -1,53 +1,44 @@
 import React, { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { productAssets } from "../../assets/Assets";
+import { galleryAssets } from "../../assets/Assets";
+import { products } from '../SingleProductPage/productData';
 import InfiniteMenu, { type InfiniteMenuHandle } from "../../animations/InfiniteMenu";
 
-const cupImages = productAssets["Cups"]?.variants || [];
-const bowlImages = productAssets["Bowls"]?.variants || [];
-const burgerImages = productAssets["BurgerBox"]?.variants || [];
-const foodBoxImages = productAssets["FoodBox"]?.variants || [];
-const foodTrayImages = productAssets["FoodTray"]?.variants || [];
-const noodleImages = productAssets["NoodleBox"]?.variants || [];
+// Helper to map gallery filenames (e.g. "cup1.webp") to Product IDs
+const galleryFilenameToId = (filename: string): string => {
+    const normal = filename.toLowerCase();
+    if (normal.includes('cup')) return 'cups';
+    if (normal.includes('bowl')) return 'bowls';
+    if (normal.includes('burger')) return 'burger-box';
+    if (normal.includes('foodbox')) return 'food-box';
+    if (normal.includes('foodtray')) return 'food-tray';
+    if (normal.includes('noodle')) return 'noodle-box';
+    if (normal.includes('hexagon')) return 'hexagon-box';
+    return 'products'; // Fallback
+};
 
-export const images = [
-    productAssets["Cups"]?.main || "",
-    productAssets["Bowls"]?.main || "",
-    productAssets["BurgerBox"]?.main || "",
-    productAssets["FoodBox"]?.main || "",
-    productAssets["FoodTray"]?.main || "",
-    productAssets["NoodleBox"]?.main || ""
-];
+// Brand-specific catchy descriptions for the gallery
+const galleryPhrases: Record<string, string> = {
+    'cups': 'Designed for drinks, crafted for brands.',
+    'bowls': 'Serve hearty meals with confidence.',
+    'burger-box': 'Packaging made for the ultimate bite.',
+    'food-box': 'Reliable boxes for every takeaway.',
+    'food-tray': 'Perfect trays for quick bites.',
+    'noodle-box': 'Designed for flavors that travel.',
+    'hexagon-box': 'Artistic forms for special gifting.'
+};
 
-const categoriesConfig = [
-    { name: 'Cups', images: cupImages, defaultImg: productAssets["Cups"]?.main || "", desc: 'Designed for drinks, crafted for brands.' },
-    { name: 'Bowls', images: bowlImages, defaultImg: productAssets["Bowls"]?.main || "", desc: 'Serve hearty meals with confidence.' },
-    { name: 'Burger Box', images: burgerImages, defaultImg: productAssets["BurgerBox"]?.main || "", desc: 'Packaging made for the ultimate bite.' },
-    { name: 'Food Box', images: foodBoxImages, defaultImg: productAssets["FoodBox"]?.main || "", desc: 'Reliable boxes for every takeaway.' },
-    { name: 'Food Tray', images: foodTrayImages, defaultImg: productAssets["FoodTray"]?.main || "", desc: 'Perfect trays for quick bites.' },
-    { name: 'Noodles Box', images: noodleImages, defaultImg: productAssets["NoodleBox"]?.main || "", desc: 'Designed for flavors that travel.' },
-];
-
-const items = categoriesConfig.flatMap(cat => {
-    const selection = cat.images.length > 0 ? cat.images.slice(0, 4) : [cat.defaultImg];
+const items = Object.entries(galleryAssets).map(([path, imported]) => {
+    const filename = path.split('/').pop()?.split('.')[0] || '';
+    const productId = galleryFilenameToId(filename);
+    const product = products[productId];
     
-    // Map category names to actual product IDs in productData.tsx
-    let productId = "";
-    const name = cat.name.toLowerCase();
-    if (name.includes('cup')) productId = 'cups';
-    else if (name.includes('bowl')) productId = 'bowls';
-    else if (name.includes('burger')) productId = 'burger-box';
-    else if (name.includes('food box')) productId = 'food-box';
-    else if (name.includes('tray')) productId = 'food-tray';
-    else if (name.includes('noodles')) productId = 'noodle-box';
-    else productId = 'products'; // Fallback to all products
-
-    return selection.map(img => ({
-        image: img,
-        link: productId === 'products' ? '/products' : `/product/${productId}`,
-        title: cat.name,
-        description: cat.desc
-    }));
+    return {
+        image: imported as string,
+        link: product ? `/product/${productId}` : `/products`,
+        title: product?.productName || filename.charAt(0).toUpperCase() + filename.slice(1),
+        description: galleryPhrases[productId] || product?.catchPhrase || "Eco-friendly packaging specialized for your brand."
+    };
 });
 
 const Gallery: React.FC = () => {

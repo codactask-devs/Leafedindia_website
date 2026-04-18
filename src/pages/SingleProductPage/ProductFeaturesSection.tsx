@@ -26,11 +26,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description }) =
 interface ProductFeaturesSectionProps {
     productName: string;
     featuresImage: string;
+    className?: string;
 }
 
 const ProductFeaturesSection: React.FC<ProductFeaturesSectionProps> = ({
     productName,
-    featuresImage
+    featuresImage,
+    className = ""
 }) => {
     const features = [
         {
@@ -67,7 +69,7 @@ const ProductFeaturesSection: React.FC<ProductFeaturesSectionProps> = ({
 
     return (
         <section
-            className="w-full py-20 px-6 lg:px-20 overflow-hidden relative"
+            className={`w-full py-20 px-6 lg:px-20 overflow-hidden relative ${className}`}
 
         >
             <div className="max-w-7xl mx-auto">
@@ -107,7 +109,9 @@ const ProductFeaturesSection: React.FC<ProductFeaturesSectionProps> = ({
                             <img
                                 src={featuresImage}
                                 alt={`LeafedIndia ${productName} Features`}
-                                className="w-full h-auto object-cover max-h-[600px]"
+                                loading="lazy"
+                                decoding="async"
+                                className="w-full h-auto object-cover max-h-[600px] bg-gray-50"
                             />
                         </div>
                     </div>

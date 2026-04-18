@@ -10,7 +10,7 @@ const HomePage = () => {
 
         <div className="w-full min-h-screen  relative md:mb-35">
             {/* asdfa */}
-            <section className="absolute inset-0 z-0 pointer-events-none">
+            <section className="absolute inset-0 z-0 pointer-events-none" style={{ willChange: 'transform' }}>
                 <div className=" bg-[#0d6e41] w-full" />
                 <div className="flex h-full w-full">
                     <div className="flex-1 h-full bg-[#fefbea] rounded-b-[70px]" />
@@ -18,7 +18,7 @@ const HomePage = () => {
                 </div>
             </section>
 
-            <section className="relative z-10">
+            <section className="relative">
                 <NavBar />
                 <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-[140px] md:pt-[200px] lg:pt-[180px]">
                     <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-0">
@@ -86,7 +86,7 @@ const HomePage = () => {
 
                         </nav>
 
-                        <nav className="w-full lg:pt-5 lg:w-1/2 flex justify-center lg:justify-end items-center relative order-1 lg:order-2 lg:translate-x-24">
+                        <nav className="w-full lg:pt-5 lg:w-1/2 flex justify-center lg:justify-end items-center relative order-1 lg:order-2 lg:translate-x-24" style={{ willChange: 'transform' }}>
                             <div className="w-[280px] md:w-[550px] lg:w-[650px]">
                                 <img
                                     src={HeroImage}
