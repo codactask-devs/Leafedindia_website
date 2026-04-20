@@ -353,14 +353,14 @@ const CanvasArea = ({ stageRef }) => {
                 listening={false} // So it doesn't interfere with interaction
               /> */}
 
-              {/* 1. Background Fills - These define the "clippable" area */}
+              {/* 1. Background Fills — only non-decorative (white/light) paths */}
               <Group name="background-fills">
                 {objects
-                  .filter((obj) => obj.type === "svg-path")
+                  .filter((obj) => obj.type === "svg-path" && !obj.isDecorative)
                   .map((obj) => (
                     <Path
                       key={`fill-${obj.id}`}
-                      id={obj.id} // Important for selection
+                      id={obj.id}
                       x={obj.x}
                       y={obj.y}
                       data={obj.data}
@@ -375,7 +375,7 @@ const CanvasArea = ({ stageRef }) => {
                   ))}
               </Group>
 
-              {/* 2. Clipped Content - Images, Text, and Shapes that should only appear inside the box */}
+              {/* 2. Clipped Content — images, text, shapes clipped to the template shape */}
               <Group
                 name="clipped-content"
                 globalCompositeOperation="source-atop"
@@ -399,36 +399,26 @@ const CanvasArea = ({ stageRef }) => {
                         if (editingId !== obj.id) selectObject(obj.id);
                       },
                       onDragMove: (e) => {
-                        updateObject(obj.id, {
-                          x: e.target.x(),
-                          y: e.target.y(),
-                        });
+                        updateObject(obj.id, { x: e.target.x(), y: e.target.y() });
                       },
                       onDragEnd: (e) => {
-                        updateObject(obj.id, {
-                          x: e.target.x(),
-                          y: e.target.y(),
-                        });
+                        updateObject(obj.id, { x: e.target.x(), y: e.target.y() });
                         saveHistory();
                       },
                       onTransform: (e) => {
                         const node = e.target;
                         updateObject(obj.id, {
-                          x: node.x(),
-                          y: node.y(),
+                          x: node.x(), y: node.y(),
                           rotation: node.rotation(),
-                          scaleX: node.scaleX(),
-                          scaleY: node.scaleY(),
+                          scaleX: node.scaleX(), scaleY: node.scaleY(),
                         });
                       },
                       onTransformEnd: (e) => {
                         const node = e.target;
                         updateObject(obj.id, {
-                          x: node.x(),
-                          y: node.y(),
+                          x: node.x(), y: node.y(),
                           rotation: node.rotation(),
-                          scaleX: node.scaleX(),
-                          scaleY: node.scaleY(),
+                          scaleX: node.scaleX(), scaleY: node.scaleY(),
                         });
                         saveHistory();
                       },
@@ -476,7 +466,27 @@ const CanvasArea = ({ stageRef }) => {
                   })}
               </Group>
 
-              {/* 3. Foreground Outlines - Keep the borders visible */}
+              {/* 3. Decorative Overlay — black structural paths (corner flaps, etc.)            */}
+              {/*    Rendered ABOVE user content so images/text can never cover them.            */}
+              {/*    listening=false → completely non-interactive / non-selectable.              */}
+              <Group name="decorative-overlay" listening={false}>
+                {objects
+                  .filter((obj) => obj.type === "svg-path" && obj.isDecorative)
+                  .map((obj) => (
+                    <Path
+                      key={`deco-${obj.id}`}
+                      x={obj.x}
+                      y={obj.y}
+                      data={obj.data}
+                      fill={obj.fill}
+                      scaleX={obj.scaleX}
+                      scaleY={obj.scaleY}
+                      rotation={obj.rotation}
+                    />
+                  ))}
+              </Group>
+
+              {/* 4. Foreground Outlines — crisp stroke borders on top of everything */}
               <Group name="foreground-outlines" listening={false}>
                 {objects
                   .filter((obj) => obj.type === "svg-path")

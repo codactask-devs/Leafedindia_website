@@ -554,7 +554,7 @@ function EditorInner() {
         );
       }
       const response = await fetch(
-        "https://leafedindia-studio.onrender.com/api/send-pdf",
+        "/api/send-pdf",
         {
           method: "POST",
           body: formData,

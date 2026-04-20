@@ -1,15 +1,30 @@
 /**
  * svgExporter.js
- * Exports the studio canvas objects as a true vector SVG file.
- * The resulting SVG can be opened in CorelDraw, Illustrator, Inkscape, etc.
- * for full vector editing — no rasterization involved.
+ * ──────────────────────────────────────────────────────────────────────────────
+ * Exports the studio canvas as a PRINT-READY vector SVG/PDF.
+ *
+ * Design goals:
+ *   • Every element (die-lines, fills, images, text) remains an individual,
+ *     selectable object when opened in CorelDRAW / Illustrator / Inkscape.
+ *   • NO clip-path — avoids svg2pdf.js rasterisation. Print shops expect
+ *     bleed and apply their own die-cutting; the die-lines serve as guides.
+ *   • NO vector-effect — svg2pdf.js doesn't support it and falls back
+ *     to rasterising the whole group. Stroke widths are pre-scaled instead.
+ *
+ * Layer order (bottom → top):
+ *   1. White page background
+ *   2. Template panel fills     (non-decorative white/light paths)
+ *   3. User design content      (shapes, images, text — unclipped, individual)
+ *   4. Decorative structure     (black corner/flap paths — always visible)
+ *   5. Die-line outlines        (vector strokes — all template paths)
+ * ──────────────────────────────────────────────────────────────────────────────
  */
 
-// Use A4 Landscape dimensions in points (72 DPI)
-const DESIGN_WIDTH  = 841.89; 
+// A4 Landscape in points (1pt = 1/72 inch)
+const DESIGN_WIDTH  = 841.89;
 const DESIGN_HEIGHT = 595.28;
 
-// Escape XML special characters inside text nodes
+/** Escape XML special characters for text content. */
 function escapeXml(str) {
   return String(str)
     .replace(/&/g,  '&amp;')
@@ -20,8 +35,8 @@ function escapeXml(str) {
 }
 
 /**
- * Build an SVG transform string from a Konva-like object.
- * Konva applies:  translate(x,y)  →  rotate(deg)  →  scale(sx, sy)
+ * Build an SVG `transform="…"` attribute from a Konva-style object.
+ * Order matches Konva: translate → rotate → scale
  */
 function buildTransform(obj) {
   const x  = obj.x  || 0;
@@ -33,60 +48,59 @@ function buildTransform(obj) {
   if (r === 0 && sx === 1 && sy === 1 && x === 0 && y === 0) return '';
 
   let t = `translate(${x}, ${y})`;
-  if (r !== 0)        t += ` rotate(${r})`;
+  if (r !== 0)              t += ` rotate(${r})`;
   if (sx !== 1 || sy !== 1) t += ` scale(${sx}, ${sy})`;
   return `transform="${t}"`;
 }
 
 /**
- * Fetch an external image URL and return it as a base64 data-URI.
- * Falls back to the original URL if fetch fails (CORS etc.).
+ * Fetch an external image URL and return a base64 data-URI.
+ * Falls back to the raw URL when fetch fails (CORS, etc.).
  */
 async function toDataURI(url) {
-  // Already a data URI or blob URL — use as-is
   if (!url || url.startsWith('data:') || url.startsWith('blob:')) return url;
-
   try {
-    const response = await fetch(url, { mode: 'cors' });
-    const blob     = await response.blob();
+    const res  = await fetch(url, { mode: 'cors' });
+    const blob = await res.blob();
     return await new Promise((resolve, reject) => {
-      const reader  = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
+      const r  = new FileReader();
+      r.onload = () => resolve(r.result);
+      r.onerror = reject;
+      r.readAsDataURL(blob);
     });
   } catch {
-    return url; // fallback — external URL reference
+    return url;
   }
 }
 
 /**
- * Main export function.
- * @param {Array} objects  — array of canvas objects from the Zustand store
- * @returns {Promise<Blob>} — SVG file as a Blob (image/svg+xml)
+ * Main export — returns the design as a self-contained SVG Blob.
+ *
+ * @param {Array} objects — canvas objects array from the Zustand store
+ * @returns {Promise<Blob>}
  */
 export async function exportStageAsSVG(objects) {
   const W = DESIGN_WIDTH;
   const H = DESIGN_HEIGHT;
 
-  const svgPaths = objects.filter(o => o.type === 'svg-path');
-  const images   = objects.filter(o => o.type === 'image');
-  const texts    = objects.filter(o => o.type === 'text');
-  const shapes   = objects.filter(o => o.type === 'shape');
+  // Categorise objects
+  const svgPaths  = objects.filter(o => o.type === 'svg-path');
+  const bgPaths   = svgPaths.filter(o => !o.isDecorative);   // white/light panel fills
+  const decoPaths = svgPaths.filter(o =>  o.isDecorative);   // black structural fills
+  const images    = objects.filter(o => o.type === 'image');
+  const texts     = objects.filter(o => o.type === 'text');
+  const shapes    = objects.filter(o => o.type === 'shape');
 
-  // Pre-fetch all images to base64 so the SVG is self-contained
-  const imageDataMap = {};
+  // Resolve every image to a base64 data-URI so the SVG is portable
+  const imgMap = {};
   await Promise.all(
-    images.map(async (obj) => {
-      imageDataMap[obj.id] = await toDataURI(obj.src);
-    })
+    images.map(async (obj) => { imgMap[obj.id] = await toDataURI(obj.src); })
   );
 
   let svg = '';
 
-  // ── Header ─────────────────────────────────────────────────────────────
+  // ── SVG Header ──────────────────────────────────────────────────────────────
   svg += `<?xml version="1.0" encoding="UTF-8"?>\n`;
-  svg += `<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n`;
   svg += `<svg\n`;
   svg += `  xmlns="http://www.w3.org/2000/svg"\n`;
   svg += `  xmlns:xlink="http://www.w3.org/1999/xlink"\n`;
@@ -94,24 +108,13 @@ export async function exportStageAsSVG(objects) {
   svg += `  viewBox="0 0 ${W} ${H}"\n`;
   svg += `  version="1.1">\n`;
 
-  // ── Clipping Definition ────────────────────────────────────────────────
-  svg += `  <defs>\n`;
-  svg += `    <clipPath id="templateClip">\n`;
-  for (const obj of svgPaths) {
-    const t = buildTransform(obj);
-    svg += `      <path d="${obj.data}" ${t}/>\n`;
-  }
-  svg += `    </clipPath>\n`;
-  svg += `  </defs>\n`;
+  // ── Layer 1 — Page background ───────────────────────────────────────────────
+  svg += `  <rect id="page-bg" width="${W}" height="${H}" fill="white"/>\n`;
 
-  // ── White background ────────────────────────────────────────────────────
-  svg += `  <rect width="${W}" height="${H}" fill="white"/>\n`;
-
-  // ── Layer 1: SVG Path Fills (background box shapes) ─────────────────────
-  if (svgPaths.length > 0) {
-    svg += `  <!-- Background Template Paths -->\n`;
-    svg += `  <g id="background-fills">\n`;
-    for (const obj of svgPaths) {
+  // ── Layer 2 — Template panel fills (individual selectable paths) ─────────
+  if (bgPaths.length > 0) {
+    svg += `  <g id="Template-Fills">\n`;
+    for (const obj of bgPaths) {
       const t    = buildTransform(obj);
       const fill = obj.fill || '#FEFEFE';
       svg += `    <path d="${obj.data}" fill="${fill}" stroke="none" ${t}/>\n`;
@@ -119,88 +122,85 @@ export async function exportStageAsSVG(objects) {
     svg += `  </g>\n`;
   }
 
-  // ── BEGIN CLIPPED CONTENT ──────────────────────────────────────────────
-  svg += `  <g id="design-content" clip-path="url(#templateClip)">\n`;
+  // ── Layer 3 — User design content (NO clip-path — individual objects) ────
+  // Each element is a standalone vector/image that CorelDRAW can select.
 
-  // ── Layer 2: User Shapes ────────────────────────────────────────────────
   if (shapes.length > 0) {
-    svg += `    <!-- User Shapes -->\n`;
-    svg += `    <g id="user-shapes">\n`;
+    svg += `  <g id="User-Shapes">\n`;
     for (const obj of shapes) {
       const t    = buildTransform(obj);
       const fill = obj.fill || '#4F46E5';
-      svg += `      <path d="${obj.data}" fill="${fill}" stroke="none" ${t}/>\n`;
+      svg += `    <path d="${obj.data}" fill="${fill}" stroke="none" ${t}/>\n`;
     }
-    svg += `    </g>\n`;
+    svg += `  </g>\n`;
   }
 
-  // ── Layer 3: Clipped Images ─────────────────────────────────────────────
   if (images.length > 0) {
-    svg += `    <!-- User Images -->\n`;
-    svg += `    <g id="user-images">\n`;
+    svg += `  <g id="User-Images">\n`;
     for (const obj of images) {
       const t    = buildTransform(obj);
-      const href = imageDataMap[obj.id] || obj.src || '';
-      
-      // IMPORTANT: Use x="0" y="0" because the transform translate(x,y) already positions it.
-      // This fixes the "double translation" bug.
-      svg += `      <image xlink:href="${href}"\n`;
-      svg += `        x="0" y="0"\n`;
-      svg += `        width="${obj.width || 250}" height="${obj.height || 250}"\n`;
-      svg += `        preserveAspectRatio="xMidYMid meet"\n`;
-      if (t) svg += `        ${t}\n`;
-      svg += `      />\n`;
+      const href = imgMap[obj.id] || obj.src || '';
+      svg += `    <image xlink:href="${href}"`;
+      svg += ` x="0" y="0"`;
+      svg += ` width="${obj.width || 250}" height="${obj.height || 250}"`;
+      svg += ` preserveAspectRatio="xMidYMid meet"`;
+      if (t) svg += ` ${t}`;
+      svg += `/>\n`;
     }
-    svg += `    </g>\n`;
+    svg += `  </g>\n`;
   }
 
-  // ── Layer 4: Text Elements ──────────────────────────────────────────────
   if (texts.length > 0) {
-    svg += `    <!-- Text Elements -->\n`;
-    svg += `    <g id="user-texts">\n`;
+    svg += `  <g id="User-Text">\n`;
     for (const obj of texts) {
       const fontSize   = obj.fontSize   || 24;
       const fontFamily = (obj.fontFamily || 'sans-serif').replace(/'/g, '');
-      const fontWeight = obj.fontWeight || 400;
+      const fontWeight = obj.fontWeight  || 400;
       const fill       = obj.fill       || '#000000';
-      const x          = obj.x          || 0;
-      const y          = obj.y          || 0;
-      const r          = obj.rotation   || 0;
-      const sx         = obj.scaleX     || 1;
-      const sy         = obj.scaleY     || 1;
+      const x  = obj.x  || 0;
+      const y  = obj.y  || 0;
+      const r  = obj.rotation || 0;
+      const sx = obj.scaleX   || 1;
+      const sy = obj.scaleY   || 1;
 
-      // SVG text baseline is at y; Konva text origin is top-left, so shift by fontSize
-      let transformStr = `translate(${x}, ${y})`;
-      if (r !== 0)        transformStr += ` rotate(${r})`;
-      if (sx !== 1 || sy !== 1) transformStr += ` scale(${sx}, ${sy})`;
+      let tf = `translate(${x}, ${y})`;
+      if (r  !== 0)              tf += ` rotate(${r})`;
+      if (sx !== 1 || sy !== 1)  tf += ` scale(${sx}, ${sy})`;
 
-      // Handle multiline text
       const lines = (obj.text || '').split('\n');
-      svg += `      <text\n`;
-      svg += `        font-size="${fontSize}"\n`;
-      svg += `        font-family="${escapeXml(fontFamily)}"\n`;
-      svg += `        font-weight="${fontWeight}"\n`;
-      svg += `        fill="${fill}"\n`;
-      svg += `        transform="${transformStr}">\n`;
+      svg += `    <text font-size="${fontSize}" font-family="${escapeXml(fontFamily)}"`;
+      svg += ` font-weight="${fontWeight}" fill="${fill}" transform="${tf}">\n`;
       lines.forEach((line, i) => {
-        svg += `        <tspan x="0" dy="${i === 0 ? fontSize : fontSize * 1.2}">${escapeXml(line)}</tspan>\n`;
+        svg += `      <tspan x="0" dy="${i === 0 ? fontSize : fontSize * 1.2}">${escapeXml(line)}</tspan>\n`;
       });
-      svg += `      </text>\n`;
+      svg += `    </text>\n`;
     }
-    svg += `    </g>\n`;
+    svg += `  </g>\n`;
   }
 
-  svg += `  </g><!-- End Clipped Content -->\n`;
+  // ── Layer 4 — Decorative structure (black corner/flap fills) ────────────
+  if (decoPaths.length > 0) {
+    svg += `  <g id="Decorative-Fills">\n`;
+    for (const obj of decoPaths) {
+      const t    = buildTransform(obj);
+      const fill = obj.fill || '#2B2A29';
+      svg += `    <path d="${obj.data}" fill="${fill}" stroke="none" ${t}/>\n`;
+    }
+    svg += `  </g>\n`;
+  }
 
-  // ── Layer 5: SVG Path Outlines/Strokes on top (keeps borders crisp) ─────
+  // ── Layer 5 — Die-line outlines (vector strokes for cut/crease guides) ──
+  // Stroke widths are in the ORIGINAL SVG coordinate space and are scaled
+  // down by the path transform, so they render at the correct visual weight.
+  // We do NOT use vector-effect="non-scaling-stroke" because svg2pdf.js
+  // doesn't support it and falls back to full rasterisation.
   if (svgPaths.length > 0) {
-    svg += `  <!-- Template Outlines (strokes on top) -->\n`;
-    svg += `  <g id="foreground-outlines">\n`;
+    svg += `  <g id="Die-Lines">\n`;
     for (const obj of svgPaths) {
       const t           = buildTransform(obj);
       const stroke      = obj.stroke      || '#2B2A29';
-      const strokeWidth = obj.strokeWidth || 200; // matches original SVG scale
-      svg += `    <path d="${obj.data}" fill="none" stroke="${stroke}" stroke-width="${strokeWidth}" vector-effect="non-scaling-stroke" ${t}/>\n`;
+      const strokeWidth = obj.strokeWidth  || 200;
+      svg += `    <path d="${obj.data}" fill="none" stroke="${stroke}" stroke-width="${strokeWidth}" ${t}/>\n`;
     }
     svg += `  </g>\n`;
   }
@@ -209,4 +209,3 @@ export async function exportStageAsSVG(objects) {
 
   return new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
 }
-
