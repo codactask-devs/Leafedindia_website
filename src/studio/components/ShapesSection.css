@@ -1,0 +1,41 @@
+.shapes-section {
+  padding: 20px;
+}
+
+.shapes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.shape-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  background: white;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #64748b;
+}
+
+.shape-item:hover {
+  border-color: #0d6e41;
+  background: #f0fdf4;
+  color: #0d6e41;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13, 110, 65, 0.1);
+}
+
+.shape-preview {
+  width: 40px;
+  height: 40px;
+}
+
+.shape-label {
+  font-size: 13px;
+  font-weight: 600;
+}
