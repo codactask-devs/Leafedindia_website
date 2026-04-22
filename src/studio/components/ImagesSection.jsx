@@ -36,16 +36,6 @@ const ImagesSection = () => {
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
-            // Validate file type
-            const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-            const fileExtension = file.name.split('.').pop().toLowerCase();
-            const isAllowedExtension = ['png', 'jpg', 'jpeg'].includes(fileExtension);
-
-            if (!allowedTypes.includes(file.type) && !isAllowedExtension) {
-                alert("Only PNG, JPG, and JPEG images are allowed.");
-                return;
-            }
-
             const reader = new FileReader();
             reader.onload = (event) => {
                 const img = new Image();
@@ -100,7 +90,7 @@ const ImagesSection = () => {
                     ref={fileInputRef}
                     style={{ display: "none" }}
                     onChange={handleFileUpload}
-                    accept=".png,.jpg,.jpeg"
+                    accept="image/*"
                 />
                 <button
                     className="btn btn-primary sidebar-full-width"
@@ -110,15 +100,12 @@ const ImagesSection = () => {
                     <Upload size={18} />
                     <span>Upload Custom</span>
                 </button>
-                <div className="sidebar-help-text">
-                    Supported formats: PNG, JPG, JPEG
-                </div>
             </div>
 
             {/* Tab Navigation */}
             <div className="image-tabs-container" style={{ marginTop: '24px', marginBottom: '16px' }}>
-                <div style={{ 
-                    display: 'flex', 
+                <div style={{
+                    display: 'flex',
                     gap: '8px',
                     borderBottom: '1px solid #e2e8f0',
                     paddingBottom: '0'
@@ -206,9 +193,9 @@ const ImagesSection = () => {
                                     alt={image.name}
                                     onClick={() => addObject({ type: "image", src: image.src, x: 100, y: 100, width: 250, height: 250 })}
                                 />
-                                <div style={{ 
-                                    fontSize: '11px', 
-                                    textAlign: 'center', 
+                                <div style={{
+                                    fontSize: '11px',
+                                    textAlign: 'center',
                                     padding: '4px',
                                     color: '#64748b',
                                     overflow: 'hidden',
@@ -220,7 +207,7 @@ const ImagesSection = () => {
                             </div>
                         ))}
                     </div>
-                    
+
                     {preUploadedImages.length === 0 && (
                         <div className="no-uploaded-images">
                             <p>No pre-uploaded images found.</p>
@@ -277,9 +264,9 @@ const ImagesSection = () => {
                                     alt={image.name}
                                     onClick={() => addObject({ type: "image", src: image.src, x: 100, y: 100, width: 250, height: 250 })}
                                 />
-                                <div style={{ 
-                                    fontSize: '11px', 
-                                    textAlign: 'center', 
+                                <div style={{
+                                    fontSize: '11px',
+                                    textAlign: 'center',
                                     padding: '4px',
                                     color: '#64748b',
                                     overflow: 'hidden',

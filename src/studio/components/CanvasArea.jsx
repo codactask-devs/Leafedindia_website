@@ -353,10 +353,29 @@ const CanvasArea = ({ stageRef }) => {
                 listening={false} // So it doesn't interfere with interaction
               /> */}
 
-              {/* 1. Background Fills — only non-decorative (white/light) paths */}
+              {/* 1. Background Decor — large dark paths (like cup/bowl backgrounds)           */}
+              {/*    Rendered at the very bottom so they never obscure printable areas.       */}
+              <Group name="background-decor" listening={false}>
+                {objects
+                  .filter((obj) => obj.type === "svg-path" && obj.isBackground)
+                  .map((obj) => (
+                    <Path
+                      key={`bg-decor-${obj.id}`}
+                      x={obj.x}
+                      y={obj.y}
+                      data={obj.data}
+                      fill={obj.fill}
+                      scaleX={obj.scaleX}
+                      scaleY={obj.scaleY}
+                      rotation={obj.rotation}
+                    />
+                  ))}
+              </Group>
+
+              {/* 2. Background Fills — only non-decorative (white/light) paths */}
               <Group name="background-fills">
                 {objects
-                  .filter((obj) => obj.type === "svg-path" && !obj.isDecorative)
+                  .filter((obj) => obj.type === "svg-path" && !obj.isDecorative && !obj.isBackground)
                   .map((obj) => (
                     <Path
                       key={`fill-${obj.id}`}
@@ -375,7 +394,7 @@ const CanvasArea = ({ stageRef }) => {
                   ))}
               </Group>
 
-              {/* 2. Clipped Content — images, text, shapes clipped to the template shape */}
+              {/* 3. Clipped Content — images, text, shapes clipped to the template shape */}
               <Group
                 name="clipped-content"
                 globalCompositeOperation="source-atop"
@@ -466,7 +485,7 @@ const CanvasArea = ({ stageRef }) => {
                   })}
               </Group>
 
-              {/* 3. Decorative Overlay — black structural paths (corner flaps, etc.)            */}
+              {/* 4. Decorative Overlay — black structural paths (corner flaps, etc.)            */}
               {/*    Rendered ABOVE user content so images/text can never cover them.            */}
               {/*    listening=false → completely non-interactive / non-selectable.              */}
               <Group name="decorative-overlay" listening={false}>
@@ -486,7 +505,7 @@ const CanvasArea = ({ stageRef }) => {
                   ))}
               </Group>
 
-              {/* 4. Foreground Outlines — crisp stroke borders on top of everything */}
+              {/* 5. Foreground Outlines — crisp stroke borders on top of everything */}
               <Group name="foreground-outlines" listening={false}>
                 {objects
                   .filter((obj) => obj.type === "svg-path")

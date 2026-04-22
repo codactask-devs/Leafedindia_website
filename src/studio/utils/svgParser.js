@@ -12,6 +12,37 @@ function isDecorativeFill(fill) {
   return DECORATIVE_FILLS.has(fill.trim());
 }
 
+/** 
+ * Simple heuristic to estimate path area via bounding box.
+ * Helps distinguish between small flaps and large background areas.
+ */
+function getPathStats(data, svgWidth, svgHeight) {
+  const numbers = (data || "").match(/-?\d+\.?\d*/g);
+  if (!numbers || numbers.length < 2) return { areaRatio: 0 };
+  
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (let i = 0; i < numbers.length; i += 2) {
+    const x = parseFloat(numbers[i]);
+    const y = parseFloat(numbers[i+1]);
+    if (isNaN(x) || isNaN(y)) continue;
+    minX = Math.min(minX, x);
+    minY = Math.min(minY, y);
+    maxX = Math.max(maxX, x);
+    maxY = Math.max(maxY, y);
+  }
+  
+  const width = maxX - minX;
+  const height = maxY - minY;
+  const area = width * height;
+  const svgArea = svgWidth * svgHeight;
+  
+  return {
+    areaRatio: area / (svgArea || 1),
+    width,
+    height
+  };
+}
+
 export const parseSvgContent = (svgContent) => {
   const parser = new DOMParser();
   const svgDoc = parser.parseFromString(svgContent, 'image/svg+xml');
@@ -35,8 +66,6 @@ export const parseSvgContent = (svgContent) => {
   }
 
   // ── Extract CSS class → fill/stroke from embedded <style> CDATA blocks ──────
-  // CorelDRAW exports use classes like .fil0/.fil1/.fil2 instead of inline attrs.
-  // e.g.  .fil2 {fill:#2B2A29}  → black for corner flap pieces
   const classFillMap   = {};
   const classStrokeMap = {};
 
@@ -48,14 +77,12 @@ export const parseSvgContent = (svgContent) => {
       const cls   = match[1];
       const decls = match[2];
 
-      // fill (not fill-rule / fill-opacity)
       const fillMatch = decls.match(/(?:^|;)\s*fill\s*:\s*([^;}\s]+)/);
       if (fillMatch) {
         const val = fillMatch[1].trim();
         classFillMap[cls] = (val === 'none') ? 'transparent' : val;
       }
 
-      // stroke colour
       const strokeMatch = decls.match(/(?:^|;)\s*stroke\s*:\s*([^;}\s]+)/);
       if (strokeMatch) {
         classStrokeMap[cls] = strokeMatch[1].trim();
@@ -63,7 +90,6 @@ export const parseSvgContent = (svgContent) => {
     }
   });
 
-  // Resolve fill: inline attr > CSS class map > sensible default
   const resolveFill = (el) => {
     const inlineFill = el.getAttribute('fill') || el.style.fill;
     if (inlineFill) return inlineFill === 'none' ? 'transparent' : inlineFill;
@@ -77,7 +103,6 @@ export const parseSvgContent = (svgContent) => {
     return '#FEFEFE';
   };
 
-  // Resolve stroke: inline attr > CSS class map > default dark
   const resolveStroke = (el) => {
     const inlineStroke = el.getAttribute('stroke') || el.style.stroke;
     if (inlineStroke) return inlineStroke;
@@ -112,10 +137,14 @@ export const parseSvgContent = (svgContent) => {
       pathEl.getAttribute('stroke-width') || pathEl.style.strokeWidth || '200'
     );
 
+    const stats = getPathStats(data, width, height);
+    
     // isDecorative = true means this path is a structural black zone (corner flaps, etc.)
-    // The canvas renderer will place it in a locked, non-interactive overlay on top of
-    // user content so images/text cannot obscure it.
-    const isDecorative = isDecorativeFill(fill);
+    // We only treat dark paths as decorative if they are small (e.g. < 40% of SVG area)
+    // Large dark paths are treated as backgrounds (isBackground).
+    const isDark = isDecorativeFill(fill);
+    const isDecorative = isDark && stats.areaRatio < 0.4;
+    const isBackground = isDark && stats.areaRatio >= 0.4;
 
     parsedPaths.push({
       id: `path-${index}`,
@@ -125,7 +154,8 @@ export const parseSvgContent = (svgContent) => {
       fill,
       stroke,
       strokeWidth,
-      isDecorative,  // ← new flag
+      isDecorative,
+      isBackground, // New flag
     });
   });
 
@@ -134,13 +164,10 @@ export const parseSvgContent = (svgContent) => {
 
 export const parseFoodBoxSvg = parseSvgContent;
 
-// Export base64 SVG for fallback
 export const getFoodBoxSvgSrc = () => {
   const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 299941.4 299941.4" width="800" height="800">
- <!-- Full SVG content here -->
- <polygon points="197937.7,166891.7 171942.8,166891.7 169943.2,169891.1 130021.4,169891.1 128021.8,166891.7 102026.9,166891.7 100018.2,169904.8 74989.7,169904.8 74989.7,201949.4 82558.1,205260.8 74989.7,209856.3 74989.7,230914.6 82980.1,234410.2 74989.7,237906.1 74989.8,269951.2 224951.9,269951.2 224952,237906.1 216961.5,234410.2 224952,230914.6 224952,209856.3 217383.5,205260.8 224952,201949.4 224952,169904.8 199946.5,169904.8 " fill="#FEFEFE" stroke="#2B2A29" stroke-width="200"/>
- <!-- More paths... -->
+ <polygon points="..." fill="#FEFEFE" stroke="#2B2A29" stroke-width="200"/>
 </svg>`;
   return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgContent)));
 };
