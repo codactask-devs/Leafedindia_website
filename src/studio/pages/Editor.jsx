@@ -308,20 +308,7 @@ function EditorInner() {
   };
 
   // ─── Cold Start Ping ────────────────────────────────────────────────────────
-  // // Wakes up the Render backend when the app loads to avoid delays during first export
-  // useEffect(() => {
-  //   const pingBackend = async () => {
-  //     try {
-  //       await fetch("https://leafedindia-studio.onrender.com/api/send-pdf", {
-  //         method: "POST", // A simple GET call to wake up the service
-  //         mode: 'no-cors' // Use no-cors to avoid preflight issues for a simple ping
-  //       });
-  //     } catch (e) {
-  //       // Silent catch: the goal is just to trigger a request to the server
-  //     }
-  //   };
-  //   pingBackend();
-  // }, []);
+  // Netlify functions are triggered on demand. A ping is less critical here but can be added if needed.
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -401,7 +388,13 @@ function EditorInner() {
       const svgElement = svgDoc.documentElement;
 
       // 3. Create an A4-landscape PDF and embed the SVG as vector content
-      const pdf = new jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
+      // We enable 'compress: true' to minimize the final PDF file size.
+      const pdf = new jsPDF({ 
+        orientation: "landscape", 
+        unit: "pt", 
+        format: "a4",
+        compress: true 
+      });
       const pdfW = pdf.internal.pageSize.getWidth();
       const pdfH = pdf.internal.pageSize.getHeight();
 
@@ -581,6 +574,31 @@ function EditorInner() {
     }
   };
 
+  const handleDownload = async () => {
+    const hasTemplate = objects.some((obj) => obj.type === "svg-path");
+    if (!hasTemplate && savedDesigns.length === 0) {
+      notify("Please create or save a design before downloading.", "error");
+      return;
+    }
+
+    try {
+      notify("Generating PDF for download...");
+      const blob = await getCanvasBlob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "leafed-india-design.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      notify("Download started!");
+    } catch (err) {
+      console.error("Download error:", err);
+      notify("Failed to generate PDF for download.", "error");
+    }
+  };
+
   return (
     <div className="studio-root">
       <div className="app-main-container">
@@ -589,6 +607,7 @@ function EditorInner() {
           onSave={initiateSave}
           onToggleSavedList={() => setShowAttachments(!showAttachments)}
           onStartTour={handleStartTour}
+          onDownload={handleDownload}
         />
         <div className="app-content-layout">
           <LeftSidebar />
@@ -875,12 +894,30 @@ function EditorInner() {
                   {savedDesigns.map((design) => (
                     <li key={design.id} className="attachment-item">
                       <span>{design.name}</span>
-                      <button
-                        className="remove-btn"
-                        onClick={() => removeSavedDesign(design.id)}
-                      >
-                        Delete
-                      </button>
+                      <div className="attachment-actions">
+                        <button
+                          className="download-btn"
+                          onClick={() => {
+                            const url = URL.createObjectURL(design.blob);
+                            const link = document.createElement("a");
+                            link.href = url;
+                            link.download = `${design.name}.pdf`;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            URL.revokeObjectURL(url);
+                            notify(`Downloading ${design.name}...`);
+                          }}
+                        >
+                          Download
+                        </button>
+                        <button
+                          className="remove-btn"
+                          onClick={() => removeSavedDesign(design.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </li>
                   ))}
                 </ul>

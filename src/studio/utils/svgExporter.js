@@ -57,18 +57,76 @@ function buildTransform(obj) {
  * Fetch an external image URL and return a base64 data-URI.
  * Falls back to the raw URL when fetch fails (CORS, etc.).
  */
-async function toDataURI(url) {
-  if (!url || url.startsWith('data:') || url.startsWith('blob:')) return url;
+/**
+ * Detects if a canvas contains any transparent pixels.
+ */
+function hasAlpha(canvas) {
+  const ctx = canvas.getContext('2d');
+  const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  for (let i = 3; i < data.length; i += 4) {
+    if (data[i] < 255) return true;
+  }
+  return false;
+}
+
+/**
+ * Fetch an external image URL and return an optimized base64 data-URI.
+ * Downscales large images to keep the final PDF size manageable.
+ */
+async function toDataURI(url, maxResolution = 1800) {
+  if (!url) return '';
+  if (url.startsWith('data:')) return url;
+  
   try {
-    const res  = await fetch(url, { mode: 'cors' });
+    const res = await fetch(url, { mode: 'cors' });
+    if (!res.ok) throw new Error('Fetch failed');
     const blob = await res.blob();
+    
+    // If it's a small file, just encode it directly
+    if (blob.size < 150000) {
+      return await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    // Otherwise, downscale via Canvas
     return await new Promise((resolve, reject) => {
-      const r  = new FileReader();
-      r.onload = () => resolve(r.result);
-      r.onerror = reject;
-      r.readAsDataURL(blob);
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        let w = img.width;
+        let h = img.height;
+        if (w > maxResolution || h > maxResolution) {
+          const ratio = maxResolution / Math.max(w, h);
+          w = Math.round(w * ratio);
+          h = Math.round(h * ratio);
+        }
+        
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        
+        // JPEG is significantly smaller than PNG. We only use PNG if 
+        // transparency is actually present (common in logos, rare in photos).
+        if (hasAlpha(canvas)) {
+          resolve(canvas.toDataURL('image/png'));
+        } else {
+          resolve(canvas.toDataURL('image/jpeg', 0.8));
+        }
+        URL.revokeObjectURL(img.src);
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(img.src);
+        reject();
+      };
+      img.src = URL.createObjectURL(blob);
     });
-  } catch {
+  } catch (err) {
+    console.warn("toDataURI fallback:", err);
     return url;
   }
 }
@@ -110,6 +168,21 @@ export async function exportStageAsSVG(objects) {
 
   // ── Layer 1 — Page background ───────────────────────────────────────────────
   svg += `  <rect id="page-bg" width="${W}" height="${H}" fill="white"/>\n`;
+  
+  // ── Clipping Definition ───────────────────────────────────────────────────
+  // We use the union of all template panels and decorative structural paths 
+  // as a clip-path. This ensures user content stays within the box boundaries.
+  const clipVisiblePaths = [...bgPaths, ...decoPaths];
+  if (clipVisiblePaths.length > 0) {
+    svg += `  <defs>\n`;
+    svg += `    <clipPath id="template-clip">\n`;
+    for (const obj of clipVisiblePaths) {
+      const t = buildTransform(obj);
+      svg += `      <path d="${obj.data}" ${t}/>\n`;
+    }
+    svg += `    </clipPath>\n`;
+    svg += `  </defs>\n`;
+  }
 
   // ── Layer 2 — Template panel fills (individual selectable paths) ─────────
   if (bgPaths.length > 0) {
@@ -122,8 +195,10 @@ export async function exportStageAsSVG(objects) {
     svg += `  </g>\n`;
   }
 
-  // ── Layer 3 — User design content (NO clip-path — individual objects) ────
-  // Each element is a standalone vector/image that CorelDRAW can select.
+  // ── Layer 3 — User design content (Clipped to template) ─────────────────
+  // We apply the clip-path here so images/shapes don't overlap the empty space.
+  const clipAttr = clipVisiblePaths.length > 0 ? ' clip-path="url(#template-clip)"' : '';
+  svg += `  <g id="User-Content"${clipAttr}>\n`;
 
   if (shapes.length > 0) {
     svg += `  <g id="User-Shapes">\n`;
@@ -177,6 +252,9 @@ export async function exportStageAsSVG(objects) {
     }
     svg += `  </g>\n`;
   }
+  
+  // Close the clipped User-Content group
+  svg += `  </g>\n`;
 
   // ── Layer 4 — Decorative structure (black corner/flap fills) ────────────
   if (decoPaths.length > 0) {

@@ -356,7 +356,10 @@
 }
 
 .attachment-item:hover { background: var(--purple-50); }
-.attachment-item span { font-size: 0.88rem; color: var(--text); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 190px; }
+.attachment-item span { font-size: 0.88rem; color: var(--text); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
+.attachment-actions { display: flex; gap: 8px; align-items: center; }
+.download-btn { background: var(--purple-50); color: var(--purple-600); border: 1px solid var(--purple-100); padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.download-btn:hover { background: var(--purple-100); border-color: var(--purple-200); }
 .remove-btn { background: #fee2e2; color: #ef4444; border: none; padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
 .remove-btn:hover { background: #fecaca; }
 

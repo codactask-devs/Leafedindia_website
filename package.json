@@ -33,7 +33,9 @@
     "tailwindcss": "^4.2.1",
     "use-image": "^1.1.4",
     "uuid": "^13.0.0",
-    "zustand": "^5.0.12"
+    "zustand": "^5.0.12",
+    "resend": "^3.2.0",
+    "lambda-multipart-parser": "^1.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

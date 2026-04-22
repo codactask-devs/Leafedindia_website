@@ -136,6 +136,24 @@
   color: #7c3aed;
 }
 
+.toolbar-download-btn {
+  background: #f5f3ff;
+  border: 1px solid #ddd6fe;
+  color: #6d28d9;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.toolbar-download-btn:hover {
+  background: #7c3aed;
+  color: white;
+  border-color: #7c3aed;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.25);
+}
+
+.toolbar-download-btn:hover svg { animation: shake 0.5s ease-in-out; }
+
 /* ── Saved Attachments — light grey ─────────────────────────────────────── */
 .toolbar-saved-list-btn {
   padding: 10px 16px;
@@ -290,9 +308,9 @@
   .toolbar-icon-btn { width: 28px; height: 28px; }
   .toolbar-right-actions { gap: 4px; }
   .toolbar-export-btn span, .toolbar-save-btn span,
-  .toolbar-saved-list-btn span, .toolbar-help-btn span { display: none; }
+  .toolbar-saved-list-btn span, .toolbar-help-btn span, .toolbar-download-btn span { display: none; }
   .toolbar-export-btn, .toolbar-save-btn,
-  .toolbar-saved-list-btn, .toolbar-help-btn {
+  .toolbar-saved-list-btn, .toolbar-help-btn, .toolbar-download-btn {
     padding: 8px 10px; min-width: 36px; border-radius: 10px;
   }
   .toolbar-help-btn { animation: none; }

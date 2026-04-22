@@ -36,6 +36,16 @@ const ImagesSection = () => {
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
+            // Validate file type
+            const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            const isAllowedExtension = ['png', 'jpg', 'jpeg'].includes(fileExtension);
+
+            if (!allowedTypes.includes(file.type) && !isAllowedExtension) {
+                alert("Only PNG, JPG, and JPEG images are allowed.");
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = (event) => {
                 const img = new Image();
@@ -90,7 +100,7 @@ const ImagesSection = () => {
                     ref={fileInputRef}
                     style={{ display: "none" }}
                     onChange={handleFileUpload}
-                    accept="image/*"
+                    accept=".png,.jpg,.jpeg"
                 />
                 <button
                     className="btn btn-primary sidebar-full-width"
@@ -100,6 +110,9 @@ const ImagesSection = () => {
                     <Upload size={18} />
                     <span>Upload Custom</span>
                 </button>
+                <div className="sidebar-help-text">
+                    Supported formats: PNG, JPG, JPEG
+                </div>
             </div>
 
             {/* Tab Navigation */}
