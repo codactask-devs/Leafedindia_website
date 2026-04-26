@@ -340,21 +340,11 @@ const CanvasArea = ({ stageRef }) => {
                 fill="white" 
                 listening={false} 
               />
-            </Layer>
-
-            <Layer>
-
-              {/* Background Image */}
-              {/* <URLImage 
-                src={canvasBackground} 
-                width={DESIGN_WIDTH} 
-                height={DESIGN_HEIGHT} 
-                opacity={1}
-                listening={false} // So it doesn't interfere with interaction
-              /> */}
 
               {/* 1. Background Decor — large dark paths (like cup/bowl backgrounds)           */}
               {/*    Rendered at the very bottom so they never obscure printable areas.       */}
+              {/*    By rendering them in a separate layer, they don't contribute to the      */}
+              {/*    source-atop clipping mask used for user content.                         */}
               <Group name="background-decor" listening={false}>
                 {objects
                   .filter((obj) => obj.type === "svg-path" && obj.isBackground)
@@ -371,11 +361,23 @@ const CanvasArea = ({ stageRef }) => {
                     />
                   ))}
               </Group>
+            </Layer>
+
+            <Layer>
+
+              {/* Background Image */}
+              {/* <URLImage 
+                src={canvasBackground} 
+                width={DESIGN_WIDTH} 
+                height={DESIGN_HEIGHT} 
+                opacity={1}
+                listening={false} // So it doesn't interfere with interaction
+              /> */}
 
               {/* 2. Background Fills — only non-decorative (white/light) paths */}
               <Group name="background-fills">
                 {objects
-                  .filter((obj) => obj.type === "svg-path" && !obj.isDecorative && !obj.isBackground)
+                  .filter((obj) => obj.type === "svg-path" && !obj.isDecorative && !obj.isBackground && obj.fill !== "transparent" && obj.fill !== "none")
                   .map((obj) => (
                     <Path
                       key={`fill-${obj.id}`}

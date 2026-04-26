@@ -142,12 +142,18 @@ export async function exportStageAsSVG(objects) {
   const H = DESIGN_HEIGHT;
 
   // Categorise objects
-  const svgPaths  = objects.filter(o => o.type === 'svg-path');
-  const bgPaths   = svgPaths.filter(o => !o.isDecorative);   // white/light panel fills
-  const decoPaths = svgPaths.filter(o =>  o.isDecorative);   // black structural fills
-  const images    = objects.filter(o => o.type === 'image');
-  const texts     = objects.filter(o => o.type === 'text');
-  const shapes    = objects.filter(o => o.type === 'shape');
+  const svgPaths      = objects.filter(o => o.type === 'svg-path');
+  const bgDecorPaths  = svgPaths.filter(o => o.isBackground);    // large dark paths
+  const bgPaths       = svgPaths.filter(o => 
+    !o.isDecorative && 
+    !o.isBackground && 
+    o.fill !== 'transparent' && 
+    o.fill !== 'none'
+  ); // white/light printable paths
+  const decoPaths     = svgPaths.filter(o => o.isDecorative);    // small dark structural paths
+  const images        = objects.filter(o => o.type === 'image');
+  const texts         = objects.filter(o => o.type === 'text');
+  const shapes        = objects.filter(o => o.type === 'shape');
 
   // Resolve every image to a base64 data-URI so the SVG is portable
   const imgMap = {};
@@ -166,13 +172,9 @@ export async function exportStageAsSVG(objects) {
   svg += `  viewBox="0 0 ${W} ${H}"\n`;
   svg += `  version="1.1">\n`;
 
-  // ── Layer 1 — Page background ───────────────────────────────────────────────
-  svg += `  <rect id="page-bg" width="${W}" height="${H}" fill="white"/>\n`;
-  
   // ── Clipping Definition ───────────────────────────────────────────────────
-  // We use the union of all template panels and decorative structural paths 
-  // as a clip-path. This ensures user content stays within the box boundaries.
-  const clipVisiblePaths = [...bgPaths, ...decoPaths];
+  // We define the mask at the top so it can be referenced by subsequent groups.
+  const clipVisiblePaths = [...bgPaths];
   if (clipVisiblePaths.length > 0) {
     svg += `  <defs>\n`;
     svg += `    <clipPath id="template-clip">\n`;
@@ -182,6 +184,19 @@ export async function exportStageAsSVG(objects) {
     }
     svg += `    </clipPath>\n`;
     svg += `  </defs>\n`;
+  }
+
+  // ── Layer 1 — Page background & structural background ───────────────────────
+  svg += `  <rect id="page-bg" width="${W}" height="${H}" fill="white"/>\n`;
+
+  if (bgDecorPaths.length > 0) {
+    svg += `  <g id="Background-Decor">\n`;
+    for (const obj of bgDecorPaths) {
+      const t    = buildTransform(obj);
+      const fill = obj.fill || '#2B2A29';
+      svg += `    <path d="${obj.data}" fill="${fill}" stroke="none" ${t}/>\n`;
+    }
+    svg += `  </g>\n`;
   }
 
   // ── Layer 2 — Template panel fills (individual selectable paths) ─────────
@@ -196,7 +211,6 @@ export async function exportStageAsSVG(objects) {
   }
 
   // ── Layer 3 — User design content (Clipped to template) ─────────────────
-  // We apply the clip-path here so images/shapes don't overlap the empty space.
   const clipAttr = clipVisiblePaths.length > 0 ? ' clip-path="url(#template-clip)"' : '';
   svg += `  <g id="User-Content"${clipAttr}>\n`;
 
