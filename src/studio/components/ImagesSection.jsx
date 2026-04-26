@@ -104,8 +104,8 @@ const ImagesSection = () => {
 
             {/* Tab Navigation */}
             <div className="image-tabs-container" style={{ marginTop: '24px', marginBottom: '16px' }}>
-                <div style={{ 
-                    display: 'flex', 
+                <div style={{
+                    display: 'flex',
                     gap: '8px',
                     borderBottom: '1px solid #e2e8f0',
                     paddingBottom: '0'
@@ -193,9 +193,9 @@ const ImagesSection = () => {
                                     alt={image.name}
                                     onClick={() => addObject({ type: "image", src: image.src, x: 100, y: 100, width: 250, height: 250 })}
                                 />
-                                <div style={{ 
-                                    fontSize: '11px', 
-                                    textAlign: 'center', 
+                                <div style={{
+                                    fontSize: '11px',
+                                    textAlign: 'center',
                                     padding: '4px',
                                     color: '#64748b',
                                     overflow: 'hidden',
@@ -207,7 +207,7 @@ const ImagesSection = () => {
                             </div>
                         ))}
                     </div>
-                    
+
                     {preUploadedImages.length === 0 && (
                         <div className="no-uploaded-images">
                             <p>No pre-uploaded images found.</p>
@@ -264,9 +264,9 @@ const ImagesSection = () => {
                                     alt={image.name}
                                     onClick={() => addObject({ type: "image", src: image.src, x: 100, y: 100, width: 250, height: 250 })}
                                 />
-                                <div style={{ 
-                                    fontSize: '11px', 
-                                    textAlign: 'center', 
+                                <div style={{
+                                    fontSize: '11px',
+                                    textAlign: 'center',
                                     padding: '4px',
                                     color: '#64748b',
                                     overflow: 'hidden',

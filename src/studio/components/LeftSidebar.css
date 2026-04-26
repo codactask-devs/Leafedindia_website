@@ -1,30 +1,35 @@
 @import url("./../utils/FontTheme.css");
+
+/* ── Left Icon Sidebar — white background ─────────────────────────────────── */
 .left-sidebar {
-  width: 200px;
-  background-color: #173346; /* Dark green */
+  width: 80px;
+  background: #ffffff;
+  border-right: 1px solid #e4e4ee;
   display: flex;
   flex-direction: column;
   padding: 12px 0;
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
   z-index: 100;
   flex-shrink: 0;
-  gap: 70px;
+  gap: 4px;
+  box-shadow: 1px 0 8px rgba(0, 0, 0, 0.04);
+  width: 200px;
+
 }
 
 .left-sidebar-item {
   width: 100%;
-  padding: 12px 0;
+  padding: 14px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.5);
+  color: #9898b0;
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .left-sidebar-item svg {
@@ -32,13 +37,15 @@
 }
 
 .left-sidebar-item span {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.025em;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .left-sidebar-item:hover {
-  color: var(--color-4);
+  color: #7c3aed;
+  background: #f5f3ff;
 }
 
 .left-sidebar-item:hover svg {
@@ -46,26 +53,23 @@
 }
 
 .left-sidebar-item.active {
-  color: var(--color-15);
-  background-color: rgba(255, 255, 255, 0.05);
+  color: #7c3aed;
+  background: #f5f3ff;
 }
 
+/* Purple left indicator */
 .left-sidebar-item.active::after {
   content: '';
   position: absolute;
   left: 0;
-  top: 15%;
-  bottom: 15%;
+  top: 20%;
+  bottom: 20%;
   width: 3px;
-  background-color: var(--color-5); /* Orange indicator */
+  background: #7c3aed;
   border-radius: 0 4px 4px 0;
 }
 
-/* Tooltip or additional styling? For now, this is clean. */
-
-/* ============================================================
-   MOBILE RESPONSIVE — LeftSidebar becomes Bottom Nav Bar
-   ============================================================ */
+/* ── Mobile Bottom Nav ────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .left-sidebar {
     width: 100%;
@@ -73,7 +77,7 @@
     flex-direction: row;
     padding: 0;
     border-right: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid #e4e4ee;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -81,6 +85,7 @@
     justify-content: space-around;
     align-items: stretch;
     flex-shrink: 0;
+    gap: 0;
   }
 
   .left-sidebar-item {
@@ -106,4 +111,3 @@
     border-radius: 0 0 4px 4px;
   }
 }
-

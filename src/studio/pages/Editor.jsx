@@ -1,5 +1,7 @@
 import React, { useRef, useState, useCallback, useEffect } from "react";
 import jsPDF from "jspdf";
+import { svg2pdf } from "svg2pdf.js";
+import { exportStageAsSVG } from "../utils/svgExporter";
 import LeftSidebar from "../components/LeftSidebar";
 import Sidebar from "../components/Sidebar";
 import CanvasArea from "../components/CanvasArea";
@@ -19,6 +21,13 @@ const TOUR_STEPS = [
     icon: "🎨",
     title: "Design Templates",
     body: "Start your project by choosing a pre-made template. Simply click or drag any design onto the canvas to set a professional base for your box design.",
+  },
+  {
+    selector: '[data-tour="tab-shapes"]',
+    tab: "shapes",
+    icon: "📐",
+    title: "Shape Elements",
+    body: "Add geometric shapes to your design. Use squares, circles, and stars to create background patterns or callout boxes for your brand.",
   },
   {
     selector: '[data-tour="tab-images"]',
@@ -86,12 +95,19 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
       className="tour-popover-inner"
       role="dialog"
       aria-labelledby="tour-title"
-      style={{ minWidth: "340px", zIndex: 1000001, padding: "24px" }}
+      style={{
+        minWidth: "340px",
+        zIndex: 1000001,
+        padding: "32px",
+        background: "#ffffff",
+        borderRadius: "24px",
+        fontFamily: "'Mazzard', sans-serif"
+      }}
     >
       {/* progress dots */}
       <div
         className="tour-dots"
-        style={{ marginBottom: "20px", display: "flex", gap: "8px" }}
+        style={{ marginBottom: "24px", display: "flex", gap: "8px", justifyContent: "center" }}
       >
         {TOUR_STEPS.map((_, i) => (
           <span
@@ -103,9 +119,10 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
               width: i === currentStep ? "24px" : "8px",
               height: "8px",
               borderRadius: "4px",
-              background: i === currentStep ? "#0d6e41" : "#e5e7eb",
+              background: i === currentStep ? "#7c3aed" : "#e4e4ee",
               cursor: "pointer",
-              transition: "all 0.3s ease",
+              transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+              boxShadow: i === currentStep ? "0 0 10px rgba(124, 58, 237, 0.3)" : "none",
             }}
           />
         ))}
@@ -115,7 +132,11 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
       <div
         className="tour-step-icon"
         aria-hidden="true"
-        style={{ fontSize: "48px", marginBottom: "15px" }}
+        style={{
+          fontSize: "52px",
+          marginBottom: "16px",
+          animation: "icon-bounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)"
+        }}
       >
         {step.icon}
       </div>
@@ -123,10 +144,11 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
         className="tour-step-title"
         id="tour-title"
         style={{
-          fontSize: "24px",
+          fontSize: "26px",
           fontWeight: "800",
-          color: "#0d6e41",
-          marginBottom: "10px",
+          color: "#1e1a3a",
+          marginBottom: "12px",
+          lineHeight: "1.2"
         }}
       >
         {step.title}
@@ -135,9 +157,9 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
         className="tour-step-body"
         style={{
           fontSize: "15px",
-          color: "#374151",
-          lineHeight: "1.6",
-          marginBottom: "20px",
+          color: "#6b6b80",
+          lineHeight: "1.7",
+          marginBottom: "24px",
         }}
       >
         {step.body}
@@ -147,11 +169,11 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
       <div
         className="tour-step-counter"
         style={{
-          color: "#9ca3af",
+          color: "#9898b0",
           fontSize: "12px",
           fontWeight: "bold",
           textTransform: "uppercase",
-          letterSpacing: "1px",
+          letterSpacing: "1.5px",
         }}
       >
         Step {currentStep + 1} / {total}
@@ -161,7 +183,7 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
       <div
         className="tour-nav"
         style={{
-          marginTop: "25px",
+          marginTop: "30px",
           display: "flex",
           gap: "12px",
           width: "100%",
@@ -173,35 +195,55 @@ function TourContent({ currentStep, setCurrentStep, setIsOpen, steps }) {
           onClick={skip}
           style={{
             flex: 1,
-            padding: "12px",
-            background: "#f3f4f6",
-            color: "#4b5563",
-            border: "none",
-            borderRadius: "12px",
+            padding: "14px",
+            background: "#f1f1f7",
+            color: "#6b6b80",
+            border: "1px solid #e4e4ee",
+            borderRadius: "14px",
             cursor: "pointer",
             fontSize: "14px",
             fontWeight: "600",
+            transition: "all 0.2s ease"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "#e4e4ee";
+            e.currentTarget.style.color = "#1e1a3a";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "#f1f1f7";
+            e.currentTarget.style.color = "#6b6b80";
           }}
         >
-          Skip All
+          Skip
         </button>
         <button
           className="tour-btn-next"
           onClick={goNext}
           style={{
             flex: 2,
-            padding: "12px",
-            background: "linear-gradient(135deg, #fb923c, #f97316)",
+            padding: "14px",
+            background: "#7c3aed",
             color: "#fff",
             border: "none",
-            borderRadius: "12px",
+            borderRadius: "14px",
             cursor: "pointer",
             fontWeight: "700",
             fontSize: "14px",
-            boxShadow: "0 8px 20px rgba(249, 115, 22, 0.3)",
+            boxShadow: "0 8px 16px rgba(124, 58, 237, 0.25)",
+            transition: "all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "#6d28d9";
+            e.currentTarget.style.transform = "translateY(-2px)";
+            e.currentTarget.style.boxShadow = "0 10px 20px rgba(124, 58, 237, 0.35)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "#7c3aed";
+            e.currentTarget.style.transform = "translateY(0)";
+            e.currentTarget.style.boxShadow = "0 8px 16px rgba(124, 58, 237, 0.25)";
           }}
         >
-          {isLast ? "Start Designing ✨" : "Continue →"}
+          {isLast ? "Begin Designing ✨" : "Next Step →"}
         </button>
       </div>
     </div>
@@ -266,20 +308,7 @@ function EditorInner() {
   };
 
   // ─── Cold Start Ping ────────────────────────────────────────────────────────
-  // // Wakes up the Render backend when the app loads to avoid delays during first export
-  // useEffect(() => {
-  //   const pingBackend = async () => {
-  //     try {
-  //       await fetch("https://leafedindia-studio.onrender.com/api/send-pdf", {
-  //         method: "POST", // A simple GET call to wake up the service
-  //         mode: 'no-cors' // Use no-cors to avoid preflight issues for a simple ping
-  //       });
-  //     } catch (e) {
-  //       // Silent catch: the goal is just to trigger a request to the server
-  //     }
-  //   };
-  //   pingBackend();
-  // }, []);
+  // Netlify functions are triggered on demand. A ping is less critical here but can be added if needed.
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -333,39 +362,60 @@ function EditorInner() {
     e.preventDefault();
   };
 
-  const getCanvasBlob = async () => {
-    if (!stageRef.current) return null;
 
-    // Deselect if there's an active selection to avoid highlights in PDF
+  /**
+   * Export as a true vector PDF using svg2pdf.js on top of jsPDF.
+   * The SVG paths from the box template + user content are embedded as
+   * real vector objects — not a rasterised image — so CorelDraw (and
+   * Illustrator / Inkscape) can open the PDF and edit every element.
+   */
+  const getCanvasBlob = async () => {
+    // Deselect so handles don't appear in export
     const currentId = selectedId;
     if (currentId) {
       selectObject(null);
-      // Wait for React to re-render without selection
-      await new Promise((resolve) => setTimeout(resolve, 50));
+      await new Promise((resolve) => setTimeout(resolve, 60));
     }
 
-    // Use JPEG with 0.8 quality and 1.5 pixelRatio to significantly reduce size from 7.7MB to ~1MB
-    const dataUrl = stageRef.current.toDataURL({
-      mimeType: "image/jpeg",
-      quality: 0.8,
-      pixelRatio: 1.5,
-    });
+    try {
+      // 1. Build the vector SVG from the canvas objects
+      const svgBlob = await exportStageAsSVG(objects);
+      const svgText = await svgBlob.text();
 
-    const pdf = new jsPDF("l", "pt", "a4");
-    const imgProps = pdf.getImageProperties(dataUrl);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      // 2. Parse the SVG string into a DOM element that jsPDF can read
+      const parser = new DOMParser();
+      const svgDoc = parser.parseFromString(svgText, "image/svg+xml");
+      const svgElement = svgDoc.documentElement;
 
-    // Add image as JPEG with high compression
-    pdf.addImage(dataUrl, "JPEG", 0, 0, pdfWidth, pdfHeight, undefined, "FAST");
-    const blob = pdf.output("blob");
+      // 3. Create an A4-landscape PDF and embed the SVG as vector content
+      // We enable 'compress: true' to minimize the final PDF file size.
+      const pdf = new jsPDF({ 
+        orientation: "landscape", 
+        unit: "pt", 
+        format: "a4",
+        compress: true 
+      });
+      const pdfW = pdf.internal.pageSize.getWidth();
+      const pdfH = pdf.internal.pageSize.getHeight();
 
-    // Restore selection
-    if (currentId) {
-      selectObject(currentId);
+      await svg2pdf(svgElement, pdf, {
+        x: 0,
+        y: 0,
+        width: pdfW,
+        height: pdfH
+      });
+
+      const blob = pdf.output("blob");
+
+      // Restore selection
+      if (currentId) selectObject(currentId);
+
+      return blob;
+    } catch (err) {
+      console.error("PDF generation error:", err);
+      if (currentId) selectObject(currentId);
+      throw err;
     }
-
-    return blob;
   };
 
   const initiateSave = () => {
@@ -497,7 +547,7 @@ function EditorInner() {
         );
       }
       const response = await fetch(
-        "https://leafedindia-studio.onrender.com/api/send-pdf",
+        "/api/send-pdf",
         {
           method: "POST",
           body: formData,
@@ -524,6 +574,31 @@ function EditorInner() {
     }
   };
 
+  const handleDownload = async () => {
+    const hasTemplate = objects.some((obj) => obj.type === "svg-path");
+    if (!hasTemplate && savedDesigns.length === 0) {
+      notify("Please create or save a design before downloading.", "error");
+      return;
+    }
+
+    try {
+      notify("Generating PDF for download...");
+      const blob = await getCanvasBlob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "leafed-india-design.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      notify("Download started!");
+    } catch (err) {
+      console.error("Download error:", err);
+      notify("Failed to generate PDF for download.", "error");
+    }
+  };
+
   return (
     <div className="studio-root">
       <div className="app-main-container">
@@ -532,6 +607,7 @@ function EditorInner() {
           onSave={initiateSave}
           onToggleSavedList={() => setShowAttachments(!showAttachments)}
           onStartTour={handleStartTour}
+          onDownload={handleDownload}
         />
         <div className="app-content-layout">
           <LeftSidebar />
@@ -818,12 +894,30 @@ function EditorInner() {
                   {savedDesigns.map((design) => (
                     <li key={design.id} className="attachment-item">
                       <span>{design.name}</span>
-                      <button
-                        className="remove-btn"
-                        onClick={() => removeSavedDesign(design.id)}
-                      >
-                        Delete
-                      </button>
+                      <div className="attachment-actions">
+                        <button
+                          className="download-btn"
+                          onClick={() => {
+                            const url = URL.createObjectURL(design.blob);
+                            const link = document.createElement("a");
+                            link.href = url;
+                            link.download = `${design.name}.pdf`;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            URL.revokeObjectURL(url);
+                            notify(`Downloading ${design.name}...`);
+                          }}
+                        >
+                          Download
+                        </button>
+                        <button
+                          className="remove-btn"
+                          onClick={() => removeSavedDesign(design.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </li>
                   ))}
                 </ul>
