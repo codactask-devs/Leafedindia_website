@@ -17,7 +17,24 @@ const EMAIL_TO = process.env.EMAIL_TO || 'maheshmarvel009@gmail.com';
 // const EMAIL_CC = process.env.EMAIL_CC || 'codactask@gmail.com';
 
 // Middleware
-app.use(cors());
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:4173',
+  process.env.FRONTEND_URL, // set this in Render env vars to your production URL
+].filter(Boolean);
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (Postman, server-to-server, etc.)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS: origin not allowed — ' + origin));
+    }
+  },
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(express.json());
 
 const storage = multer.memoryStorage();

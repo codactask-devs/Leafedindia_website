@@ -1,8 +1,9 @@
 @import url("./../utils/FontTheme.css");
+
 .templates-tool-section h3 {
-  font-size: 11px;
+  font-size: 10px;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: #3a3a50;
   letter-spacing: 0.1em;
   margin: 0 0 16px 0;
   font-weight: 700;
@@ -11,42 +12,41 @@
 .templates-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 14px;
 }
 
 .templates-item {
   width: 100%;
   aspect-ratio: 1;
   background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
+  border: 1.5px solid #e4e4ee;
+  border-radius: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 12px;
   text-align: center;
 }
 
 .templates-item:hover {
-  border-color: #3b82f6;
-  background-color: #f0f9ff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+  border-color: #9898b0;
+  background: #f4f4f8;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 .template-preview-box {
   width: 70%;
   aspect-ratio: 1;
-  /* background: #f8fafc; */
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 12px;
-  color: #64748b;
+  margin-bottom: 10px;
+  color: #9898b0;
   transition: all 0.2s;
   overflow: hidden;
 }
@@ -59,13 +59,13 @@
 }
 
 .templates-item:hover .template-thumbnail {
-  transform: scale(1.05);
+  transform: scale(1.07);
 }
 
 .template-name {
   font-size: 10px;
   font-weight: 700;
-  color: #475569;
+  color: #6b6b80;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-top: auto;
