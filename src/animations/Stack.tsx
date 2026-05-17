@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useTransform, AnimatePresence, type PanInfo } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 interface CardRotateProps {
     children: React.ReactNode;
@@ -168,12 +168,16 @@ export default function Stack({
         }
     }, [autoplay, autoplayDelay, stack, isPaused]);
 
+    const randomRotations = useMemo(
+        () => stack.map(() => (randomRotation ? Math.random() * 10 - 5 : 0)),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [stack.length, randomRotation]
+    );
+
     return (
         <div
             className="relative w-full h-full"
-            style={{
-                perspective: 600
-            }}
+            style={{ perspective: 600 }}
             onMouseEnter={() => {
                 pauseOnHover && setIsPaused(true);
                 setIsHovered(true);
@@ -203,7 +207,7 @@ export default function Stack({
             </AnimatePresence>
 
             {stack.map((card, index) => {
-                const randomRotate = randomRotation ? Math.random() * 10 - 5 : 0;
+                const randomRotate = randomRotations[index] ?? 0;
                 return (
                     <CardRotate
                         key={card.id}

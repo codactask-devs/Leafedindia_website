@@ -4,10 +4,14 @@ import type { SpecificationData } from "./productData";
 import bg2 from "../../assets/bg1.png";
 import quoteBackground from "../../assets/quote_background.png";
 
+import bg2 from "../../assets/bg1.png";
+import quoteBackground from "../../assets/quote_background.png";
+
 
 interface ProductSpecsSectionProps {
     productName: string;
     specs: SpecificationData;
+    className?: string;
 }
 
 const materialLibrary: Record<string, { title: string, description: string, bgColor: string, icon: React.ReactNode }> = {
@@ -55,7 +59,8 @@ const productMaterialsMap: Record<string, string[]> = {
 
 const ProductSpecsSection: React.FC<ProductSpecsSectionProps> = ({
     productName,
-    specs
+    specs,
+    className = ""
 }) => {
     const [activeTab, setActiveTab] = useState<"materials" | "sizes">("materials");
 
@@ -66,7 +71,7 @@ const ProductSpecsSection: React.FC<ProductSpecsSectionProps> = ({
     return (
         <section
             id="product-specs"
-            className="w-full py-20 px-6 lg:px-20 overflow-hidden relative"
+            className={`w-full py-20 px-6 lg:px-20 overflow-hidden relative ${className}`}
 
         >
 

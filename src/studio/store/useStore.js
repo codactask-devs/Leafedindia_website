@@ -50,8 +50,8 @@ const useStore = create((set, get) => ({
       const response = await fetch(url);
       const svgText = await response.text();
       const { paths, width, height } = parseSvgContent(svgText);
-      const CANVAS_W = 800;
-      const CANVAS_H = 600;
+      const CANVAS_W = 841.89;
+      const CANVAS_H = 595.28;
 
       // We want to fit it in say, 80% of the canvas.
       const targetW = CANVAS_W * 0.8;

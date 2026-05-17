@@ -8,10 +8,10 @@ const FAQ = () => {
         },
         {
             question: "What is the shelf life of your products?",
-            answer: "Our packaging typically has a high shelf life of between 2-3 years if kept dry and in room condition. However, white paper may discolor and turn slightly yellowish over time especially if it’s exposed directly to the sunlight for a long period of time.",
+            answer: "Our packaging typically has a shelf life of 2–3 years when stored in a dry, room-temperature environment. However, white paper may gradually discolor and develop a slight yellowish tint over time, especially with prolonged exposure to direct sunlight.",
         },
         {
-            question: "Can I exchange the products if I purchase it wrongly? Do you return and refund?",
+            question: "Can I exchange the products if I purchase them wrongly? Do you offer returns or refunds?",
             answer: "Exchange is allowed subject to the stock’s availability. There will be a processing fee of RM30 imposed on each exchange.",
         },
         {

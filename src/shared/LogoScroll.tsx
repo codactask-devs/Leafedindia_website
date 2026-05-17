@@ -48,13 +48,17 @@ const LogoScroll = () => {
                 <div className="absolute inset-y-0 left-0 w-20 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
                 <div className="absolute inset-y-0 right-0 w-20 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
-                <div className="flex w-fit animate-scroll">
+                <div className="flex w-fit animate-scroll" style={{ willChange: 'transform' }}>
                     {/* First batch */}
                     {logos.map((item, i) => (
                         <div key={i} className="shrink-0 flex items-center justify-center mx-10 md:mx-16">
                             <img
                                 src={item}
                                 alt={`company-logo-${i}`}
+                                loading="lazy"
+                                decoding="async"
+                                width={120}
+                                height={56}
                                 className="h-10 md:h-14 w-auto object-contain"
                             />
                         </div>
@@ -66,6 +70,10 @@ const LogoScroll = () => {
                             <img
                                 src={item}
                                 alt={`company-logo-dup-${i}`}
+                                loading="lazy"
+                                decoding="async"
+                                width={120}
+                                height={56}
                                 className="h-10 md:h-14 w-auto object-contain"
                             />
                         </div>

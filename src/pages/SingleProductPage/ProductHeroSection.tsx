@@ -84,6 +84,9 @@ const ProductHeroSection: React.FC<ProductHeroSectionProps> = ({
                         <img
                             src={heroImage}
                             alt="Product Hero"
+                            loading="eager"
+                            fetchPriority="high"
+                            decoding="async"
                             className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
                         />
                         {/* Floating Trusted Card */}
@@ -105,15 +108,6 @@ const ProductHeroSection: React.FC<ProductHeroSectionProps> = ({
                 </div>
             </div>
 
-            <style>{`
-                @keyframes pulse-gentle {
-                    0%, 100% { transform: scale(1); }
-                    50% { transform: scale(1.02); }
-                }
-                .animate-pulse-gentle {
-                    animation: pulse-gentle 4s infinite ease-in-out;
-                }
-            `}</style>
         </section>
     );
 };

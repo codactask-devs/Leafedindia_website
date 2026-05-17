@@ -1242,7 +1242,7 @@ const InfiniteMenu = ({
                         className={`
           absolute
           left-1/2
-          z-10
+          z-[1]
           w-[60px]
           h-[60px]
           grid

@@ -151,8 +151,8 @@ const CanvasArea = ({ stageRef }) => {
   const transformerRef = useRef(null);
   const containerRef = useRef(null);
 
-  const DESIGN_WIDTH = 800;
-  const DESIGN_HEIGHT = 600;
+  const DESIGN_WIDTH = 841.89;
+  const DESIGN_HEIGHT = 595.28;
 
   const [scale, setScale] = useState(1);
   const [stageDimensions, setStageDimensions] = useState({
@@ -181,8 +181,8 @@ const CanvasArea = ({ stageRef }) => {
       // Store the offset to use in render
       setMobileOffset(mobileSidebarHeight);
 
-      const availableWidth = window.innerWidth - (isMobile ? 20 : 100);
-      const availableHeight = window.innerHeight - toolbarHeight - bottomNavHeight - mobileSidebarHeight - (isMobile ? 40 : 100);
+      const availableWidth = window.innerWidth - (isMobile ? 20 : 100) - 24; // Extra space for sheet padding
+      const availableHeight = window.innerHeight - toolbarHeight - bottomNavHeight - mobileSidebarHeight - (isMobile ? 40 : 100) - 24;
 
       // Fit to container dimensions while maintaining aspect ratio
       const scaleX = availableWidth / DESIGN_WIDTH;
@@ -318,227 +318,272 @@ const CanvasArea = ({ stageRef }) => {
         transition: 'padding-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
       }}
     >
-      <div className="canvas-wrapper" style={{ boxShadow: '0 10px 40px -10px rgba(180, 50, 50, 0.15)', border: '1px solid #fee2e2', borderRadius: '8px', background: '#FFF8F6', overflow: 'hidden', transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }}>        <div className="canvas-container" style={{ position: "relative" }}>
-        <Stage
-          width={stageDimensions.width}
-          height={stageDimensions.height}
-          scaleX={scale}
-          scaleY={scale}
-          onMouseDown={checkDeselect}
-          onTouchStart={checkDeselect}
-          ref={stageRef}
-          style={{ background: "#F3F1EC" }}
-        >
+      <div className="canvas-sheet">
+        <div className="canvas-wrapper">
+          <div className="canvas-container" style={{ position: "relative" }}>
+          <Stage
+            width={stageDimensions.width}
+            height={stageDimensions.height}
+            scaleX={scale}
+            scaleY={scale}
+            onMouseDown={checkDeselect}
+            onTouchStart={checkDeselect}
+            ref={stageRef}
+            style={{ background: "#F3F1EC" }}
+          >
 
-          <Layer>
-            {/* 0. Solid White Background for Exports */}
-            <Rect 
-              width={DESIGN_WIDTH} 
-              height={DESIGN_HEIGHT} 
-              fill="white" 
-              listening={false} 
-            />
-          </Layer>
-
-          <Layer>
-
-            {/* Background Image */}
-            {/* <URLImage 
-              src={canvasBackground} 
-              width={DESIGN_WIDTH} 
-              height={DESIGN_HEIGHT} 
-              opacity={1}
-              listening={false} // So it doesn't interfere with interaction
-            /> */}
-
-            {/* 1. Background Fills - These define the "clippable" area */}
-            <Group name="background-fills">
-              {objects
-                .filter((obj) => obj.type === "svg-path")
-                .map((obj) => (
-                  <Path
-                    key={`fill-${obj.id}`}
-                    id={obj.id} // Important for selection
-                    x={obj.x}
-                    y={obj.y}
-                    data={obj.data}
-                    fill={obj.fill}
-                    scaleX={obj.scaleX}
-                    scaleY={obj.scaleY}
-                    rotation={obj.rotation}
-                    onClick={() => selectObject(obj.id)}
-                    onTap={() => selectObject(obj.id)}
-                    opacity={selectedId === obj.id ? 0.8 : 1}
-                  />
-                ))}
-            </Group>
-
-            {/* 2. Clipped Content - Images and Text that should only appear inside the box */}
-            <Group
-              name="clipped-content"
-              globalCompositeOperation="source-atop"
-              listening={true}
-            >
-              {objects
-                .filter((obj) => obj.type === "image" || obj.type === "text")
-                .map((obj) => {
-                  const commonProps = {
-                    id: obj.id,
-                    x: obj.x,
-                    y: obj.y,
-                    rotation: obj.rotation || 0,
-                    scaleX: obj.scaleX || 1,
-                    scaleY: obj.scaleY || 1,
-                    draggable: editingId !== obj.id,
-                    onClick: () => {
-                      if (editingId !== obj.id) selectObject(obj.id);
-                    },
-                    onTap: () => {
-                      if (editingId !== obj.id) selectObject(obj.id);
-                    },
-                    onDragMove: (e) => {
-                      updateObject(obj.id, {
-                        x: e.target.x(),
-                        y: e.target.y(),
-                      });
-                    },
-                    onDragEnd: (e) => {
-                      updateObject(obj.id, {
-                        x: e.target.x(),
-                        y: e.target.y(),
-                      });
-                      saveHistory();
-                    },
-                    onTransform: (e) => {
-                      const node = e.target;
-                      updateObject(obj.id, {
-                        x: node.x(),
-                        y: node.y(),
-                        rotation: node.rotation(),
-                        scaleX: node.scaleX(),
-                        scaleY: node.scaleY(),
-                      });
-                    },
-                    onTransformEnd: (e) => {
-                      const node = e.target;
-                      updateObject(obj.id, {
-                        x: node.x(),
-                        y: node.y(),
-                        rotation: node.rotation(),
-                        scaleX: node.scaleX(),
-                        scaleY: node.scaleY(),
-                      });
-                      saveHistory();
-                    },
-                  };
-
-                  if (obj.type === "image") {
-                    return (
-                      <URLImage
-                        key={obj.id}
-                        {...commonProps}
-                        src={obj.src}
-                        width={obj.width}
-                        height={obj.height}
-                      />
-                    );
-                  }
-
-                  if (obj.type === "text") {
-                    return (
-                      <Text
-                        key={obj.id}
-                        {...commonProps}
-                        text={obj.text}
-                        fontSize={obj.fontSize}
-                        fill={obj.fill}
-                        fontFamily={obj.fontFamily || "'Mazzard', sans-serif"}
-                        fontStyle={obj.fontWeight || "400"}
-                        onDblClick={(e) => handleTextDblClick(e, obj)}
-                        onDblTap={(e) => handleTextDblClick(e, obj)}
-                      />
-                    );
-                  }
-                  return null;
-                })}
-            </Group>
-
-            {/* 3. Foreground Outlines - Keep the borders visible */}
-            <Group name="foreground-outlines" listening={false}>
-              {objects
-                .filter((obj) => obj.type === "svg-path")
-                .map((obj) => (
-                  <Path
-                    key={`outline-${obj.id}`}
-                    x={obj.x}
-                    y={obj.y}
-                    data={obj.data}
-                    fill="transparent"
-                    stroke={selectedId === obj.id ? "#3b82f6" : (obj.stroke || "#2B2A29")}
-                    strokeWidth={selectedId === obj.id ? 3 : 1.5}
-                    scaleX={obj.scaleX}
-                    scaleY={obj.scaleY}
-                    rotation={obj.rotation}
-                    strokeScaleEnabled={false}
-                  />
-                ))}
-            </Group>
-
-            <Transformer
-              ref={transformerRef}
-              boundBoxFunc={(oldBox, newBox) => {
-                if (Math.abs(newBox.width) < 5 || Math.abs(newBox.height) < 5) {
-                  return oldBox;
-                }
-                return newBox;
-              }}
-            />
-
-            {selectedId && !editingId && objects.find(o => o.id === selectedId && !["svg-path", "svg-container"].includes(o.type)) && (
-              <SelectionControls
-                object={objects.find(o => o.id === selectedId)}
-                onDelete={() => deleteObject(selectedId)}
-                onDuplicate={() => duplicateObject(selectedId)}
-                stageRef={stageRef}
+            <Layer>
+              {/* 0. Solid White Background for Exports */}
+              <Rect 
+                width={DESIGN_WIDTH} 
+                height={DESIGN_HEIGHT} 
+                fill="white" 
+                listening={false} 
               />
-            )}
-          </Layer>
-        </Stage>
 
-        {editingId && (
-          <textarea
-            value={textEditValue}
-            onChange={(e) => setTextEditValue(e.target.value)}
-            onBlur={handleTextEditComplete}
-            onKeyDown={handleKeyDown}
-            style={{
-              display: "block",
-              position: "absolute",
-              top: textEditPos.y + "px",
-              left: textEditPos.x + "px",
-              fontSize: textEditPos.fontSize + "px",
-              color: textEditPos.color,
-              border: "none",
-              padding: "0px",
-              margin: "0px",
-              background: "transparent",
-              resize: "none",
-              outline: "none",
-              overflow: "hidden",
-              lineHeight: 1.2,
-              zIndex: 100,
-              width: textEditPos.width + 20 + "px",
-              height: "auto",
-              minHeight: textEditPos.fontSize + "px",
-              transform: `rotate(${textEditPos.rotation}deg)`,
-              transformOrigin: "top left",
-              fontFamily: textEditPos.fontFamily,
-              fontWeight: textEditPos.fontWeight,
-            }}
-            autoFocus
-          />
-        )}
-      </div>
+              {/* 1. Background Decor — large dark paths (like cup/bowl backgrounds)           */}
+              {/*    Rendered at the very bottom so they never obscure printable areas.       */}
+              {/*    By rendering them in a separate layer, they don't contribute to the      */}
+              {/*    source-atop clipping mask used for user content.                         */}
+              <Group name="background-decor" listening={false}>
+                {objects
+                  .filter((obj) => obj.type === "svg-path" && obj.isBackground)
+                  .map((obj) => (
+                    <Path
+                      key={`bg-decor-${obj.id}`}
+                      x={obj.x}
+                      y={obj.y}
+                      data={obj.data}
+                      fill={obj.fill}
+                      scaleX={obj.scaleX}
+                      scaleY={obj.scaleY}
+                      rotation={obj.rotation}
+                    />
+                  ))}
+              </Group>
+            </Layer>
+
+            <Layer>
+
+              {/* Background Image */}
+              {/* <URLImage 
+                src={canvasBackground} 
+                width={DESIGN_WIDTH} 
+                height={DESIGN_HEIGHT} 
+                opacity={1}
+                listening={false} // So it doesn't interfere with interaction
+              /> */}
+
+              {/* 2. Background Fills — only non-decorative (white/light) paths */}
+              <Group name="background-fills">
+                {objects
+                  .filter((obj) => obj.type === "svg-path" && !obj.isDecorative && !obj.isBackground && obj.fill !== "transparent" && obj.fill !== "none")
+                  .map((obj) => (
+                    <Path
+                      key={`fill-${obj.id}`}
+                      id={obj.id}
+                      x={obj.x}
+                      y={obj.y}
+                      data={obj.data}
+                      fill={obj.fill}
+                      scaleX={obj.scaleX}
+                      scaleY={obj.scaleY}
+                      rotation={obj.rotation}
+                      onClick={() => selectObject(obj.id)}
+                      onTap={() => selectObject(obj.id)}
+                      opacity={selectedId === obj.id ? 0.8 : 1}
+                    />
+                  ))}
+              </Group>
+
+              {/* 3. Clipped Content — images, text, shapes clipped to the template shape */}
+              <Group
+                name="clipped-content"
+                globalCompositeOperation="source-atop"
+                listening={true}
+              >
+                {objects
+                  .filter((obj) => obj.type === "image" || obj.type === "text" || obj.type === "shape")
+                  .map((obj) => {
+                    const commonProps = {
+                      id: obj.id,
+                      x: obj.x,
+                      y: obj.y,
+                      rotation: obj.rotation || 0,
+                      scaleX: obj.scaleX || 1,
+                      scaleY: obj.scaleY || 1,
+                      draggable: editingId !== obj.id,
+                      onClick: () => {
+                        if (editingId !== obj.id) selectObject(obj.id);
+                      },
+                      onTap: () => {
+                        if (editingId !== obj.id) selectObject(obj.id);
+                      },
+                      onDragMove: (e) => {
+                        updateObject(obj.id, { x: e.target.x(), y: e.target.y() });
+                      },
+                      onDragEnd: (e) => {
+                        updateObject(obj.id, { x: e.target.x(), y: e.target.y() });
+                        saveHistory();
+                      },
+                      onTransform: (e) => {
+                        const node = e.target;
+                        updateObject(obj.id, {
+                          x: node.x(), y: node.y(),
+                          rotation: node.rotation(),
+                          scaleX: node.scaleX(), scaleY: node.scaleY(),
+                        });
+                      },
+                      onTransformEnd: (e) => {
+                        const node = e.target;
+                        updateObject(obj.id, {
+                          x: node.x(), y: node.y(),
+                          rotation: node.rotation(),
+                          scaleX: node.scaleX(), scaleY: node.scaleY(),
+                        });
+                        saveHistory();
+                      },
+                    };
+
+                    if (obj.type === "image") {
+                      return (
+                        <URLImage
+                          key={obj.id}
+                          {...commonProps}
+                          src={obj.src}
+                          width={obj.width}
+                          height={obj.height}
+                        />
+                      );
+                    }
+
+                    if (obj.type === "text") {
+                      return (
+                        <Text
+                          key={obj.id}
+                          {...commonProps}
+                          text={obj.text}
+                          fontSize={obj.fontSize}
+                          fill={obj.fill}
+                          fontFamily={obj.fontFamily || "'Mazzard', sans-serif"}
+                          fontStyle={obj.fontWeight || "400"}
+                          onDblClick={(e) => handleTextDblClick(e, obj)}
+                          onDblTap={(e) => handleTextDblClick(e, obj)}
+                        />
+                      );
+                    }
+
+                    if (obj.type === "shape") {
+                      return (
+                        <Path
+                          key={obj.id}
+                          {...commonProps}
+                          data={obj.data}
+                          fill={obj.fill || "#4F46E5"}
+                        />
+                      );
+                    }
+                    return null;
+                  })}
+              </Group>
+
+              {/* 4. Decorative Overlay — black structural paths (corner flaps, etc.)            */}
+              {/*    Rendered ABOVE user content so images/text can never cover them.            */}
+              {/*    listening=false → completely non-interactive / non-selectable.              */}
+              <Group name="decorative-overlay" listening={false}>
+                {objects
+                  .filter((obj) => obj.type === "svg-path" && obj.isDecorative)
+                  .map((obj) => (
+                    <Path
+                      key={`deco-${obj.id}`}
+                      x={obj.x}
+                      y={obj.y}
+                      data={obj.data}
+                      fill={obj.fill}
+                      scaleX={obj.scaleX}
+                      scaleY={obj.scaleY}
+                      rotation={obj.rotation}
+                    />
+                  ))}
+              </Group>
+
+              {/* 5. Foreground Outlines — crisp stroke borders on top of everything */}
+              <Group name="foreground-outlines" listening={false}>
+                {objects
+                  .filter((obj) => obj.type === "svg-path")
+                  .map((obj) => (
+                    <Path
+                      key={`outline-${obj.id}`}
+                      x={obj.x}
+                      y={obj.y}
+                      data={obj.data}
+                      fill="transparent"
+                      stroke={selectedId === obj.id ? "#3b82f6" : (obj.stroke || "#2B2A29")}
+                      strokeWidth={selectedId === obj.id ? 3 : 1.5}
+                      scaleX={obj.scaleX}
+                      scaleY={obj.scaleY}
+                      rotation={obj.rotation}
+                      strokeScaleEnabled={false}
+                    />
+                  ))}
+              </Group>
+
+              <Transformer
+                ref={transformerRef}
+                boundBoxFunc={(oldBox, newBox) => {
+                  if (Math.abs(newBox.width) < 5 || Math.abs(newBox.height) < 5) {
+                    return oldBox;
+                  }
+                  return newBox;
+                }}
+              />
+
+              {selectedId && !editingId && objects.find(o => o.id === selectedId && !["svg-path", "svg-container"].includes(o.type)) && (
+                <SelectionControls
+                  object={objects.find(o => o.id === selectedId)}
+                  onDelete={() => deleteObject(selectedId)}
+                  onDuplicate={() => duplicateObject(selectedId)}
+                  stageRef={stageRef}
+                />
+              )}
+            </Layer>
+          </Stage>
+
+          {editingId && (
+            <textarea
+              value={textEditValue}
+              onChange={(e) => setTextEditValue(e.target.value)}
+              onBlur={handleTextEditComplete}
+              onKeyDown={handleKeyDown}
+              style={{
+                display: "block",
+                position: "absolute",
+                top: textEditPos.y + "px",
+                left: textEditPos.x + "px",
+                fontSize: textEditPos.fontSize + "px",
+                color: textEditPos.color,
+                border: "none",
+                padding: "0px",
+                margin: "0px",
+                background: "transparent",
+                resize: "none",
+                outline: "none",
+                overflow: "hidden",
+                lineHeight: 1.2,
+                zIndex: 100,
+                width: textEditPos.width + 20 + "px",
+                height: "auto",
+                minHeight: textEditPos.fontSize + "px",
+                transform: `rotate(${textEditPos.rotation}deg)`,
+                transformOrigin: "top left",
+                fontFamily: textEditPos.fontFamily,
+                fontWeight: textEditPos.fontWeight,
+              }}
+              autoFocus
+            />
+          )}
+          </div>
+        </div>
       </div>
     </div>
   );

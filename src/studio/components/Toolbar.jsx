@@ -1,11 +1,11 @@
 import React from 'react';
 import useStore from '../store/useStore';
 import "./Toolbar.css";
-import { Undo, Redo, Mail, Save, List, HelpCircle } from 'lucide-react';
+import { Undo, Redo, Mail, Save, List, HelpCircle, Download } from 'lucide-react';
 import companylogo from "./../assets/LEAFEDINDIA Logo.svg"
 import mobileLogo from "./../assets/LEAFEDINDIA Logo2.svg"
 
-const Toolbar = ({ onExport, onSave, onToggleSavedList, onStartTour }) => {
+const Toolbar = ({ onExport, onSave, onToggleSavedList, onStartTour, onDownload }) => {
     const { undo, redo, history, historyStep, savedDesigns, hasChanges, objects } = useStore();
 
     const canUndo = historyStep > 0;
@@ -83,6 +83,17 @@ const Toolbar = ({ onExport, onSave, onToggleSavedList, onStartTour }) => {
                     <HelpCircle size={18} />
                     <span>Need Help?</span>
                 </button>
+
+                {(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && (
+                    <button 
+                        className="btn btn-outline-secondary toolbar-download-btn" 
+                        onClick={onDownload}
+                        title="Download current design as PDF"
+                    >
+                        <Download size={18} />
+                        <span>Download PDF</span>
+                    </button>
+                )}
             </div>
         </div>
     );

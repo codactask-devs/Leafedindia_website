@@ -10,7 +10,7 @@ const HomePage = () => {
 
         <div className="w-full min-h-screen  relative md:mb-35">
             {/* asdfa */}
-            <section className="absolute inset-0 z-0 pointer-events-none">
+            <section className="absolute inset-0 z-0 pointer-events-none" style={{ willChange: 'transform' }}>
                 <div className=" bg-[#0d6e41] w-full" />
                 <div className="flex h-full w-full">
                     <div className="flex-1 h-full bg-[#fefbea] rounded-b-[70px]" />
@@ -18,7 +18,7 @@ const HomePage = () => {
                 </div>
             </section>
 
-            <section className="relative z-10">
+            <section className="relative">
                 <NavBar />
                 <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-[140px] md:pt-[200px] lg:pt-[180px]">
                     <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-0">
@@ -86,7 +86,7 @@ const HomePage = () => {
 
                         </nav>
 
-                        <nav className="w-full lg:pt-5 lg:w-1/2 flex justify-center lg:justify-end items-center relative order-1 lg:order-2 lg:translate-x-24">
+                        <nav className="w-full lg:pt-5 lg:w-1/2 flex justify-center lg:justify-end items-center relative order-1 lg:order-2 lg:translate-x-24" style={{ willChange: 'transform' }}>
                             <div className="w-[280px] md:w-[550px] lg:w-[650px]">
                                 <img
                                     src={HeroImage}
@@ -113,14 +113,14 @@ const HomePage = () => {
                             style={{ fontFamily: "'Montserrat', sans-serif" }}
                             className="text-[32px] md:text-[45px] font-black mb-6 leading-[1.1]"
                         >
-                            Excellence In Printing And Packaging
+                            Excellence in Sustainable Packaging
                         </h2>
                         <p
                             style={{ fontFamily: "'Montserrat', sans-serif" }}
                             className="text-gray-100 text-[14px] md:text-[16px] mb-10 max-w-xl opacity-90 font-medium"
                         >
-                            Leading the global transition towards circular packaging ecosystems.
-                            Our mission is to empower brands with sustainable, beautiful, for the earth.
+                            Innovating eco-friendly solutions that redefine how brands connect with the earth. 
+                            Crafted to balance durability with design, we create packaging that is beautiful, responsible, and future-focused.
                         </p>
 
                     </div>
@@ -142,7 +142,7 @@ const HomePage = () => {
                                 style={{ fontFamily: "'Montserrat', sans-serif" }}
                                 className="text-gray-400 text-[14px] leading-relaxed font-medium"
                             >
-                                Leading the global transition towards circular packaging ecosystems.
+                                Leading the global transition towards packaging that protects the planet and elevates brands.
                             </p>
                         </div>
 
@@ -161,7 +161,7 @@ const HomePage = () => {
                                 style={{ fontFamily: "'Montserrat', sans-serif" }}
                                 className="text-white/90 text-[14px] leading-relaxed font-medium"
                             >
-                                Empowering brands with customizable, eco-friendly packaging that doesn't compromise on beauty.
+                                Delivering customizable, eco-conscious solutions where sustainability and style unite seamlessly.
                             </p>
                         </div>
                     </div>

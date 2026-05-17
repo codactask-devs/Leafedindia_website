@@ -1,4 +1,4 @@
-import foodBoxMain from "../../assets/FOOD BOX/foodBoxMain.webp";
+import { productAssets } from "../../assets/Assets";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -13,14 +13,16 @@ const ProductHeroModern = () => {
         <section className="relative w-full h-screen overflow-hidden flex md:items-center">
             <div className="absolute inset-0 z-0">
                 <img
-                    src={foodBoxMain}
+                    src={productAssets["FoodBox"]?.main || ""}
                     alt="Sustainable Packaging"
                     width={1920}
                     height={1080}
+                    loading="eager"
+                    fetchPriority="high"
                     decoding="async"
                     className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-linear-to-r from-white via-white/80 to-transparent z-10" />
+                <div className="absolute inset-0 bg-linear-to-r from-white via-white/40 to-transparent z-10" />
             </div>
 
             <div className="relative pt-28 md:pt-0 z-20 w-full px-6 lg:px-16">
@@ -60,18 +62,6 @@ const ProductHeroModern = () => {
                 <div className="w-1 h-12 bg-linear-to-b from-[#1a2b4b] to-transparent rounded-full animate-scroll-hint" />
                 <span className="text-[10px] font-bold text-[#1a2b4b] uppercase tracking-widest">Scroll</span>
             </div>
-
-            <style>{`
-                @keyframes scroll-hint {
-                    0% { transform: scaleY(0); transform-origin: top; }
-                    50% { transform: scaleY(1); transform-origin: top; }
-                    51% { transform: scaleY(1); transform-origin: bottom; }
-                    100% { transform: scaleY(0); transform-origin: bottom; }
-                }
-                .animate-scroll-hint {
-                    animation: scroll-hint 2.5s infinite ease-in-out;
-                }
-            `}</style>
         </section>
     );
 }

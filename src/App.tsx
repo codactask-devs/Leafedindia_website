@@ -5,14 +5,15 @@ import Gallery from "./pages/LandingPage/Gallery";
 import Testimonials from "./pages/LandingPage/Testimonials";
 import Footer from "./shared/Footer";
 import WhyChooseUs from "./pages/LandingPage/WhyChooseUs";
-import ProductPage from "./pages/ProductMain/ProductPage";
-import SingleProductPage from "./pages/SingleProductPage/SingleProductPage";
+import AwardsSection from "./pages/LandingPage/AwardsSection";
 import LogoScroll from "./shared/LogoScroll";
 import ScrollToTop from "./shared/ScrollToTop";
 import WhatsAppButton from "./shared/WhatsAppButton";
 import RotatingQuotes from "./shared/RotatingQuotes";
 
-// Lazy load the heavy Studio editor
+// Lazy-load all non-landing heavy pages
+const ProductPage = lazy(() => import("./pages/ProductMain/ProductPage"));
+const SingleProductPage = lazy(() => import("./pages/SingleProductPage/SingleProductPage"));
 const Editor = lazy(() => import("./studio/pages/Editor"));
 
 // Simple loading fallback
@@ -47,13 +48,14 @@ const LandingPage: React.FC = () => {
     <>
       <HomePage />
       <LogoScroll />
-      <div className="relative bg-[#fdfae9] ">
-        <Gallery />
-        <WhyChooseUs />
-        <Testimonials />
+      <div className="relative bg-[#fdfae9]">
+        <div className="cv-auto"><Gallery /></div>
+        <div className="cv-auto"><WhyChooseUs /></div>
+        <div className="cv-auto"><AwardsSection /></div>
+        <div className="cv-auto"><Testimonials /></div>
       </div>
-      <RotatingQuotes />
-      <Footer />
+      <div className="cv-auto"><RotatingQuotes /></div>
+      <div className="cv-auto"><Footer /></div>
     </>
   );
 };
@@ -65,8 +67,22 @@ function App() {
       <HashScrollHandler />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/products" element={<ProductPage />} />
-        <Route path="/product/:id" element={<SingleProductPage />} />
+        <Route
+          path="/products"
+          element={
+            <Suspense fallback={<Loader />}>
+              <ProductPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/product/:id"
+          element={
+            <Suspense fallback={<Loader />}>
+              <SingleProductPage />
+            </Suspense>
+          }
+        />
         <Route
           path="/studio"
           element={

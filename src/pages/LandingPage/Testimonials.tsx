@@ -73,7 +73,7 @@ const Testimonials: FC = () => {
 
                 {/* Infinite Slider Track */}
                 <div className="relative flex overflow-hidden group">
-                    <div className="flex gap-8 animate-scroll hover:[animation-play-state:paused] whitespace-nowrap">
+                    <div className="flex gap-8 animate-scroll hover:[animation-play-state:paused] whitespace-nowrap" style={{ willChange: 'transform' }}>
                         {scrollItems.map((item, index) => (
                             <div
                                 key={index}

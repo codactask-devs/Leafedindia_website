@@ -1,74 +1,54 @@
 import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import burgerBox from "../../assets/Main/burgerBoxMain.webp";
-import foodBox from "../../assets/Main/foodBoxMain.webp";
-import cupMain from "../../assets/Main/cupMain.webp";
-import bowlMain from "../../assets/Main/bowlMain.webp";
-import foodTrayMain from "../../assets/Main/foodTrayMain.webp";
-import foodBoxAlt1 from "../../assets/FOOD BOX/foodBox1.webp";
-import foodBoxAlt2 from "../../assets/FOOD BOX/foodBox2.webp";
 import Stack from "../../animations/Stack";
-import { images } from "../LandingPage/Gallery";
+import { productAssets, stackImages } from "../../assets/Assets";
+import { products as productDataMap } from "../SingleProductPage/productData";
 
-const products = [
-    {
-        title: "Burger Box",
-        description: "Perfectly sized, breathable paper boxes for fresh burgers.",
-        image: burgerBox,
-        bg: "bg-[#fdf8f3]",
-        category: "Fast Food",
-        span: "md:col-span-1"
-    },
-    {
-        title: "Paper Cups",
-        description: "Versatile, leak-proof cups for hot and cold beverages.",
-        image: cupMain,
-        bg: "bg-[#f3f9f6]",
-        category: "Beverage",
-        span: "md:col-span-1 md:row-span-2",
-        imgHeight: "h-full"
-    },
-    {
-        title: "Bowl",
-        description: "Sturdy and stylish bowls for salads, soups, and more.",
-        image: bowlMain,
-        bg: "bg-[#fef7f4]",
-        category: "Catering",
-        span: "md:col-span-1"
-    },
-    {
-        title: "Paper Food Box",
-        description: "The ultimate sustainable solution for full meals and takeaway.",
-        image: foodBox,
-        bg: "bg-[#f8fafc]",
-        category: "Takeaway",
-        span: "md:col-span-2"
-    },
-    {
-        title: "Paper Tray",
-        description: "Open-top trays for easy serving and eco-friendly dining.",
-        image: foodTrayMain,
-        bg: "bg-[#fdf2f8]",
-        category: "Serving",
-        span: "md:col-span-1"
-    },
-    {
-        title: "Pizza Box",
-        description: "Insulated, robust paper boxes to keep pizzas hot and crisp.",
-        image: foodBoxAlt1, // Placeholder
-        bg: "bg-[#fffbeb]",
-        category: "Pizza",
-        span: "md:col-span-1"
-    },
-    {
-        title: "Hexagon Box",
-        description: "Unique geometric packaging for premium gifting and food.",
-        image: foodBoxAlt2,
-        bg: "bg-[#f0fdf4]",
-        category: "Specialty",
-        span: "md:col-span-1"
-    },
+const folderToIdMap: Record<string, string> = {
+    'BurgerBox': 'burger-box',
+    'Cups': 'cups',
+    'Bowls': 'bowls',
+    'FoodBox': 'food-box',
+    'FoodTray': 'food-tray',
+    'NoodleBox': 'noodle-box',
+    'HexagonBox': 'hexagon-box'
+};
+
+const desiredOrder = [
+    'burger-box',
+    'cups',
+    'bowls',
+    'food-box',
+    'food-tray',
+    'noodle-box',
+    'hexagon-box'
+];
+
+// Map dynamic assets to our fixed order
+const dynamicProducts = desiredOrder.map(productId => {
+    // Find which folder matches this productId
+    const folderName = Object.keys(productAssets).find(key => folderToIdMap[key] === productId) || productId;
+    const assets = productAssets[folderName];
+    const data = productDataMap[productId];
+    
+    if (!assets && !data) return null;
+
+    return {
+        id: productId,
+        title: data?.productName || folderName,
+        description: data?.description || "High-quality sustainable packaging solution.",
+        image: assets?.main || assets?.variants[0] || "",
+        bg: data?.galleryBg || "bg-[#f9fafb]",
+        category: data?.category || "Eco-Packaging",
+        span: data?.gridSpan || "md:col-span-1",
+        imgHeight: data?.gridSpan?.includes('row-span-2') ? 'h-full' : undefined
+    };
+}).filter(Boolean);
+
+// Add the Shuffle card at the end
+const finalProducts = [
+    ...dynamicProducts,
     {
         title: "Product Shuffle",
         description: "Explore our diverse range through interactive cards.",
@@ -82,16 +62,6 @@ const products = [
 const ProductGallery = () => {
     const [isVisible, setIsVisible] = useState(false);
     const navigate = useNavigate();
-
-    const titleToId: Record<string, string> = {
-        "Burger Box": "burger-box",
-        "Paper Cups": "paper-cups",
-        "Bowl": "paper-bowls",
-        "Paper Food Box": "food-box",
-        "Paper Tray": "paper-tray",
-        "Pizza Box": "pizza-box",
-        "Hexagon Box": "hexagon-box"
-    };
 
     useEffect(() => {
         setIsVisible(true);
@@ -122,13 +92,13 @@ const ProductGallery = () => {
 
                 {/* Masonry Product Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                    {products.map((product, index) => {
+                    {finalProducts.map((product, index) => {
                         const isStackTile = product.isStack;
 
                         return (
                             <div
                                 key={index}
-                                onClick={() => !isStackTile && navigate(`/product/${titleToId[product.title] || product.title.toLowerCase().replace(/ /g, '-')}`)}
+                                onClick={() => !isStackTile && navigate(`/product/${product.id || product.title.toLowerCase().replace(/ /g, '-')}`)}
                                 className={`group cursor-pointer transition-all duration-1000 transform ${product.span} ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'}`}
                                 style={{ transitionDelay: `${400 + (index * 150)}ms` }}
                             >
@@ -142,7 +112,7 @@ const ProductGallery = () => {
                                                         randomRotation={true}
                                                         sensitivity={180}
                                                         sendToBackOnClick={true}
-                                                        cards={images.map((src, i) => (
+                                                        cards={stackImages.map((src, i) => (
                                                             <img
                                                                 key={i}
                                                                 src={src}
@@ -167,7 +137,7 @@ const ProductGallery = () => {
                                                 width={600}
                                                 height={450}
                                                 loading={index < 2 ? "eager" : "lazy"}
-                                                {...(index < 2 ? { fetchpriority: "high" } : {})}
+                                                {...(index < 2 ? { fetchPriority: "high" } : {})}
                                                 decoding="async"
                                                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                                             />
